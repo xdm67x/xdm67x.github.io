@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#CE422B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B2500;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Shield body -->
+  <path d="M100 20 L170 50 L170 110 Q170 160 100 190 Q30 160 30 110 L30 50 Z" fill="url(#shieldGrad)" stroke="#2D1810" stroke-width="4"/>
+  <!-- Shield highlight -->
+  <path d="M100 30 L155 55 L155 105 Q155 145 100 175" fill="none" stroke="#FF6B4A" stroke-width="6" stroke-linecap="round" opacity="0.4"/>
+  <!-- Cargo box 1 -->
+  <rect x="65" y="70" width="30" height="25" rx="3" fill="#F5DEB3" stroke="#8B4513" stroke-width="2"/>
+  <path d="M65 82 L95 82" stroke="#8B4513" stroke-width="2"/>
+  <path d="M80 70 L80 95" stroke="#8B4513" stroke-width="2"/>
+  <!-- Feature flag on box 1 -->
+  <polygon points="85,72 95,77 85,82" fill="#32CD32"/>
+  <!-- Cargo box 2 -->
+  <rect x="105" y="70" width="30" height="25" rx="3" fill="#F5DEB3" stroke="#8B4513" stroke-width="2"/>
+  <path d="M105 82 L135 82" stroke="#8B4513" stroke-width="2"/>
+  <path d="M120 70 L120 95" stroke="#8B4513" stroke-width="2"/>
+  <!-- Feature flag on box 2 (crossed out - forbidden) -->
+  <polygon points="125,72 135,77 125,82" fill="#FF4500"/>
+  <line x1="125" y1="72" x2="135" y2="82" stroke="#2D1810" stroke-width="2"/>
+  <line x1="135" y1="72" x2="125" y2="82" stroke="#2D1810" stroke-width="2"/>
+  <!-- Checkmark -->
+  <circle cx="100" cy="140" r="25" fill="#32CD32" stroke="#228B22" stroke-width="3"/>
+  <path d="M85 140 L95 150 L115 130" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Small sparkle -->
+  <polygon points="160,40 165,50 175,50 167,57 170,67 160,60 150,67 153,57 145,50 155,50" fill="#FFD700"/>
+</svg>
