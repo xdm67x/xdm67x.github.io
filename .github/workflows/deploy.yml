@@ -33,7 +33,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_BASE_URL: /xdm67x/
+          VITE_BASE_URL: /portfolio/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
