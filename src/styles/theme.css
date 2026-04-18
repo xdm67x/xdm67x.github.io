@@ -1,22 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap');
 
 :root {
-  --color-bg: #FFF8F3;
-  --color-bg-secondary: #FFF0E8;
-  --color-primary: #E85D04;
-  --color-primary-dark: #C45000;
-  --color-secondary: #4A3728;
-  --color-text: #2D1810;
-  --color-text-muted: #8B7355;
+  --color-bg: #F0F7FF;
+  --color-bg-secondary: #E0EBFF;
+  --color-primary: #2563EB;
+  --color-primary-dark: #1D4ED8;
+  --color-secondary: #1E3A5F;
+  --color-text: #0F172A;
+  --color-text-muted: #64748B;
   --color-white: #FFFFFF;
-  --color-border: rgba(45, 24, 16, 0.1);
+  --color-border: rgba(15, 23, 42, 0.1);
 
   --font-heading: 'Outfit', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
 
-  --shadow-sm: 0 2px 8px rgba(45, 24, 16, 0.08);
-  --shadow-md: 0 4px 16px rgba(45, 24, 16, 0.12);
-  --shadow-lg: 0 8px 32px rgba(45, 24, 16, 0.16);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.12);
+  --shadow-lg: 0 8px 32px rgba(15, 23, 42, 0.16);
 
   --radius-sm: 8px;
   --radius-md: 12px;
