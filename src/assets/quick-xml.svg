@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="rustGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#DEA584;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="xmlGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#001880;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0033CC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Speed lines -->
+  <path d="M10 60 L50 60" stroke="#FF6B4A" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+  <path d="M5 80 L45 80" stroke="#FF6B4A" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+  <path d="M10 100 L50 100" stroke="#FF6B4A" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+  <!-- XML Tag Left -->
+  <rect x="50" y="45" width="45" height="50" rx="5" fill="url(#xmlGrad)" stroke="#000860" stroke-width="3"/>
+  <text x="60" y="80" font-family="monospace" font-size="24" font-weight="bold" fill="white">&lt;/&gt;</text>
+  <!-- XML Tag Right -->
+  <rect x="105" y="105" width="45" height="50" rx="5" fill="url(#xmlGrad)" stroke="#000860" stroke-width="3"/>
+  <text x="115" y="140" font-family="monospace" font-size="24" font-weight="bold" fill="white">&lt;?&gt;</text>
+  <!-- Rust gear/cog -->
+  <circle cx="100" cy="100" r="35" fill="url(#rustGrad)" stroke="#8B4513" stroke-width="3"/>
+  <!-- Gear teeth -->
+  <rect x="92" y="55" width="16" height="12" rx="2" fill="url(#rustGrad)" stroke="#8B4513" stroke-width="2"/>
+  <rect x="92" y="133" width="16" height="12" rx="2" fill="url(#rustGrad)" stroke="#8B4513" stroke-width="2"/>
+  <rect x="55" y="92" width="12" height="16" rx="2" fill="url(#rustGrad)" stroke="#8B4513" stroke-width="2"/>
+  <rect x="133" y="92" width="12" height="16" rx="2" fill="url(#rustGrad)" stroke="#8B4513" stroke-width="2"/>
+  <!-- Rust inner circle -->
+  <circle cx="100" cy="100" r="20" fill="#F5DEB3" stroke="#8B4513" stroke-width="2"/>
+  <!-- Anchor in center -->
+  <path d="M100 88 L100 112 M92 95 L108 95 M94 112 Q100 118 106 112" stroke="#8B4513" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <!-- Fast arrow -->
+  <polygon points="155,55 175,70 160,70 160,85 150,70 165,70" fill="#32CD32" stroke="#228B22" stroke-width="2"/>
+  <!-- Sparkles -->
+  <polygon points="45,35 48,42 55,42 50,47 52,55 45,50 38,55 40,47 35,42 42,42" fill="#FFD700"/>
+  <polygon points="165,130 167,135 172,135 168,138 170,143 165,140 160,143 162,138 158,135 163,135" fill="#FFD700"/>
+</svg>

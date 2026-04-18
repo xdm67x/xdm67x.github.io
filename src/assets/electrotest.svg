@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="electronGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#47848F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2F5F6F;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Electron orbits -->
+  <ellipse cx="100" cy="100" rx="70" ry="25" fill="none" stroke="#47848F" stroke-width="3" transform="rotate(-30 100 100)" opacity="0.6"/>
+  <ellipse cx="100" cy="100" rx="70" ry="25" fill="none" stroke="#47848F" stroke-width="3" transform="rotate(30 100 100)" opacity="0.6"/>
+  <ellipse cx="100" cy="100" rx="70" ry="25" fill="none" stroke="#47848F" stroke-width="3" transform="rotate(90 100 100)" opacity="0.6"/>
+  <!-- Central nucleus -->
+  <circle cx="100" cy="100" r="30" fill="url(#electronGrad)" stroke="#1F3F47" stroke-width="4"/>
+  <!-- Electron dots on orbits -->
+  <circle cx="30" cy="100" r="8" fill="#FFD700" stroke="#B8860B" stroke-width="2"/>
+  <circle cx="170" cy="100" r="8" fill="#FFD700" stroke="#B8860B" stroke-width="2"/>
+  <circle cx="100" cy="30" r="8" fill="#FFD700" stroke="#B8860B" stroke-width="2"/>
+  <!-- Gherkin leaf/sprout -->
+  <ellipse cx="145" cy="55" rx="20" ry="12" fill="#32CD32" stroke="#228B22" stroke-width="2" transform="rotate(-45 145 55)"/>
+  <path d="M145 55 Q160 45 170 55" stroke="#228B22" stroke-width="2" fill="none"/>
+  <ellipse cx="155" cy="45" rx="15" ry="8" fill="#32CD32" stroke="#228B22" stroke-width="2" transform="rotate(-20 155 45)"/>
+  <!-- Test/checklist -->
+  <rect x="35" y="140" width="45" height="50" rx="5" fill="#F5F5DC" stroke="#8B4513" stroke-width="3"/>
+  <line x1="45" y1="155" x2="70" y2="155" stroke="#8B4513" stroke-width="2"/>
+  <line x1="45" y1="165" x2="70" y2="165" stroke="#8B4513" stroke-width="2"/>
+  <line x1="45" y1="175" x2="65" y2="175" stroke="#8B4513" stroke-width="2"/>
+  <!-- Checkmarks on list -->
+  <path d="M38 155 L42 159 L50 151" stroke="#32CD32" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <path d="M38 165 L42 169 L50 161" stroke="#32CD32" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <!-- Screenshot icon -->
+  <rect x="120" y="135" width="40" height="35" rx="5" fill="#87CEEB" stroke="#4682B4" stroke-width="3"/>
+  <circle cx="140" cy="152" r="8" fill="#FFA500" stroke="#FF8C00" stroke-width="2"/>
+  <!-- Lens flare -->
+  <polygon points="170,140 175,150 185,150 177,157 180,167 170,160 160,167 163,157 155,150 165,150" fill="#FFD700"/>
+</svg>
