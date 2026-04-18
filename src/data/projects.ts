@@ -1,3 +1,5 @@
+const BASE_URL = import.meta.env.BASE_URL;
+
 export interface Project {
   id: string;
   title: string;
@@ -17,7 +19,7 @@ export const projects: Project[] = [
     description: 'Validate Cargo feature propagation across a workspace',
     longDescription: 'A Rust CLI tool that catches common mistakes like forgetting to forward a feature flag through intermediate crates. Uses cargo tree as the source of truth to detect feature gaps and verify forbidden features never leak into production builds.',
     techStack: ['Rust', 'Cargo'],
-    image: '/assets/cargo-feature-guard.svg',
+    image: `${BASE_URL}assets/cargo-feature-guard.svg`,
     color: '#CE422B',
     githubUrl: 'https://github.com/xdm67x/cargo-feature-guard',
   },
@@ -27,7 +29,7 @@ export const projects: Project[] = [
     description: 'Rust high performance xml reader and writer',
     longDescription: 'Contributed performance optimizations and bug fixes to quick-xml, a Rust XML reader and writer library known for its high performance and low memory footprint.',
     techStack: ['Rust'],
-    image: '/assets/quick-xml.svg',
+    image: `${BASE_URL}assets/quick-xml.svg`,
     color: '#DEA584',
     githubUrl: 'https://github.com/xdm67x/quick-xml',
   },
@@ -37,7 +39,7 @@ export const projects: Project[] = [
     description: 'CLI automation tool for testing Electron apps using Gherkin and CDP',
     longDescription: 'A CLI automation tool for testing Electron applications using Gherkin syntax and the Chrome DevTools Protocol (CDP). Write end-to-end tests for Electron apps using human-readable .feature files.',
     techStack: ['Rust', 'Tokio', 'CDP'],
-    image: '/assets/electrotest.svg',
+    image: `${BASE_URL}assets/electrotest.svg`,
     color: '#47848F',
     githubUrl: 'https://github.com/xdm67x/electrotest',
   },
