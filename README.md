@@ -22,3 +22,9 @@ Personal portfolio website built with React, TypeScript, and Vite.
 npm install
 npm run dev
 ```
+
+## Deployment
+
+Deployed to GitHub Pages at [xdm67x.github.io/xdm67x](https://xdm67x.github.io/xdm67x)
+
+Automatically deployed on push to `main` branch via GitHub Actions workflow.
