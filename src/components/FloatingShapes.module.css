@@ -30,3 +30,9 @@
     transform: translate(20px, 25px) scale(1.02);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .shape {
+    animation: none;
+  }
+}

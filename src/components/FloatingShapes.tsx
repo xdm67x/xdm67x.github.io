@@ -9,6 +9,7 @@ const SHAPE_CONFIGS = [
   { size: 350, top: '5%', left: '-8%', delay: '0s', duration: '20s' },
   { size: 220, bottom: '10%', right: '-5%', delay: '-5s', duration: '18s' },
   { size: 140, top: '45%', right: '15%', delay: '-10s', duration: '22s' },
+  { size: 100, bottom: '30%', left: '10%', delay: '-15s', duration: '16s' },
 ];
 
 function FloatingShapes({ color, count = 3 }: FloatingShapesProps) {
