@@ -8,15 +8,24 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 3rem;
-  background: linear-gradient(to bottom, var(--color-bg) 0%, rgba(255, 248, 243, 0.95) 100%);
-  backdrop-filter: blur(8px);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.scrolled {
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(245, 245, 245, 0.06);
 }
 
 .logo {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-text);
+  letter-spacing: 1px;
 }
 
 .links {
@@ -25,7 +34,7 @@
 }
 
 .link {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: var(--color-text-muted);
   cursor: pointer;
@@ -34,8 +43,30 @@
   border: none;
   padding: 0;
   font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .link:hover {
-  color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+  color: var(--color-text);
+}
+
+.active {
+  color: var(--color-text);
+}
+
+@media (max-width: 600px) {
+  .nav {
+    padding: 1rem 1.5rem;
+  }
+
+  .links {
+    gap: 1.5rem;
+  }
 }

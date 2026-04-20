@@ -1,22 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap');
 
 :root {
-  --color-bg: #F0F7FF;
-  --color-bg-secondary: #E0EBFF;
+  --color-bg: #0A0A0A;
+  --color-bg-gradient: #0F1115;
+  --color-surface: #111111;
   --color-primary: #2563EB;
   --color-primary-dark: #1D4ED8;
   --color-secondary: #1E3A5F;
-  --color-text: #0F172A;
-  --color-text-muted: #64748B;
+  --color-text: #F5F5F5;
+  --color-text-muted: #888888;
+  --color-text-dim: #555555;
   --color-white: #FFFFFF;
-  --color-border: rgba(15, 23, 42, 0.1);
+  --color-border: rgba(245, 245, 245, 0.08);
+  --color-nav-bg: rgba(10, 10, 10, 0.8);
 
   --font-heading: 'Outfit', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
 
-  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.08);
-  --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.12);
-  --shadow-lg: 0 8px 32px rgba(15, 23, 42, 0.16);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -33,12 +36,13 @@
 html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: var(--color-text-muted) var(--color-bg-secondary);
+  scrollbar-color: #444 #111;
 }
 
 body {
   font-family: var(--font-body);
-  background-color: var(--color-bg);
+  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-gradient) 100%);
+  background-attachment: fixed;
   color: var(--color-text);
   line-height: 1.6;
   overflow-x: hidden;
@@ -53,13 +57,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--color-text);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 a:hover {
-  color: var(--color-primary-dark);
+  color: var(--color-primary);
 }
 
 ::selection {
@@ -72,14 +76,14 @@ a:hover {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-secondary);
+  background: #111;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-text-muted);
+  background: #444;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-secondary);
+  background: #666;
 }

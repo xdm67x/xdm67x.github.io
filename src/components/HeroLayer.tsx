@@ -1,5 +1,6 @@
 import { ParallaxLayer } from '@react-spring/parallax';
 import { heroContent } from '../data/projects';
+import FloatingShapes from './FloatingShapes';
 import styles from './HeroLayer.module.css';
 
 interface HeroLayerProps {
@@ -11,12 +12,7 @@ interface HeroLayerProps {
 function HeroLayer({ offset, speed, onExplore }: HeroLayerProps) {
   return (
     <ParallaxLayer offset={offset} speed={speed} className={styles.layer}>
-      <div className={styles.shapes}>
-        <div className={`${styles.shape} ${styles.shape1}`} />
-        <div className={`${styles.shape} ${styles.shape2}`} />
-        <div className={`${styles.shape} ${styles.shape3}`} />
-        <div className={`${styles.shape} ${styles.shape4}`} />
-      </div>
+      <FloatingShapes color="var(--color-secondary)" count={4} />
       <div className={styles.content}>
         <p className={styles.greeting}>Welcome</p>
         <h1 className={styles.name}>{heroContent.name}</h1>

@@ -1,5 +1,6 @@
 import { ParallaxLayer } from '@react-spring/parallax';
 import { useInView, useSpring, animated } from '@react-spring/web';
+import { useEffect, useState } from 'react';
 import type { Project } from '../data/projects';
 import FloatingShapes from './FloatingShapes';
 import styles from './ProjectLayer.module.css';
@@ -11,25 +12,41 @@ interface ProjectLayerProps {
 }
 
 function ProjectLayer({ project, offset, speed }: ProjectLayerProps) {
-  const [ref, inView] = useInView({ amount: 0.3 });
+  const [ref, inView] = useInView({ amount: 0.3, once: true });
+
+  const [reducedMotion, setReducedMotion] = useState(() =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  }, []);
 
   const imageSpring = useSpring({
     opacity: inView ? 1 : 0,
     y: inView ? 0 : 40,
     scale: inView ? 1 : 0.95,
+    immediate: reducedMotion,
     config: { tension: 120, friction: 20 },
   });
 
   const textSpring = useSpring({
     opacity: inView ? 1 : 0,
     y: inView ? 0 : 30,
-    config: { tension: 120, friction: 20, delay: 100 },
+    delay: 100,
+    immediate: reducedMotion,
+    config: { tension: 120, friction: 20 },
   });
 
   const badgeSpring = useSpring({
     opacity: inView ? 1 : 0,
     scale: inView ? 1 : 0,
-    config: { tension: 180, friction: 12, delay: 200 },
+    delay: 200,
+    immediate: reducedMotion,
+    config: { tension: 180, friction: 12 },
   });
 
   return (
