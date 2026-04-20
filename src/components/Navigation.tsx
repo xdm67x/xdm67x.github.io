@@ -15,6 +15,7 @@ function Navigation({ scrollTo, activePage = 0 }: NavigationProps) {
     const handleScroll = () => {
       setScrolled(window.scrollY > SCROLL_THRESHOLD_PX);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
