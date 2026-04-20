@@ -15,6 +15,8 @@
   max-width: 1200px;
   width: 100%;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .imageSection {
@@ -28,31 +30,8 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
-  transform: translateY(20px);
-  opacity: 0;
-  animation: fadeInUp 0.8s ease forwards;
-  animation-delay: 0.2s;
-}
-
-@keyframes fadeInUp {
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-}
-
-.icon {
-  font-size: 4rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
 }
 
 .projectImage {
@@ -66,8 +45,8 @@
   position: absolute;
   top: -1rem;
   right: -1rem;
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   background: var(--color-primary);
   color: var(--color-white);
   border-radius: 50%;
@@ -76,7 +55,7 @@
   justify-content: center;
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   box-shadow: var(--shadow-md);
 }
 
@@ -84,25 +63,21 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  transform: translateY(20px);
-  opacity: 0;
-  animation: fadeInUp 0.8s ease forwards;
-  animation-delay: 0.4s;
 }
 
 .projectLabel {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   color: var(--color-primary);
 }
 
 .title {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 700;
   color: var(--color-text);
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .description {
@@ -119,8 +94,8 @@
 
 .techBadge {
   padding: 0.5rem 1rem;
-  background: var(--color-bg-secondary);
-  color: var(--color-secondary);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
   font-size: 0.85rem;
   font-weight: 500;
   border-radius: var(--radius-xl);
@@ -137,7 +112,7 @@
 .links {
   display: flex;
   gap: 1rem;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .link {
@@ -152,12 +127,12 @@
 }
 
 .linkPrimary {
-  background: var(--color-primary);
-  color: var(--color-white);
+  background: var(--color-text);
+  color: var(--color-bg);
 }
 
 .linkPrimary:hover {
-  background: var(--color-primary-dark);
+  background: var(--color-text-muted);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
@@ -165,69 +140,12 @@
 .linkSecondary {
   background: transparent;
   color: var(--color-text);
-  border: 2px solid var(--color-border);
+  border: 1px solid var(--color-border);
 }
 
 .linkSecondary:hover {
   border-color: var(--color-primary);
   color: var(--color-primary);
-}
-
-.shapes {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.shape {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.08;
-  animation: shapeFloat 20s ease-in-out infinite;
-}
-
-.shape1 {
-  width: 400px;
-  height: 400px;
-  background: var(--color-primary);
-  top: 10%;
-  left: -150px;
-  animation-delay: 0s;
-}
-
-.shape2 {
-  width: 250px;
-  height: 250px;
-  background: var(--color-secondary);
-  bottom: 15%;
-  right: -80px;
-  animation-delay: -5s;
-}
-
-.shape3 {
-  width: 150px;
-  height: 150px;
-  background: var(--color-primary);
-  top: 40%;
-  right: 20%;
-  opacity: 0.05;
-  animation-delay: -10s;
-}
-
-@keyframes shapeFloat {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  25% {
-    transform: translate(30px, -20px) scale(1.05);
-  }
-  50% {
-    transform: translate(-15px, 15px) scale(0.95);
-  }
-  75% {
-    transform: translate(20px, 25px) scale(1.02);
-  }
 }
 
 @media (max-width: 900px) {
@@ -248,5 +166,23 @@
   .imageWrapper {
     max-width: 400px;
     margin: 0 auto;
+  }
+
+  .projectNumber {
+    right: calc(50% - 180px);
+  }
+}
+
+@media (max-width: 600px) {
+  .layer {
+    padding: 5rem 1.5rem 1.5rem;
+  }
+
+  .container {
+    gap: 1.5rem;
+  }
+
+  .title {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
   }
 }
