@@ -25,7 +25,7 @@
   margin-bottom: 1.5rem;
   transform: translateY(20px);
   opacity: 0;
-  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation: fadeInUp 0.8s ease forwards;
   animation-delay: 0.2s;
 }
 
@@ -37,7 +37,7 @@
   line-height: 1.05;
   transform: translateY(20px);
   opacity: 0;
-  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation: fadeInUp 0.8s ease forwards;
   animation-delay: 0.35s;
 }
 
@@ -48,7 +48,7 @@
   margin-bottom: 2rem;
   transform: translateY(20px);
   opacity: 0;
-  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation: fadeInUp 0.8s ease forwards;
   animation-delay: 0.5s;
 }
 
@@ -61,7 +61,7 @@
   margin-right: auto;
   transform: translateY(20px);
   opacity: 0;
-  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation: fadeInUp 0.8s ease forwards;
   animation-delay: 0.65s;
 }
 
@@ -82,12 +82,12 @@
   box-shadow: var(--shadow-md);
   transform: translateY(20px);
   opacity: 0;
-  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation: fadeInUp 0.8s ease forwards;
   animation-delay: 0.85s;
 }
 
 .cta:hover {
-  background: var(--color-white);
+  background: var(--color-text-muted);
   transform: translateY(-3px);
   box-shadow: var(--shadow-lg);
 }
@@ -113,7 +113,7 @@
   color: var(--color-text-dim);
   font-size: 0.85rem;
   opacity: 0;
-  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards,
+  animation: fadeInUp 0.8s ease forwards,
              bounce 2s ease-in-out infinite;
   animation-delay: 1.1s, 1.2s;
   z-index: 10;
@@ -163,6 +163,19 @@
   50% {
     opacity: 0.3;
     transform: translateX(-50%) translateY(10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .greeting,
+  .name,
+  .title,
+  .tagline,
+  .cta,
+  .scrollIndicator {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
 
