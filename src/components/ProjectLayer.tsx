@@ -1,5 +1,7 @@
 import { ParallaxLayer } from '@react-spring/parallax';
+import { useInView, useSpring, animated } from '@react-spring/web';
 import type { Project } from '../data/projects';
+import FloatingShapes from './FloatingShapes';
 import styles from './ProjectLayer.module.css';
 
 interface ProjectLayerProps {
@@ -9,20 +11,46 @@ interface ProjectLayerProps {
 }
 
 function ProjectLayer({ project, offset, speed }: ProjectLayerProps) {
+  const [ref, inView] = useInView({ amount: 0.3 });
+
+  const imageSpring = useSpring({
+    opacity: inView ? 1 : 0,
+    y: inView ? 0 : 40,
+    scale: inView ? 1 : 0.95,
+    config: { tension: 120, friction: 20 },
+  });
+
+  const textSpring = useSpring({
+    opacity: inView ? 1 : 0,
+    y: inView ? 0 : 30,
+    config: { tension: 120, friction: 20, delay: 100 },
+  });
+
+  const badgeSpring = useSpring({
+    opacity: inView ? 1 : 0,
+    scale: inView ? 1 : 0,
+    config: { tension: 180, friction: 12, delay: 200 },
+  });
+
   return (
     <ParallaxLayer offset={offset} speed={speed} className={styles.layer}>
-      <div className={styles.shapes}>
-        <div className={`${styles.shape} ${styles.shape1}`} />
-        <div className={`${styles.shape} ${styles.shape2}`} />
-      </div>
-      <div className={styles.container}>
-        <div className={styles.imageSection}>
+      <FloatingShapes color={project.color} count={3} />
+      <div ref={ref} className={styles.container}>
+        <animated.div style={imageSpring} className={styles.imageSection}>
           <div className={styles.imageWrapper}>
-            <img src={project.image} alt={project.title} className={styles.projectImage} />
+            <img
+              src={project.image}
+              alt={project.title}
+              className={styles.projectImage}
+              loading="lazy"
+            />
           </div>
-          <div className={styles.projectNumber}>{offset}</div>
-        </div>
-        <div className={styles.infoSection}>
+          <animated.div style={badgeSpring} className={styles.projectNumber}>
+            {offset}
+          </animated.div>
+        </animated.div>
+
+        <animated.div style={textSpring} className={styles.infoSection}>
           <span className={styles.projectLabel}>Featured Project</span>
           <h2 className={styles.title}>{project.title}</h2>
           <p className={styles.description}>{project.longDescription}</p>
@@ -63,7 +91,7 @@ function ProjectLayer({ project, offset, speed }: ProjectLayerProps) {
               </a>
             )}
           </div>
-        </div>
+        </animated.div>
       </div>
     </ParallaxLayer>
   );
