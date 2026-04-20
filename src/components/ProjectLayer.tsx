@@ -1,6 +1,6 @@
 import { ParallaxLayer } from '@react-spring/parallax';
 import { useInView, useSpring, animated } from '@react-spring/web';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import type { Project } from '../data/projects';
 import FloatingShapes from './FloatingShapes';
 import styles from './ProjectLayer.module.css';
@@ -14,9 +14,16 @@ interface ProjectLayerProps {
 function ProjectLayer({ project, offset, speed }: ProjectLayerProps) {
   const [ref, inView] = useInView({ amount: 0.3, once: true });
 
-  const reducedMotion = useMemo(() =>
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-  []);
+  const [reducedMotion, setReducedMotion] = useState(() =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  }, []);
 
   const imageSpring = useSpring({
     opacity: inView ? 1 : 0,
