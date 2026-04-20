@@ -25,6 +25,6 @@ npm run dev
 
 ## Deployment
 
-Deployed to GitHub Pages at [xdm67x.github.io/xdm67x](https://xdm67x.github.io/xdm67x)
+Deployed to GitHub Pages at [xdm67x.github.io](https://xdm67x.github.io)
 
 Automatically deployed on push to `main` branch via GitHub Actions workflow.
