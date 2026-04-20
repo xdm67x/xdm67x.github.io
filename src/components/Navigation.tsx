@@ -1,24 +1,24 @@
-import { useEffect, useState } from 'react';
-import styles from './Navigation.module.css';
+import { useEffect, useState } from 'react'
+import styles from './Navigation.module.css'
 
-const SCROLL_THRESHOLD_PX = 50;
+const SCROLL_THRESHOLD_PX = 50
 
 interface NavigationProps {
-  scrollTo: (page: number) => void;
-  activePage?: number;
+  scrollTo: (page: number) => void
+  activePage?: number
 }
 
 function Navigation({ scrollTo, activePage = 0 }: NavigationProps) {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > SCROLL_THRESHOLD_PX);
-    };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+      setScrolled(window.scrollY > SCROLL_THRESHOLD_PX)
+    }
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
@@ -42,7 +42,7 @@ function Navigation({ scrollTo, activePage = 0 }: NavigationProps) {
         </button>
       </div>
     </nav>
-  );
+  )
 }
 
-export default Navigation;
+export default Navigation

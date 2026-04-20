@@ -113,8 +113,9 @@
   color: var(--color-text-dim);
   font-size: 0.85rem;
   opacity: 0;
-  animation: fadeInUp 0.8s ease forwards,
-             bounce 2s ease-in-out infinite;
+  animation:
+    fadeInUp 0.8s ease forwards,
+    bounce 2s ease-in-out infinite;
   animation-delay: 1.1s, 1.2s;
   z-index: 10;
 }
@@ -127,7 +128,8 @@
 }
 
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(-50%) translateY(0);
   }
   50% {
@@ -156,7 +158,8 @@
 }
 
 @keyframes scroll {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }

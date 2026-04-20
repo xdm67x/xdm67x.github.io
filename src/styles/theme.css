@@ -1,21 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap");
 
 :root {
-  --color-bg: #0A0A0A;
-  --color-bg-gradient: #0F1115;
+  --color-bg: #0a0a0a;
+  --color-bg-gradient: #0f1115;
   --color-surface: #111111;
-  --color-primary: #2563EB;
-  --color-primary-dark: #1D4ED8;
-  --color-secondary: #1E3A5F;
-  --color-text: #F5F5F5;
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-secondary: #1e3a5f;
+  --color-text: #f5f5f5;
   --color-text-muted: #888888;
   --color-text-dim: #555555;
-  --color-white: #FFFFFF;
+  --color-white: #ffffff;
   --color-border: rgba(245, 245, 245, 0.08);
   --color-nav-bg: rgba(10, 10, 10, 0.8);
 
-  --font-heading: 'Outfit', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: "Outfit", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
 
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
@@ -41,7 +41,11 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-gradient) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg) 0%,
+    var(--color-bg-gradient) 100%
+  );
   background-attachment: fixed;
   color: var(--color-text);
   line-height: 1.6;
@@ -50,7 +54,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   font-weight: 600;
   line-height: 1.2;

@@ -1,12 +1,12 @@
-import { ParallaxLayer } from '@react-spring/parallax';
-import { heroContent } from '../data/projects';
-import FloatingShapes from './FloatingShapes';
-import styles from './HeroLayer.module.css';
+import { ParallaxLayer } from '@react-spring/parallax'
+import { heroContent } from '../data/projects'
+import FloatingShapes from './FloatingShapes'
+import styles from './HeroLayer.module.css'
 
 interface HeroLayerProps {
-  offset: number;
-  speed: number;
-  onExplore: () => void;
+  offset: number
+  speed: number
+  onExplore: () => void
 }
 
 function HeroLayer({ offset, speed, onExplore }: HeroLayerProps) {
@@ -30,7 +30,7 @@ function HeroLayer({ offset, speed, onExplore }: HeroLayerProps) {
         <span>Scroll to explore</span>
       </div>
     </ParallaxLayer>
-  );
+  )
 }
 
-export default HeroLayer;
+export default HeroLayer

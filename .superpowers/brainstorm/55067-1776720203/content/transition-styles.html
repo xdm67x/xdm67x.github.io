@@ -1,0 +1,93 @@
+<h2>Transition Styles for Your Portfolio</h2>
+<p class="subtitle">How should each project reveal itself as you scroll? Pick the vibe that fits your style.</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Fade + Slide Up</h3>
+      <p>Content gently fades in while sliding upward. Soft, elegant, and easy on the eyes.</p>
+      <div class="mockup" style="margin-top:1rem">
+        <div class="mockup-header">Preview: Fade + Slide</div>
+        <div class="mockup-body" style="padding:1.5rem">
+          <div style="opacity:0.3; transform:translateY(20px); transition:all 0.6s ease">
+            <div style="height:8px; background:var(--color-primary); width:60%; border-radius:4px; margin-bottom:0.75rem"></div>
+            <div style="height:4px; background:var(--color-border); width:90%; border-radius:2px; margin-bottom:0.5rem"></div>
+            <div style="height:4px; background:var(--color-border); width:75%; border-radius:2px"></div>
+          </div>
+          <div style="text-align:center; margin-top:1rem; font-size:0.75rem; color:var(--color-text-muted)">→ scrolls into view →</div>
+          <div style="margin-top:0.75rem">
+            <div style="height:8px; background:var(--color-primary); width:60%; border-radius:4px; margin-bottom:0.75rem"></div>
+            <div style="height:4px; background:var(--color-border); width:90%; border-radius:2px; margin-bottom:0.5rem"></div>
+            <div style="height:4px; background:var(--color-border); width:75%; border-radius:2px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Scale + Blur Reveal</h3>
+      <p>Projects start slightly smaller and blurred, then snap crisply into sharp focus.</p>
+      <div class="mockup" style="margin-top:1rem">
+        <div class="mockup-header">Preview: Scale + Blur</div>
+        <div class="mockup-body" style="padding:1.5rem">
+          <div style="filter:blur(3px); transform:scale(0.92); opacity:0.5; transition:all 0.6s ease">
+            <div style="height:8px; background:var(--color-primary); width:60%; border-radius:4px; margin-bottom:0.75rem"></div>
+            <div style="height:4px; background:var(--color-border); width:90%; border-radius:2px; margin-bottom:0.5rem"></div>
+            <div style="height:4px; background:var(--color-border); width:75%; border-radius:2px"></div>
+          </div>
+          <div style="text-align:center; margin-top:1rem; font-size:0.75rem; color:var(--color-text-muted)">→ scrolls into view →</div>
+          <div style="margin-top:0.75rem">
+            <div style="height:8px; background:var(--color-primary); width:60%; border-radius:4px; margin-bottom:0.75rem"></div>
+            <div style="height:4px; background:var(--color-border); width:90%; border-radius:2px; margin-bottom:0.5rem"></div>
+            <div style="height:4px; background:var(--color-border); width:75%; border-radius:2px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Layered Depth Shifts</h3>
+      <p>Background shapes drift at different parallax speeds while content crossfades. Dimensional and immersive.</p>
+      <div class="mockup" style="margin-top:1rem">
+        <div class="mockup-header">Preview: Depth Shifts</div>
+        <div class="mockup-body" style="padding:1.5rem; position:relative; overflow:hidden">
+          <div style="position:absolute; top:0.5rem; right:-1rem; width:40px; height:40px; background:var(--color-primary); border-radius:50%; opacity:0.15"></div>
+          <div style="position:absolute; bottom:0.5rem; left:-1rem; width:30px; height:30px; background:var(--color-secondary); border-radius:50%; opacity:0.15"></div>
+          <div style="position:relative; z-index:1">
+            <div style="height:8px; background:var(--color-primary); width:60%; border-radius:4px; margin-bottom:0.75rem"></div>
+            <div style="height:4px; background:var(--color-border); width:90%; border-radius:2px; margin-bottom:0.5rem"></div>
+            <div style="height:4px; background:var(--color-border); width:75%; border-radius:2px"></div>
+          </div>
+          <div style="text-align:center; margin-top:1rem; font-size:0.75rem; color:var(--color-text-muted); position:relative; z-index:1">shapes move at different speeds</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="d" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Horizontal Wipe / Overlay</h3>
+      <p>A clean divider sweeps across the screen as you move from one project to the next. Bold and editorial.</p>
+      <div class="mockup" style="margin-top:1rem">
+        <div class="mockup-header">Preview: Wipe Transition</div>
+        <div class="mockup-body" style="padding:1.5rem; position:relative">
+          <div style="position:absolute; top:0; left:0; bottom:0; width:40%; background:rgba(37,99,235,0.08); z-index:2"></div>
+          <div style="position:relative; z-index:1">
+            <div style="height:8px; background:var(--color-primary); width:60%; border-radius:4px; margin-bottom:0.75rem; opacity:0.4"></div>
+            <div style="height:4px; background:var(--color-border); width:90%; border-radius:2px; margin-bottom:0.5rem; opacity:0.4"></div>
+            <div style="height:4px; background:var(--color-border); width:75%; border-radius:2px; opacity:0.4"></div>
+          </div>
+          <div style="text-align:center; margin-top:1rem; font-size:0.75rem; color:var(--color-text-muted)">divider overlay sweeps across</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

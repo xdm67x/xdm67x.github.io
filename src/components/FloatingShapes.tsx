@@ -1,8 +1,8 @@
-import styles from './FloatingShapes.module.css';
+import styles from './FloatingShapes.module.css'
 
 interface FloatingShapesProps {
-  color: string;
-  count?: number;
+  color: string
+  count?: number
 }
 
 const SHAPE_CONFIGS = [
@@ -10,10 +10,10 @@ const SHAPE_CONFIGS = [
   { size: 220, bottom: '10%', right: '-5%', delay: '-5s', duration: '18s' },
   { size: 140, top: '45%', right: '15%', delay: '-10s', duration: '22s' },
   { size: 100, bottom: '30%', left: '10%', delay: '-15s', duration: '16s' },
-];
+]
 
 function FloatingShapes({ color, count = 3 }: FloatingShapesProps) {
-  const shapes = SHAPE_CONFIGS.slice(0, count);
+  const shapes = SHAPE_CONFIGS.slice(0, count)
 
   return (
     <div className={styles.shapes} aria-hidden="true">
@@ -35,7 +35,7 @@ function FloatingShapes({ color, count = 3 }: FloatingShapesProps) {
         />
       ))}
     </div>
-  );
+  )
 }
 
-export default FloatingShapes;
+export default FloatingShapes
