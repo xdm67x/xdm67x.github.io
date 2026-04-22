@@ -14,6 +14,18 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'simple-agent',
+    title: 'simple-agent',
+    description:
+      'An interactive AI coding agent that runs locally on your computer',
+    longDescription:
+      'Simple Agent is an interactive general-purpose AI agent powered by Ollama that runs locally on your computer. Capable of executing software engineering tasks by taking direct action on your filesystem using Bash and AskUser tools. Follows an Observe -> Act -> Review cycle for reliable code changes.',
+    techStack: ['Go', 'Ollama', 'Coding Agent'],
+    image: `${BASE_URL}assets/simple-agent.svg`,
+    color: '#22d3ee',
+    githubUrl: 'https://github.com/xdm67x/simple-agent',
+  },
+  {
     id: 'cargo-feature-guard',
     title: 'cargo-feature-guard',
     description: 'Validate Cargo feature propagation across a workspace',
