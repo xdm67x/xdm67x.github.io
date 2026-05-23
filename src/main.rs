@@ -8,12 +8,14 @@ use std::sync::LazyLock;
 
 #[derive(Clone, PartialEq, Eq, Deserialize)]
 pub struct Project {
-    id: String,
-    title: String,
-    description: String,
-    tags: Vec<String>,
-    color: String,
-    github_url: String,
+    pub id: String,
+    pub title: String,
+    pub description: String,
+    pub tags: Vec<String>,
+    pub color: String,
+    pub github_url: String,
+    #[serde(default)]
+    pub play_url: Option<String>,
 }
 
 static PROJECTS: LazyLock<Vec<Project>> = LazyLock::new(|| {
