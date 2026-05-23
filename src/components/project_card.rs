@@ -1,6 +1,6 @@
 use crate::Project;
 use leptos::prelude::*;
-use stylance::{classes, import_crate_style};
+use stylance::import_crate_style;
 
 import_crate_style!(style, "src/components/project_card.module.css");
 
@@ -18,13 +18,14 @@ pub fn ProjectCard(#[prop(into)] project: Project, index: usize) -> impl IntoVie
 
     view! {
         <article
-            class=classes!(style::card, style::revealed)
+            class=format!("{} {} js-tilt", style::card, style::revealed)
             style=format!(
                 "--project-color: {}; --reveal-delay: {}",
                 color,
                 delay,
             )
         >
+            <div class="shine" />
             <div class=style::top>
                 <span class=style::index>{format!("/{:02}", index + 1)}</span>
                 <span class=style::dot />

@@ -6,12 +6,10 @@
     padding: 1.25rem 1.5rem;
     display: flex;
     flex-direction: column;
-    transition:
-        border-color var(--transition-smooth),
-        transform var(--transition-smooth),
-        box-shadow var(--transition-smooth);
+    position: relative;
     opacity: 0;
     transform: translateY(30px);
+    cursor: none;
 }
 
 .card.revealed {
@@ -27,14 +25,9 @@
 
 .card:hover {
     border-color: var(--project-color);
-    transform: translateY(-4px);
     box-shadow:
         0 0 20px color-mix(in srgb, var(--project-color) 12%, transparent),
         0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.card.revealed:hover {
-    transform: translateY(-4px);
 }
 
 .top {

@@ -47,6 +47,10 @@
     );
 }
 
+.featured_section {
+    margin-bottom: 1rem;
+}
+
 .grid {
     display: grid;
     grid-template-columns: 1fr;

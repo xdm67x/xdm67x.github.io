@@ -1,5 +1,14 @@
 [
   {
+    "id": "2048",
+    "title": "TwoZeroFourEight",
+    "description": "Classic 2048 puzzle game. Slide tiles, merge numbers, chase the ultimate score. Fully playable in the browser.",
+    "tags": ["Game", "Rust", "Bevy", "WASM"],
+    "color": "#edcf72",
+    "github_url": "https://github.com/xdm67x/TwoZeroFourEight",
+    "play_url": "https://xdm67x.github.io/TwoZeroFourEight/"
+  },
+  {
     "id": "rtk",
     "title": "RTK (Rust Token Killer)",
     "description": "CLI proxy that reduces LLM token consumption by 60-90%",

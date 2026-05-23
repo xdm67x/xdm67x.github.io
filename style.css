@@ -50,6 +50,13 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    cursor: none;
+}
+
+@media (pointer: coarse) {
+    body {
+        cursor: auto;
+    }
 }
 
 h1,
@@ -64,6 +71,7 @@ a {
     color: var(--color-text-primary);
     text-decoration: none;
     transition: color var(--transition-fast);
+    cursor: none;
 }
 
 a:hover {
@@ -90,4 +98,78 @@ a:hover {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-text-secondary);
+}
+
+/* ── Three.js canvas ────────────────────────────── */
+
+#three-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ── Custom cursor ──────────────────────────────── */
+
+#cursor,
+#cursor-trail {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    will-change: left, top;
+}
+
+#cursor {
+    width: 8px;
+    height: 8px;
+    background: var(--color-accent);
+    transition: transform 0.1s ease, background 0.3s ease;
+}
+
+#cursor-trail {
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(255, 0, 77, 0.35);
+    background: transparent;
+    transition: width 0.35s ease, height 0.35s ease, border-color 0.35s ease;
+}
+
+#cursor.active {
+    background: var(--color-cyan);
+    transform: translate(-50%, -50%) scale(1.6);
+}
+
+#cursor-trail.active {
+    width: 50px;
+    height: 50px;
+    border-color: rgba(0, 240, 255, 0.35);
+}
+
+@media (pointer: coarse) {
+    #cursor,
+    #cursor-trail {
+        display: none;
+    }
+}
+
+/* ── Global tilt shine overlay ──────────────────── */
+
+.shine {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    transition: background 0.08s;
+}
+
+/* Keep card content above the shine layer */
+[data-tilt] > *:not(.shine) {
+    position: relative;
+    z-index: 1;
 }
