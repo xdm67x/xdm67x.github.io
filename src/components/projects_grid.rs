@@ -6,6 +6,8 @@ use stylance::import_crate_style;
 
 import_crate_style!(style, "src/components/projects_grid.module.css");
 
+const TICKER: &str = "PRESS START ★ NOW LOADING: QUEST LOG ★ SIDE QUESTS ACCEPTED ★ RUST MAIN ★ CO-OP FRIENDLY ★ NO MICROTRANSACTIONS ★ ";
+
 #[component]
 pub fn ProjectsGrid(projects: Vec<Project>) -> impl IntoView {
     let (featured, regular): (Vec<_>, Vec<_>) = projects
@@ -15,6 +17,12 @@ pub fn ProjectsGrid(projects: Vec<Project>) -> impl IntoView {
 
     view! {
         <section class=style::section id="projects">
+            <div class=style::ticker aria-hidden="true">
+                <div class=style::ticker_track>
+                    <span>{TICKER}</span>
+                    <span>{TICKER}</span>
+                </div>
+            </div>
             <div class=style::container>
                 <div class=style::header>
                     <span class=style::headerLabel>"// QUEST LOG"</span>

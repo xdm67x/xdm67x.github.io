@@ -1,12 +1,54 @@
 .section {
     min-height: 100vh;
     background-color: var(--color-bg-primary);
-    padding: 3rem 2rem;
+    padding: 0 2rem 3rem;
     position: relative;
     z-index: 2;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+/* ── Attract-mode ticker ────────────────────────── */
+
+.ticker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    background: var(--color-ink);
+    border-bottom: var(--border-chunky);
+    padding: 0.55rem 0;
+}
+
+.ticker_track {
+    display: flex;
+    width: max-content;
+    animation: ticker-scroll 26s linear infinite;
+}
+
+.ticker_track span {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: var(--color-gold);
+    white-space: pre;
+    padding-right: 2rem;
+}
+
+.ticker:hover .ticker_track {
+    animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
 }
 
 .container {
@@ -21,7 +63,8 @@
 
 .headerLabel {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
+    font-weight: 600;
     color: var(--color-accent);
     letter-spacing: 0.15em;
     display: block;
@@ -30,31 +73,31 @@
 
 .title {
     font-family: var(--font-mono);
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
-    color: var(--color-text-accent);
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    color: var(--color-ink);
     margin-bottom: 0.75rem;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
+    text-shadow: 3px 3px 0 var(--color-gold-soft);
 }
 
 .line {
-    height: 1px;
-    background: linear-gradient(
+    height: 3px;
+    background: repeating-linear-gradient(
         90deg,
-        var(--color-accent) 0%,
-        var(--color-accent) 40px,
-        rgba(255, 255, 255, 0.06) 40px,
-        rgba(255, 255, 255, 0.06) 100%
+        var(--color-ink) 0 14px,
+        transparent 14px 22px
     );
+    border-radius: 2px;
 }
 
 .featured_section {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.25rem;
 }
 
 @media (min-width: 768px) {
@@ -65,6 +108,12 @@
 
 @media (max-width: 767px) {
     .section {
-        padding: 2rem 1rem;
+        padding: 3.5rem 1rem 2rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ticker_track {
+        animation: none;
     }
 }

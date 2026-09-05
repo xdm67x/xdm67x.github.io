@@ -7,12 +7,10 @@
     <link data-trunk rel="css" href="./styles/bundle.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mehmet Ozkan — Software Engineer</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   </head>
   <body>
     <div id="cursor"></div>
     <div id="cursor-trail"></div>
-    <canvas id="three-bg"></canvas>
 
     <script>
       // ── Custom cursor ──────────────────────────────────────
@@ -47,99 +45,6 @@
             cur.classList.remove("active");
             trail.classList.remove("active");
           }
-        });
-      })();
-
-      // ── Three.js neural-network background ────────────────
-      (function () {
-        var canvas = document.getElementById("three-bg");
-        var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 500);
-        camera.position.z = 80;
-
-        var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false });
-        renderer.setSize(innerWidth, innerHeight);
-        renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
-
-        var N = 90;
-        var pos = new Float32Array(N * 3);
-        var cols = new Float32Array(N * 3);
-        var nodes = [];
-
-        for (var i = 0; i < N; i++) {
-          var n = {
-            x: (Math.random() - 0.5) * 180,
-            y: (Math.random() - 0.5) * 160,
-            z: (Math.random() - 0.5) * 30,
-            vx: (Math.random() - 0.5) * 0.035,
-            vy: (Math.random() - 0.5) * 0.035,
-          };
-          nodes.push(n);
-          pos[i * 3] = n.x; pos[i * 3 + 1] = n.y; pos[i * 3 + 2] = n.z;
-          // ~20% red-accent nodes, rest cyan
-          if (Math.random() > 0.8) {
-            cols[i*3]=1; cols[i*3+1]=0; cols[i*3+2]=0.19;
-          } else {
-            cols[i*3]=0; cols[i*3+1]=0.94; cols[i*3+2]=1;
-          }
-        }
-
-        var ptGeo = new THREE.BufferGeometry();
-        ptGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-        ptGeo.setAttribute("color", new THREE.BufferAttribute(cols, 3));
-        var ptMat = new THREE.PointsMaterial({ size: 0.75, transparent: true, opacity: 0.5, vertexColors: true });
-        scene.add(new THREE.Points(ptGeo, ptMat));
-
-        var lineMat = new THREE.LineBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.07 });
-        var linesMesh = null;
-
-        function buildLines() {
-          var arr = [];
-          for (var i = 0; i < N; i++) {
-            for (var j = i + 1; j < N; j++) {
-              var dx = nodes[i].x - nodes[j].x;
-              var dy = nodes[i].y - nodes[j].y;
-              if (dx * dx + dy * dy < 900) {
-                arr.push(nodes[i].x, nodes[i].y, nodes[i].z, nodes[j].x, nodes[j].y, nodes[j].z);
-              }
-            }
-          }
-          if (linesMesh) scene.remove(linesMesh);
-          var g = new THREE.BufferGeometry();
-          g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(arr), 3));
-          linesMesh = new THREE.LineSegments(g, lineMat);
-          scene.add(linesMesh);
-        }
-
-        var mx = 0, my = 0;
-        document.addEventListener("mousemove", function (e) {
-          mx = (e.clientX / innerWidth - 0.5) * 18;
-          my = -(e.clientY / innerHeight - 0.5) * 18;
-        });
-
-        var tick = 0;
-        (function animate() {
-          requestAnimationFrame(animate);
-          tick++;
-          for (var i = 0; i < N; i++) {
-            nodes[i].x += nodes[i].vx;
-            nodes[i].y += nodes[i].vy;
-            if (Math.abs(nodes[i].x) > 90) nodes[i].vx *= -1;
-            if (Math.abs(nodes[i].y) > 80) nodes[i].vy *= -1;
-            pos[i * 3] = nodes[i].x;
-            pos[i * 3 + 1] = nodes[i].y;
-          }
-          ptGeo.attributes.position.needsUpdate = true;
-          if (tick % 4 === 0) buildLines();
-          camera.position.x += (mx - camera.position.x) * 0.012;
-          camera.position.y += (my - camera.position.y) * 0.012;
-          renderer.render(scene, camera);
-        })();
-
-        window.addEventListener("resize", function () {
-          camera.aspect = innerWidth / innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(innerWidth, innerHeight);
         });
       })();
 

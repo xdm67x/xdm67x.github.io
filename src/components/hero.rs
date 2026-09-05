@@ -17,17 +17,12 @@ pub fn Hero() -> impl IntoView {
     let scale = move || 1.0 - progress.get() * 0.15;
     let translate_y = move || -progress.get() * 60.0;
     let decor_opacity = move || (1.0 - progress.get() * 2.5).max(0.0);
-    let scroll_indicator_opacity = move || (1.0 - progress.get() * 5.0).max(0.0);
 
     view! {
         <section class=style::hero>
             <div
                 class=style::hero_grid
                 style=move || format!("opacity: {:.3}", decor_opacity() * 0.5)
-            />
-            <div
-                class=style::hero_noise
-                style=move || format!("opacity: {:.3}", decor_opacity() * 0.03)
             />
 
             <div
@@ -61,16 +56,12 @@ pub fn Hero() -> impl IntoView {
                 </p>
 
                 <p class=style::hero_bio>{HERO_BIO}</p>
-            </div>
 
-            <div
-                class=style::hero_scroll_indicator
-                style=move || format!("opacity: {:.3}", scroll_indicator_opacity())
-            >
-                <span class=style::hero_scroll_text>"scroll"</span>
-                <div class=style::hero_scroll_line>
-                    <div class=style::hero_scroll_dot />
-                </div>
+                <a class=style::hero_next href="#projects">
+                    <span class=style::hero_next_ok>"✓ PORTFOLIO LOADED"</span>
+                    <span class=style::hero_next_hint>"SCROLL FOR QUESTS"</span>
+                    <span class=style::hero_next_arrow>"▼"</span>
+                </a>
             </div>
         </section>
     }

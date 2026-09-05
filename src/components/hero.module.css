@@ -14,9 +14,9 @@
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-    background-size: 60px 60px;
+        linear-gradient(rgba(46, 42, 38, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46, 42, 38, 0.05) 1px, transparent 1px);
+    background-size: 52px 52px;
     mask-image: radial-gradient(
         ellipse 70% 60% at 50% 50%,
         black 30%,
@@ -29,14 +29,7 @@
     );
 }
 
-.hero-noise {
-    position: absolute;
-    inset: 0;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-size: 200px 200px;
-    pointer-events: none;
-}
+/* ── Floating game tokens ───────────────────────── */
 
 .hero-shapes {
     position: absolute;
@@ -47,37 +40,44 @@
 
 .hero-shape {
     position: absolute;
-    opacity: 0.15;
 }
 
 .hero-rect {
-    top: 15%;
+    top: 16%;
     right: 12%;
-    width: 120px;
-    height: 120px;
-    border: 1.5px solid var(--color-cyan);
-    transform: rotate(15deg);
-    animation: hero-float-slow 12s ease-in-out infinite;
+    width: 56px;
+    height: 56px;
+    background: var(--color-gold);
+    border: var(--border-chunky);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    transform: rotate(12deg);
+    animation: hero-float 6s ease-in-out infinite;
 }
 
 .hero-circle {
-    bottom: 25%;
+    bottom: 24%;
     left: 8%;
-    width: 80px;
-    height: 80px;
-    border: 1.5px solid var(--color-accent);
+    width: 48px;
+    height: 48px;
+    background: var(--color-mint-soft);
+    border: var(--border-chunky);
     border-radius: 50%;
-    animation: hero-float-slow 10s ease-in-out infinite 2s;
+    box-shadow: var(--shadow-sm);
+    animation: hero-float 7s ease-in-out infinite 1.5s;
 }
 
 .hero-diamond {
     top: 55%;
     right: 20%;
-    width: 60px;
-    height: 60px;
-    border: 1.5px solid var(--color-text-muted);
+    width: 40px;
+    height: 40px;
+    background: var(--color-accent-soft);
+    border: var(--border-chunky);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
     transform: rotate(45deg);
-    animation: hero-float-slow 14s ease-in-out infinite 4s;
+    animation: hero-float 8s ease-in-out infinite 3s;
 }
 
 .hero-content {
@@ -89,56 +89,57 @@
     will-change: opacity, transform;
 }
 
+/* staggered entrance */
+.hero-content > * {
+    animation: hero-rise 0.7s var(--ease-out-expo) both;
+}
+.hero-content > *:nth-child(1) { animation-delay: 0.05s; }
+.hero-content > *:nth-child(2) { animation-delay: 0.15s; }
+.hero-content > *:nth-child(3) { animation-delay: 0.25s; }
+.hero-content > *:nth-child(4) { animation-delay: 0.35s; }
+.hero-content > *:nth-child(5) { animation-delay: 0.45s; }
+
 .hero-label {
     display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: var(--color-cyan);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-ink);
     letter-spacing: 0.15em;
-    padding: 0.3rem 0.8rem;
-    border: 1px solid rgba(0, 240, 255, 0.3);
+    padding: 0.35rem 0.9rem;
+    background: var(--color-mint-soft);
+    border: var(--border-chunky);
     border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
     margin-bottom: var(--spacing-md);
 }
 
 .hero-name {
     font-family: var(--font-mono);
-    font-size: clamp(3rem, 12vw, 9rem);
+    font-size: clamp(2.8rem, 11vw, 8rem);
     font-weight: 700;
-    color: var(--color-text-accent);
-    letter-spacing: -0.03em;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
     line-height: 0.95;
     margin-bottom: var(--spacing-md);
-    position: relative;
+    text-shadow: 5px 5px 0 var(--color-gold);
+    transition: text-shadow var(--transition-smooth);
 }
 
+.hero-name:hover {
+    text-shadow: 5px 5px 0 var(--color-accent-soft);
+}
+
+/* pseudo elements kept for parity with data-text, but clean: no glitch */
 .hero-name::before,
 .hero-name::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.hero-name::before {
-    color: var(--color-cyan);
-    animation: hero-glitch-1 4s infinite 2s;
-}
-
-.hero-name::after {
-    color: var(--color-accent);
-    animation: hero-glitch-2 4s infinite 2s;
+    content: none;
 }
 
 .hero-subtitle {
     font-family: var(--font-mono);
-    font-size: clamp(0.75rem, 1.2vw, 0.95rem);
-    font-weight: 500;
+    font-size: clamp(0.8rem, 1.2vw, 1rem);
+    font-weight: 600;
     color: var(--color-text-secondary);
     letter-spacing: 0.12em;
     margin-bottom: var(--spacing-md);
@@ -154,124 +155,88 @@
 
 .hero-bio {
     font-family: var(--font-sans);
-    font-size: clamp(0.95rem, 1vw, 1.1rem);
+    font-size: clamp(1rem, 1.1vw, 1.15rem);
+    font-weight: 600;
     color: var(--color-text-secondary);
     line-height: 1.7;
-    max-width: 500px;
+    max-width: 520px;
     margin: 0 auto;
 }
 
-.hero-scroll-indicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
+/* ── Loaded badge / scroll CTA ──────────────────── */
+
+.hero-next {
+    margin: 2.25rem auto 0;
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    will-change: opacity;
-}
-
-.hero-scroll-text {
+    gap: 0.75rem;
+    padding: 0.7rem 1.4rem;
+    background: var(--color-mint-soft);
+    border: var(--border-chunky);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
     font-family: var(--font-mono);
+    text-decoration: none;
+    transition:
+        transform var(--transition-bounce),
+        box-shadow var(--transition-bounce);
+}
+
+.hero-next:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-md);
+}
+
+.hero-next-ok {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--color-ink);
+}
+
+.hero-next-hint {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--color-text-secondary);
+    border-left: 1.5px solid rgba(46, 42, 38, 0.25);
+    padding-left: 0.75rem;
+}
+
+.hero-next-arrow {
     font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
+    color: var(--color-accent);
+    animation: hero-bob 1.6s ease-in-out infinite;
 }
 
-.hero-scroll-line {
-    width: 1px;
-    height: 40px;
-    background: var(--color-text-muted);
-    position: relative;
-    overflow: hidden;
+@keyframes hero-rise {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.hero-scroll-dot {
-    width: 1px;
-    height: 10px;
-    background: var(--color-text-accent);
-    animation: hero-scroll-dot-anim 2s ease-in-out infinite;
-}
-
-@keyframes hero-float-slow {
+@keyframes hero-float {
     0%,
     100% {
-        transform: translateY(0) rotate(15deg);
+        translate: 0 0;
     }
     50% {
-        transform: translateY(-20px) rotate(15deg);
+        translate: 0 -18px;
     }
 }
 
-@keyframes hero-scroll-dot-anim {
-    0% {
-        transform: translateY(-10px);
-    }
-    100% {
-        transform: translateY(40px);
-    }
-}
-
-@keyframes hero-glitch-1 {
+@keyframes hero-bob {
     0%,
-    88%,
     100% {
-        opacity: 0;
-        clip-path: inset(0);
-        transform: translate(0);
+        transform: translateY(0);
     }
-    90% {
-        opacity: 0.8;
-        clip-path: inset(20% 0 60% 0);
-        transform: translate(-3px, 1px);
-    }
-    92% {
-        opacity: 0;
-        clip-path: inset(0);
-        transform: translate(0);
-    }
-    94% {
-        opacity: 0.6;
-        clip-path: inset(50% 0 20% 0);
-        transform: translate(2px, -1px);
-    }
-    96% {
-        opacity: 0;
-        clip-path: inset(0);
-        transform: translate(0);
-    }
-}
-
-@keyframes hero-glitch-2 {
-    0%,
-    91%,
-    100% {
-        opacity: 0;
-        clip-path: inset(0);
-        transform: translate(0);
-    }
-    93% {
-        opacity: 0.8;
-        clip-path: inset(60% 0 10% 0);
-        transform: translate(3px, 2px);
-    }
-    95% {
-        opacity: 0;
-        clip-path: inset(0);
-        transform: translate(0);
-    }
-    97% {
-        opacity: 0.6;
-        clip-path: inset(30% 0 50% 0);
-        transform: translate(-2px, 1px);
-    }
-    99% {
-        opacity: 0;
-        clip-path: inset(0);
-        transform: translate(0);
+    50% {
+        transform: translateY(8px);
     }
 }
 
@@ -281,50 +246,42 @@
     }
 
     .hero-label {
-        font-size: 0.6rem;
+        font-size: 0.65rem;
     }
 
     .hero-rect {
-        width: 80px;
-        height: 80px;
-        top: 10%;
-        right: 5%;
+        width: 40px;
+        height: 40px;
+        top: 12%;
+        right: 6%;
     }
 
     .hero-circle {
-        width: 50px;
-        height: 50px;
-        bottom: 20%;
+        width: 34px;
+        height: 34px;
+        bottom: 18%;
         left: 5%;
     }
 
     .hero-diamond {
-        width: 40px;
-        height: 40px;
-        right: 10%;
+        width: 28px;
+        height: 28px;
+        right: 8%;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .hero-shape,
-    .hero-scroll-dot,
-    .hero-name::before,
-    .hero-name::after {
+    .hero-next-arrow,
+    .hero-content > * {
         animation: none;
     }
 
-    .hero-name::before,
-    .hero-name::after {
-        display: none;
+    .hero-content > * {
+        opacity: 1;
     }
 
     .hero-grid {
         opacity: 0.5;
-    }
-
-    .hero-scroll-dot {
-        position: static;
-        height: 10px;
-        background: var(--color-text-accent);
     }
 }
