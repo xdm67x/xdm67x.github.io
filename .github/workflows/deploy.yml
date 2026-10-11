@@ -21,26 +21,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
 
-      - name: Add WASM target
-        run: rustup target add wasm32-unknown-unknown
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
 
-      - name: Cache Cargo
-        uses: Swatinem/rust-cache@v2
-
-      - name: Install Trunk
-        uses: jetli/trunk-action@v0.5.0
-
-      - name: Install Stylance CLI
-        run: cargo install stylance-cli
-
-      - name: Generate CSS bundle
-        run: stylance . --output-file styles/bundle.css
-
-      - name: Build with Trunk
-        run: trunk build --release --public-url "/"
+      - name: Build
+        run: bun run build
 
       - name: Copy index.html to 404.html
         run: cp dist/index.html dist/404.html

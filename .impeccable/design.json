@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-11T22:10:00Z",
+  "title": "Design System: XDM67X — The Lantern-Lit Quest",
+  "extensions": {
+    "colorMeta": {
+      "lantern-gold": {
+        "role": "primary",
+        "displayName": "Lantern Gold",
+        "canonical": "#f2c14e",
+        "tonalRamp": ["#3a2c0d", "#6b4e14", "#a0741f", "#c9973a", "#f2c14e", "#f6cf75", "#fad9a4", "#fde9cd"]
+      },
+      "lantern-brass": {
+        "role": "primary",
+        "displayName": "Lantern Brass",
+        "canonical": "#b98e35",
+        "tonalRamp": ["#2e230a", "#584312", "#83631e", "#b98e35", "#cfa15a", "#ddb680", "#eccba8", "#f5e0cc"]
+      },
+      "crystal-cyan": {
+        "role": "secondary",
+        "displayName": "Crystal Cyan",
+        "canonical": "#7de3e3",
+        "tonalRamp": ["#062f2e", "#0b4a48", "#106563", "#17837f", "#2aa3a0", "#4fc4c0", "#7de3e3", "#aeeeed"]
+      },
+      "cave-violet": {
+        "role": "tertiary",
+        "displayName": "Cave Violet",
+        "canonical": "#d966ff",
+        "tonalRamp": ["#2b0a38", "#4d1268", "#701f97", "#9a33c2", "#d966ff", "#e18cff", "#eaadff", "#f5d8ff"]
+      },
+      "aurora-green": {
+        "role": "tertiary",
+        "displayName": "Aurora Green",
+        "canonical": "#7ef29d",
+        "tonalRamp": ["#07230f", "#0d4020", "#145e30", "#1c7c41", "#3aa865", "#57cc83", "#7ef29d", "#b7f9cb"]
+      },
+      "dawn-rose": {
+        "role": "tertiary",
+        "displayName": "Dawn Rose",
+        "canonical": "#ff9d5c",
+        "tonalRamp": ["#3a1a08", "#66300f", "#914818", "#bd612f", "#ff9d5c", "#ffb488", "#ffccb4", "#ffe5d8"]
+      },
+      "night-ground": {
+        "role": "neutral",
+        "displayName": "Night Ground",
+        "canonical": "#05060f",
+        "tonalRamp": ["#010103", "#05060f", "#0a0b1c", "#121532", "#1a1e45", "#232a5e", "#2e3778", "#3a4494"]
+      },
+      "starlight-ink": {
+        "role": "neutral",
+        "displayName": "Starlight Ink",
+        "canonical": "#d6dbf0",
+        "tonalRamp": ["#141726", "#2b3149", "#454d6b", "#5f6890", "#7a84b2", "#9aa3c4", "#bcc4dd", "#d6dbf0"]
+      },
+      "dusk-ink": {
+        "role": "neutral",
+        "displayName": "Dusk Ink",
+        "canonical": "#9aa3c4",
+        "tonalRamp": ["#0e101c", "#1c2035", "#2b3149", "#3a4160", "#4a5479", "#5f6890", "#7a84b2", "#9aa3c4"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Arcade Logotype", "purpose": "Title-screen logotype only; pixel arcade authority." },
+      "headline": { "displayName": "Level Banner", "purpose": "Section banners in pixel gold." },
+      "label": { "displayName": "Pixel Chrome", "purpose": "Chips, dates, rewards, HUD readouts, footer. Never sentences." },
+      "body": { "displayName": "Traveler's Sans", "purpose": "All reading copy inside dialogue panels." }
+    },
+    "shadows": [
+      { "name": "pixel-press", "value": "0 0.06em 0 rgba(3,4,10,0.85)", "purpose": "The only sanctioned shadow: arcade press depth under pixel type." }
+    ],
+    "motion": [
+      { "name": "ease-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Default easing for entrances and state transitions." },
+      { "name": "reveal", "value": "opacity/transform/filter 0.8s ease-expo, stagger 90ms", "purpose": "Rise + blur clear on scroll-into-view." },
+      { "name": "banner-wipe", "value": "clip-path inset 0.9s ease-expo", "purpose": "Section banner reveal wipe." },
+      { "name": "blink", "value": "1.2s steps(1) infinite", "purpose": "Arcade blink for carets and INSERT COIN." },
+      { "name": "hud-fill", "value": "transform 0.2s linear", "purpose": "HP bar scaleX tracking scroll." }
+    ],
+    "breakpoints": [
+      { "name": "lg", "value": "min-width 900px", "purpose": "Full HUD with level names; two-column stats." },
+      { "name": "md", "value": "max-width 900px", "purpose": "Single-column stats, tighter trail, h1 44px." },
+      { "name": "sm", "value": "max-width 640px", "purpose": "h1 32px." },
+      { "name": "xs", "value": "max-width 560px", "purpose": "HUD contracts (HP 64px, nameplate crest only), h1 24px, h2 16px, menu destinations hidden." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Start Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The PRESS START control: pixel font, gold on night, fills gold on hover.",
+      "html": "<button class=\"ds-btn-start\">PRESS START</button>",
+      "css": ".ds-btn-start { font-family: 'Press Start 2P', monospace; font-size: 14px; color: #f2c14e; background: rgba(7,8,26,0.82); border: 2px solid #f2c14e; padding: 18px 30px; cursor: pointer; transition: background-color .25s, color .25s, transform .25s cubic-bezier(.16,1,.3,1); } .ds-btn-start:hover, .ds-btn-start:focus-visible { background: #f2c14e; color: #05060f; } .ds-btn-start:active { transform: translateY(2px); } .ds-btn-start:focus-visible { outline: 2px solid #f2c14e; outline-offset: 3px; }"
+    },
+    {
+      "name": "Quest Type Chip",
+      "kind": "chip",
+      "refersTo": "chip-quest-type",
+      "description": "MAIN QUEST labeling; cyan and green siblings mark side quests and tutorials.",
+      "html": "<span class=\"ds-quest-chip\">MAIN QUEST</span>",
+      "css": ".ds-quest-chip { font-family: 'Press Start 2P', monospace; font-size: 12px; letter-spacing: 0.08em; color: #f2c14e; border: 1px solid rgba(242,193,78,0.32); background: rgba(242,193,78,0.08); padding: 6px 8px; display: inline-block; }"
+    },
+    {
+      "name": "Dialogue Panel",
+      "kind": "card",
+      "refersTo": "panel-dialogue",
+      "description": "The RPG reading surface: near-opaque indigo, gold hairline, pixel corner ticks.",
+      "html": "<article class=\"ds-dialogue-panel\"><h3>Software Engineer · Doctolib</h3><p>Architected core billing features for Doctolib Médecin.</p></article>",
+      "css": ".ds-dialogue-panel { position: relative; background: rgba(9,11,24,0.88); border: 1px solid rgba(242,193,78,0.32); padding: 28px 30px 24px; font-family: 'Chakra Petch', system-ui, sans-serif; color: #d6dbf0; max-width: 60ch; } .ds-dialogue-panel h3 { font-size: 22px; font-weight: 600; margin-bottom: 14px; color: #d6dbf0; } .ds-dialogue-panel p { font-size: 16.5px; line-height: 1.65; } .ds-dialogue-panel::before { content: ''; position: absolute; inset: 4px; pointer-events: none; opacity: .55; background: linear-gradient(#f2c14e,#f2c14e) left 0 top 0 / 14px 2px, linear-gradient(#f2c14e,#f2c14e) left 0 top 0 / 2px 14px, linear-gradient(#f2c14e,#f2c14e) right 0 top 0 / 14px 2px, linear-gradient(#f2c14e,#f2c14e) right 0 top 0 / 2px 14px, linear-gradient(#f2c14e,#f2c14e) left 0 bottom 0 / 14px 2px, linear-gradient(#f2c14e,#f2c14e) left 0 bottom 0 / 2px 14px, linear-gradient(#f2c14e,#f2c14e) right 0 bottom 0 / 14px 2px, linear-gradient(#f2c14e,#f2c14e) right 0 bottom 0 / 2px 14px; background-repeat: no-repeat; }"
+    },
+    {
+      "name": "HUD Level Chip",
+      "kind": "nav",
+      "refersTo": "hud-level-active",
+      "description": "Fixed HUD navigation: shows the current level, scrolls to its section.",
+      "html": "<button class=\"ds-hud-level ds-hud-level--active\">LVL1 JOURNEY</button>",
+      "css": ".ds-hud-level { font-family: 'Press Start 2P', monospace; font-size: 12px; color: #9aa3c4; background: transparent; border: 1px solid transparent; padding: 8px 10px; cursor: pointer; transition: color .25s, border-color .25s, background-color .25s; } .ds-hud-level:hover { color: #d6dbf0; border-color: rgba(214,219,240,0.16); } .ds-hud-level--active, .ds-hud-level:focus-visible { color: #f2c14e; border-color: rgba(242,193,78,0.32); background: rgba(242,193,78,0.07); }"
+    },
+    {
+      "name": "Inventory Slot",
+      "kind": "custom",
+      "refersTo": "chip-quest-type",
+      "description": "Signature stat unit: a skill as equipment, never an invented stat bar.",
+      "html": "<span class=\"ds-inventory-slot\"><span class=\"ds-slot-abbr\">Rs</span><span class=\"ds-slot-name\">Rust</span></span>",
+      "css": ".ds-inventory-slot { display: inline-flex; flex-direction: column; align-items: center; gap: 9px; } .ds-slot-abbr { width: 46px; height: 46px; display: grid; place-items: center; font-family: 'Press Start 2P', monospace; font-size: 12px; color: #f2c14e; border: 1px solid #b98e35; background: rgba(242,193,78,0.06); } .ds-slot-name { font-family: 'Chakra Petch', system-ui, sans-serif; font-size: 11px; color: #9aa3c4; }"
+    },
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "panel-dialogue",
+      "description": "Side-quest collectible: dialogue panel whose border shifts to the project's color on hover.",
+      "html": "<article class=\"ds-project-card\" style=\"--pc:#edcf72\"><span class=\"ds-pc-index\">/01</span><h3 class=\"ds-pc-title\">TwoZeroFourEight</h3><p class=\"ds-pc-desc\">Classic 2048 puzzle game. Fully playable in the browser.</p></article>",
+      "css": ".ds-project-card { background: rgba(9,11,24,0.88); border: 1px solid rgba(242,193,78,0.32); padding: 24px 26px 22px; font-family: 'Chakra Petch', system-ui, sans-serif; color: #d6dbf0; transition: border-color .3s; } .ds-project-card:hover, .ds-project-card:focus-within { border-color: color-mix(in srgb, var(--pc, #f2c14e) 70%, rgba(242,193,78,0.32)); } .ds-pc-index { font-family: 'Press Start 2P', monospace; font-size: 12px; color: var(--pc, #f2c14e); } .ds-pc-title { font-size: 20px; font-weight: 600; margin: 10px 0 12px; color: #d6dbf0; } .ds-pc-desc { font-size: 15.5px; line-height: 1.65; }"
+    },
+    {
+      "name": "Continue Menu Item",
+      "kind": "custom",
+      "refersTo": "button-primary",
+      "description": "Game-over menu link: pixel label, destination right-aligned, caret appears on hover.",
+      "html": "<a class=\"ds-continue-item\" href=\"#\"><span class=\"ds-menu-label\">GITHUB</span><span class=\"ds-menu-dest\">github.com/xdm67x</span></a>",
+      "css": ".ds-continue-item { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 14px; padding: 15px 18px; border: 1px solid transparent; text-decoration: none; transition: border-color .25s, background-color .25s; } .ds-continue-item:hover, .ds-continue-item:focus-visible { border-color: rgba(242,193,78,0.32); background: rgba(242,193,78,0.05); } .ds-menu-label { font-family: 'Press Start 2P', monospace; font-size: 12px; color: #f2c14e; } .ds-menu-dest { justify-self: end; font-family: 'Chakra Petch', system-ui, sans-serif; font-size: 14px; color: #9aa3c4; }"
+    },
+    {
+      "name": "Section Banner",
+      "kind": "custom",
+      "refersTo": "panel-dialogue",
+      "description": "Level title with flanking brass diamonds under a hairline.",
+      "html": "<header class=\"ds-banner\"><h2>THE JOURNEY</h2><p class=\"ds-banner-sub\">QUEST LOG</p></header>",
+      "css": ".ds-banner { text-align: center; font-family: 'Press Start 2P', monospace; } .ds-banner::before { content: ''; display: block; height: 1px; margin-bottom: 30px; background: linear-gradient(90deg, transparent, rgba(242,193,78,0.32), transparent); } .ds-banner h2 { display: inline-flex; align-items: center; gap: 20px; font-size: 22px; color: #f2c14e; text-shadow: 0 3px 0 rgba(3,4,10,0.85); } .ds-banner h2::before, .ds-banner h2::after { content: ''; width: 9px; height: 9px; background: #b98e35; transform: rotate(45deg); } .ds-banner-sub { margin-top: 18px; font-family: 'Chakra Petch', system-ui, sans-serif; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: #9aa3c4; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Lantern-Lit Quest",
+    "overview": "The portfolio is one continuous night world the visitor travels by scrolling: a WebGL2 shader sky whose palette and weather shift through five biomes (night hub, dawn ridge, crystal cave, aurora fields, starfield arena), over which arcade chrome floats — a pixel-font HUD with a scroll-driven HP bar, level chips, and a secrets counter. Everything a visitor reads sits inside square RPG dialogue panels with gold hairline borders and corner ticks; everything that moves belongs to the world behind them.\n\nThe palette is disciplined to a single guide-light: Lantern Gold carries every action, border, and instrument; Crystal Cyan marks the technical and the playable; three biome accents appear only as chip tints and world colors. Gold never floods fields — the shader sky owns the big color.\n\nThe register is playful but honest: game vocabulary (quests, inventory, stats, CONTINUE?) frames factual career content. Nothing in the chrome is allowed to invent claims; nothing in the content is allowed to break the world.",
+    "keyCharacteristics": [
+      "One continuous shader world (fBm nebula, parallax ridgelines, stars, moon, aurora, GPU motes) that blends palettes per section — never a hard cut.",
+      "Arcade pixel chrome (Press Start 2P) strictly for logotype, banners, HUD, chips, and labels; Chakra Petch carries every sentence.",
+      "Square geometry: zero radii, 1px gold hairlines, 14×2px corner ticks, rotated-square diamonds as trail nodes.",
+      "Motion grammar: exponential ease-out entrances (rise + blur clear), blinking chrome, scroll-and-pointer parallax; everything freezes honestly under prefers-reduced-motion, and the site works with no WebGL at all."
+    ],
+    "rules": [
+      { "name": "The One Lantern Rule", "body": "Gold is the guide-light, never a field. If a screen needs more gold to read as this world, the shader is broken, not the accent budget.", "section": "colors" },
+      { "name": "The Solid Panel Rule", "body": "Body copy never floats on the animated sky. Reading text lives on Dialogue Panel surfaces; only display chrome may sit directly on the world, and only on the title screen.", "section": "colors" },
+      { "name": "The Pixel Chrome Rule", "body": "Press Start 2P appears only as chrome — logotype, banners, chips, HUD, controls, labels — never for sentences. Chakra Petch carries anything a visitor reads for meaning.", "section": "typography" },
+      { "name": "The 12-Pixel Floor Rule", "body": "No text below 12px anywhere, pixel or body. The smallest labels stay legible over the night world.", "section": "typography" },
+      { "name": "The Hairline Rule", "body": "A panel states its elevation once, as a border — never border plus soft shadow. Hover raises border color, not box-shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep every sentence on a near-opaque Dialogue Panel; only display chrome sits on the sky, and only on the title screen.",
+      "Do blend biome palettes continuously through scroll; the world is one journey, not five decorated sections.",
+      "Do use authored pixel-grid SVG icons on a 2px unit for every icon need.",
+      "Do keep motion exponential ease-out (cubic-bezier(.16,1,.3,1)) and reach past transform/opacity (blur clear, clip-path banner wipes) where it stays smooth.",
+      "Do respect prefers-reduced-motion everywhere: static world frame, no boot typing, no tilt, instant reveals — and keep the CSS-gradient fallback world for no-WebGL browsers."
+    ],
+    "donts": [
+      "Don't put radii on panels or controls; the world is square.",
+      "Don't invent stat numbers or proficiency bars — lists render as inventory slots and traits, honestly.",
+      "Don't use Press Start 2P for sentences or body copy.",
+      "Don't add a seventh UI accent; new color arrives through the shader's biome palettes, not the chrome.",
+      "Don't place text below 12px."
+    ]
+  }
+}

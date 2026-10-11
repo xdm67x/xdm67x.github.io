@@ -15,12 +15,15 @@
 # Superpowers brainstorming artifacts
 .superpowers
 
-
-# Added by cargo
-
-# Stylance generated CSS bundle
-/styles/bundle.css
-
+# Dependencies and build output
+node_modules/
 /dist
 
+# Bun
+.bun/
+
+# Stale Rust artifacts (rust-analyzer may recreate)
 /target
+
+# Finish-review captures (session artifacts)
+.impeccable/review/

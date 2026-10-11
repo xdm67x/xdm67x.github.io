@@ -1,87 +1,322 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="booting">
   <head>
+    <noscript>
+      <style>
+        html.booting #app,
+        html.booting #hud {
+          visibility: visible;
+        }
+        #boot {
+          display: none;
+        }
+        .reveal {
+          opacity: 1;
+          transform: none;
+          filter: none;
+        }
+      </style>
+    </noscript>
     <meta charset="UTF-8" />
-    <link data-trunk rel="icon" type="image/svg+xml" href="./public/favicon.svg" />
-    <link data-trunk rel="css" href="./style.css" />
-    <link data-trunk rel="css" href="./styles/bundle.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mehmet Ozkan — Software Engineer</title>
+    <meta
+      name="description"
+      content="Mehmet Ozkan — software engineer at Doctolib, AI enthusiast, video game aficionado. A portfolio staged as a playable adventure through a WebGL shader world."
+    />
+    <meta property="og:title" content="Mehmet Ozkan — Software Engineer" />
+    <meta
+      property="og:description"
+      content="A portfolio staged as a playable adventure through a WebGL shader world. Press start."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://xdm67x.github.io" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <div id="cursor"></div>
-    <div id="cursor-trail"></div>
+    <canvas id="world" aria-hidden="true"></canvas>
 
-    <script>
-      // ── Custom cursor ──────────────────────────────────────
-      (function () {
-        var cur = document.getElementById("cursor");
-        var trail = document.getElementById("cursor-trail");
-        var tx = -200, ty = -200, cx = -200, cy = -200;
+    <div id="boot" role="status" aria-label="Loading">
+      <div class="boot-frame">
+        <pre id="boot-log" class="boot-log"></pre>
+        <p class="boot-skip">CLICK OR PRESS ANY KEY TO SKIP</p>
+      </div>
+    </div>
 
-        document.addEventListener("mousemove", function (e) {
-          tx = e.clientX;
-          ty = e.clientY;
-          cur.style.left = tx + "px";
-          cur.style.top = ty + "px";
-        });
+    <header id="hud" hidden>
+      <div class="hud-plate">
+        <svg class="hud-crest" viewBox="0 0 12 12" aria-hidden="true">
+          <rect x="2" y="1" width="2" height="10" fill="currentColor" />
+          <rect x="8" y="1" width="2" height="10" fill="currentColor" />
+          <rect x="4" y="2" width="1" height="2" fill="currentColor" />
+          <rect x="7" y="2" width="1" height="2" fill="currentColor" />
+          <rect x="5" y="3" width="2" height="2" fill="currentColor" />
+        </svg>
+        <span>XDM67X</span>
+      </div>
+      <nav class="hud-levels" aria-label="Levels">
+        <button class="hud-level" data-target="journey"><span class="lvl-n">LVL1</span><span class="lvl-name">JOURNEY</span></button>
+        <button class="hud-level" data-target="quests"><span class="lvl-n">LVL2</span><span class="lvl-name">QUESTS</span></button>
+        <button class="hud-level" data-target="stats"><span class="lvl-n">LVL3</span><span class="lvl-name">STATS</span></button>
+        <button class="hud-level" data-target="continue"><span class="lvl-n">LVL4</span><span class="lvl-name">CONTINUE</span></button>
+      </nav>
+      <div class="hud-right">
+        <svg class="hud-coin" viewBox="0 0 12 12" aria-hidden="true">
+          <rect x="4" y="1" width="4" height="1" fill="currentColor" />
+          <rect x="3" y="2" width="6" height="8" fill="currentColor" />
+          <rect x="4" y="10" width="4" height="1" fill="currentColor" />
+          <rect x="5" y="4" width="2" height="4" fill="#07081a" />
+        </svg>
+        <span id="hud-secrets">0/9</span>
+        <div
+          class="hud-hp"
+          role="progressbar"
+          aria-label="Scroll progress"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <div class="hud-hp-fill" id="hud-hp-fill"></div>
+        </div>
+        <span class="hud-hp-tag">HP</span>
+      </div>
+    </header>
 
-        (function loop() {
-          cx += (tx - cx) * 0.1;
-          cy += (ty - cy) * 0.1;
-          trail.style.left = cx + "px";
-          trail.style.top = cy + "px";
-          requestAnimationFrame(loop);
-        })();
+    <main id="app">
+      <section id="title" class="screen screen-title" data-biome="0">
+        <div class="title-core">
+          <h1 class="logo">MEHMET OZKAN</h1>
+          <p class="tagline">SOFTWARE ENGINEER · AI TINKERER · GAME AFICIONADO</p>
+          <p class="bio">
+            Crafting web experiences with a controller in hand. Ready to join
+            your squad.
+          </p>
+          <button id="start" class="btn-start">
+            <svg class="caret" viewBox="0 0 12 12" aria-hidden="true">
+              <rect x="2" y="1" width="8" height="2" fill="currentColor" />
+              <rect x="4" y="3" width="4" height="2" fill="currentColor" />
+              <rect x="6" y="5" width="2" height="2" fill="currentColor" />
+              <rect x="4" y="7" width="4" height="2" fill="currentColor" />
+              <rect x="2" y="9" width="8" height="2" fill="currentColor" />
+            </svg>
+            PRESS START
+          </button>
+          <p class="controls-hint">SCROLL TO EXPLORE — WASD NOT REQUIRED</p>
+        </div>
+        <p class="insert-coin" aria-hidden="true">INSERT COIN</p>
+        <p class="arcade-credit" aria-hidden="true">©2026 XDM67X</p>
+      </section>
 
-        document.addEventListener("mouseover", function (e) {
-          if (e.target.closest("a, button, [data-magnetic]")) {
-            cur.classList.add("active");
-            trail.classList.add("active");
-          }
-        });
-        document.addEventListener("mouseout", function (e) {
-          if (e.target.closest("a, button, [data-magnetic]")) {
-            cur.classList.remove("active");
-            trail.classList.remove("active");
-          }
-        });
-      })();
+      <section id="journey" class="screen screen-journey" data-biome="1">
+        <header class="banner reveal">
+          <h2>THE JOURNEY</h2>
+          <p class="banner-sub">QUEST LOG</p>
+        </header>
 
-      // ── 3-D card tilt ──────────────────────────────────────
-      (function () {
-        function attachTilt(card) {
-          if (card._tilt) return;
-          card._tilt = true;
+        <div class="quest-trail">
+          <article class="quest-card quest-main reveal" style="--i: 0">
+            <div class="quest-head">
+              <span class="quest-type type-main">MAIN QUEST</span>
+              <h3>Software Engineer · Doctolib</h3>
+              <span class="quest-date">JAN 2021 — PRESENT · PARIS / NIORT, FR</span>
+            </div>
+            <ul class="objectives">
+              <li>
+                <span class="obj-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 8 8"><rect x="0" y="3" width="6" height="2" fill="currentColor"/><rect x="4" y="1" width="2" height="6" fill="currentColor"/></svg>
+                </span>
+                <p>
+                  Architected core billing features for Doctolib Médecin,
+                  streamlining financial workflows and compliance for thousands
+                  of French medical practitioners.
+                </p>
+              </li>
+              <li>
+                <span class="obj-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 8 8"><rect x="0" y="3" width="6" height="2" fill="currentColor"/><rect x="4" y="1" width="2" height="6" fill="currentColor"/></svg>
+                </span>
+                <p>
+                  Embedded 6 months in the German market initiative: built EHR
+                  solutions and a smart coding engine, powered by expert rules,
+                  to automate medical procedure codification.
+                </p>
+              </li>
+              <li>
+                <span class="obj-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 8 8"><rect x="0" y="3" width="6" height="2" fill="currentColor"/><rect x="4" y="1" width="2" height="6" fill="currentColor"/></svg>
+                </span>
+                <p>
+                  Pioneered AI adoption across engineering teams: custom AI
+                  skills, agentic workflows, and test harnesses that automated
+                  complex tasks and lifted developer productivity.
+                </p>
+              </li>
+              <li>
+                <span class="obj-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 8 8"><rect x="0" y="3" width="6" height="2" fill="currentColor"/><rect x="4" y="1" width="2" height="6" fill="currentColor"/></svg>
+                </span>
+                <p>
+                  Designed and delivered internal training programs on
+                  practical AI implementation for software engineering teams.
+                </p>
+              </li>
+            </ul>
+            <p class="quest-reward">REWARD: PRODUCT XP · AI MASTERY BADGE</p>
+          </article>
 
-          card.addEventListener("mousemove", function (e) {
-            var r = card.getBoundingClientRect();
-            var x = (e.clientX - r.left) / r.width - 0.5;
-            var y = (e.clientY - r.top) / r.height - 0.5;
-            card.style.transform =
-              "perspective(900px) rotateX(" + (-y * 8) + "deg) rotateY(" + (x * 8) + "deg) translateZ(8px)";
-            var shine = card.querySelector(".shine");
-            if (shine) {
-              shine.style.background =
-                "radial-gradient(circle at " + ((x + 0.5) * 100) + "% " + ((y + 0.5) * 100) + "%, rgba(255,255,255,0.09) 0%, transparent 65%)";
-            }
-          });
+          <article class="quest-card quest-side reveal" style="--i: 1">
+            <div class="quest-head">
+              <span class="quest-type type-side">SIDE QUEST</span>
+              <h3>R&amp;D Intern, VR/AR · ICube Laboratory (CNRS)</h3>
+              <span class="quest-date">JAN 2020 — JUL 2020 · STRASBOURG, FR</span>
+            </div>
+            <ul class="objectives">
+              <li>
+                <span class="obj-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 8 8"><rect x="0" y="3" width="6" height="2" fill="currentColor"/><rect x="4" y="1" width="2" height="6" fill="currentColor"/></svg>
+                </span>
+                <p>
+                  Engineered immersive VR/AR experimental environments with
+                  Unity3D and C# for scientific research.
+                </p>
+              </li>
+              <li>
+                <span class="obj-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 8 8"><rect x="0" y="3" width="6" height="2" fill="currentColor"/><rect x="4" y="1" width="2" height="6" fill="currentColor"/></svg>
+                </span>
+                <p>
+                  Integrated Mapbox and WrldAPI cartography to render real-world
+                  map data inside interactive 3D spaces; prototyped and user
+                  tested mixed-reality interaction mechanics.
+                </p>
+              </li>
+            </ul>
+            <p class="quest-reward">REWARD: RESEARCH XP · PUBLICATION UNLOCKED</p>
+          </article>
 
-          card.addEventListener("mouseleave", function () {
-            card.style.transition = "transform 0.6s cubic-bezier(0.16,1,0.3,1)";
-            card.style.transform = "";
-            var shine = card.querySelector(".shine");
-            if (shine) shine.style.background = "";
-            setTimeout(function () { card.style.transition = ""; }, 600);
-          });
-        }
+          <aside class="achievement reveal" style="--i: 2">
+            <span class="ach-icon" aria-hidden="true">
+              <svg viewBox="0 0 12 12">
+                <rect x="2" y="0" width="8" height="1" fill="currentColor"/>
+                <rect x="1" y="1" width="10" height="1" fill="currentColor"/>
+                <rect x="0" y="2" width="12" height="5" fill="currentColor"/>
+                <rect x="3" y="7" width="6" height="2" fill="currentColor"/>
+                <rect x="4" y="9" width="4" height="2" fill="currentColor"/>
+                <rect x="5" y="11" width="2" height="1" fill="currentColor"/>
+              </svg>
+            </span>
+            <p>
+              <strong>ACHIEVEMENT UNLOCKED</strong>: co-author of
+              <em>“Interactions with a Hybrid Map for Navigation Information
+              Visualization in Virtual Reality”</em>, peer-reviewed publication,
+              ICube Laboratory (2020).
+            </p>
+          </aside>
 
-        var obs = new MutationObserver(function () {
-          document.querySelectorAll(".js-tilt").forEach(attachTilt);
-        });
-        obs.observe(document.body, { childList: true, subtree: true });
-        document.querySelectorAll(".js-tilt").forEach(attachTilt);
-      })();
-    </script>
+          <article class="quest-card quest-tutorial reveal" style="--i: 3">
+            <div class="quest-head">
+              <span class="quest-type type-tut">TUTORIAL</span>
+              <h3>Master’s in Computer Science · University of Strasbourg</h3>
+              <span class="quest-date">CLASS OF 2020 · 2020</span>
+            </div>
+            <ul class="objectives">
+              <li>
+                <span class="obj-arrow" aria-hidden="true">
+                  <svg viewBox="0 0 8 8"><rect x="0" y="3" width="6" height="2" fill="currentColor"/><rect x="4" y="1" width="2" height="6" fill="currentColor"/></svg>
+                </span>
+                <p>
+                  Specialization in Computer Graphics, Imaging &amp; 3D: the
+                  loadout that still powers every shader on this page.
+                </p>
+              </li>
+            </ul>
+            <p class="quest-reward">REWARD: CLASS CHANGE → SOFTWARE ENGINEER</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="quests" class="screen screen-quests" data-biome="2">
+        <header class="banner reveal">
+          <h2>SIDE QUESTS</h2>
+          <p class="banner-sub">PROJECTS COLLECTED ON THE WAY</p>
+        </header>
+        <div id="projects-grid" class="projects-grid" aria-label="Projects"></div>
+        <noscript>
+          <ul class="nojs-projects">
+            <li><a href="https://github.com/xdm67x/TwoZeroFourEight">TwoZeroFourEight</a></li>
+            <li><a href="https://github.com/rtk-ai/rtk">RTK (Rust Token Killer)</a></li>
+            <li><a href="https://github.com/xdm67x/simple-agent">simple-agent</a></li>
+            <li><a href="https://github.com/xdm67x/cargo-feature-guard">cargo-feature-guard</a></li>
+            <li><a href="https://github.com/tafia/quick-xml">quick-xml</a></li>
+            <li><a href="https://github.com/xdm67x/electrotest">electrotest</a></li>
+            <li><a href="https://github.com/xdm67x/soft-delight">Soft Delight</a></li>
+            <li><a href="https://github.com/dm67x/chip8">chip8</a></li>
+            <li><a href="https://github.com/xdm67x/xdm67x.github.io">Portfolio</a></li>
+          </ul>
+        </noscript>
+      </section>
+
+      <section id="stats" class="screen screen-stats" data-biome="3">
+        <header class="banner reveal">
+          <h2>PLAYER STATS</h2>
+          <p class="banner-sub">EQUIPMENT &amp; TRAITS</p>
+        </header>
+        <div id="stats-panels" class="stats-panels"></div>
+      </section>
+
+      <section id="continue" class="screen screen-continue" data-biome="4">
+        <header class="banner reveal">
+          <h2>CONTINUE?</h2>
+          <p class="banner-sub">THE MAP ENDS HERE</p>
+        </header>
+        <div class="continue-panel reveal">
+          <p class="continue-line">
+            The next quest could be with your team. Pick a path:
+          </p>
+          <ul class="continue-menu">
+            <li>
+              <a href="https://github.com/xdm67x" target="_blank" rel="noopener noreferrer">
+                <span class="menu-caret" aria-hidden="true">
+                  <svg viewBox="0 0 8 8"><rect x="0" y="3" width="6" height="2" fill="currentColor"/><rect x="4" y="1" width="2" height="6" fill="currentColor"/></svg>
+                </span>
+                <span class="menu-label">GITHUB</span>
+                <span class="menu-dest">github.com/xdm67x</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/dm67x" target="_blank" rel="noopener noreferrer">
+                <span class="menu-caret" aria-hidden="true">
+                  <svg viewBox="0 0 8 8"><rect x="0" y="3" width="6" height="2" fill="currentColor"/><rect x="4" y="1" width="2" height="6" fill="currentColor"/></svg>
+                </span>
+                <span class="menu-label">LINKEDIN</span>
+                <span class="menu-dest">linkedin.com/in/dm67x</span>
+              </a>
+            </li>
+            <li>
+              <a href="mailto:m-ozkan@outlook.fr">
+                <span class="menu-caret" aria-hidden="true">
+                  <svg viewBox="0 0 8 8"><rect x="0" y="3" width="6" height="2" fill="currentColor"/><rect x="4" y="1" width="2" height="6" fill="currentColor"/></svg>
+                </span>
+                <span class="menu-label">NEW GAME+</span>
+                <span class="menu-dest">m-ozkan@outlook.fr</span>
+              </a>
+            </li>
+          </ul>
+          <p class="spawn-line">SPAWN POINT: NIORT, FRANCE</p>
+        </div>
+        <footer class="site-footer">
+          <p>©2026 MEHMET OZKAN — BUILT WITH THREE.JS · NO RNG WAS HARMED</p>
+        </footer>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
