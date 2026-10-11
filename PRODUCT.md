@@ -16,11 +16,11 @@ Recruiters, engineers, and potential collaborators evaluating Mehmet Ozkan for s
 
 ## Product Purpose
 
-Personal portfolio for Mehmet Ozkan: present his projects and experience, land interviews and interesting collaborations. Success = a visitor understands his range (product engineering at Doctolib, VR/AR research, AI tooling, game/emulator side quests) and reaches his GitHub, LinkedIn, or email.
+Personal portfolio for Mehmet Ozkan: present his projects and experience, land interviews and interesting collaborations. Success = a visitor understands his range (product engineering at Doctolib, VR/AR research, AI tooling, systems programming side quests) and reaches his GitHub, LinkedIn, or email.
 
 ## Positioning
 
-A portfolio staged as a playable game: WebGL shader-driven world whose atmosphere evolves as the visitor travels through it. The visitor does not read a document; they progress through an adventure — quests are experience entries, inventory items are projects, stats are skills.
+A professional portfolio that traces a path: one continuous WebGL shader world (night, dawn, dusk, aurora) that the visitor travels section by section, with a waypoint rail marking progress. The world carries the atmosphere; the content stays strictly professional and factual.
 
 ## Operating Context
 
@@ -28,34 +28,35 @@ Deployed at https://xdm67x.github.io via GitHub Actions on push to `main`. Must 
 
 ## Capabilities and Constraints
 
-- Single-page site, sections: title screen (hero), journey (experience), quests (projects), stats (skills), continue/contact.
-- WebGL shader background must animate continuously and react to scroll and pointer.
-- Real, factual content only — from `src/projects.json` (curated list) and the resume PDF (repo `xdm67x/resume.pdf`, private). No invented job titles, dates, or claims.
+- Single-page site, four sections: intro (hero), experience (path timeline), projects, contact.
+- WebGL shader background animates continuously and reacts to scroll and pointer; a fixed waypoint rail traces scroll progress and jumps between sections.
+- Real, factual content only — from the curated project list and the CV (repo `xdm67x/resume.pdf`, private). No invented job titles, dates, or claims.
+- Stats/skills section intentionally removed (user decision, 2026-10-11 revamp).
+- Gaming chrome removed in the 2026-10-11 revamp: no boot sequence, no game HUD, no pixel fonts, no quest vocabulary. Professional register throughout.
 - Contact: m-ozkan@outlook.fr, linkedin.com/in/dm67x, github.com/xdm67x. Based in Niort, France.
 
 ## Brand Commitments
 
 - Name: Mehmet Ozkan (GitHub handle xdm67x).
-- Voice: playful gamer register ("Ready to join your squad", player/quest/HUD vocabulary) without hiding professional substance.
-- Gaming-adventure visual world with WebGL shaders is pinned by the user's brief.
+- Professional register; the shader world provides atmosphere, never gimmickry.
+- The path/journey structure (timeline + waypoint rail) is the site's organizing idea.
 
 ## Evidence on Hand
 
-- Projects with descriptions, tags, links: `src/projects.json` (9 projects, kept per user decision — including Rust projects).
-- Experience/education/skills/languages: extracted from `Mehmet_Ozkan_CV.pdf` (repo `xdm67x/resume.pdf`):
+- Projects with descriptions, tags, links: `src/data.ts` (9 projects, kept per user decision — including Rust ones).
+- Experience/education from `Mehmet_Ozkan_CV.pdf` (repo `xdm67x/resume.pdf`):
   - Software Engineer, Doctolib (Paris/Niort), Jan 2021–Present. Core product & domain engineering for Doctolib Médecin: billing features; 6-month German-market EHR initiative with a smart coding engine. AI integration & enablement: led AI adoption across engineering teams, built AI skills/agentic workflows/test harnesses, delivered internal training.
   - Software Engineering Intern (R&D), ICube Laboratory (CNRS), Strasbourg, Jan–Jul 2020. VR/AR environments in Unity3D/C#; Mapbox/WrldAPI cartography in 3D spaces; mixed-reality prototyping and user testing.
   - Publication: "Interactions with a Hybrid Map for Navigation Information Visualization in Virtual Reality" (co-author, peer-reviewed, ICube 2020).
   - Master's in Computer Science, University of Strasbourg, 2020 — Computer Graphics, Imaging & 3D.
-  - Languages: Rust, Python, JS/TS, Kotlin, Go, C#, GDScript. Tools: Git, React, Docker, Node.js, Spring Boot, Claude Code, OpenCode, Godot, Unity3D. Spoken: French (native), English (professional), Turkish (fluent).
 
 ## Product Principles
 
-- The game metaphor is load-bearing: every section maps to a game concept, and every game concept maps to real content.
-- Factual content, playful frame — never the reverse.
-- Atmosphere is continuous: one evolving shader world, not separate decorated sections.
-- Accessibility and performance are gameplay too: reduced-motion users get a static world; the site works without WebGL.
+- The path metaphor is load-bearing: the timeline, the rail, and the biome journey are one idea.
+- Factual content, professional frame — the shader provides mood, never claims.
+- Atmosphere is continuous: one evolving shader world, not decorated sections.
+- Performance and accessibility are part of the craft: reduced-motion users get a static world; the site works without WebGL.
 
 ## Accessibility & Inclusion
 
-Respect `prefers-reduced-motion`; keep text contrast readable over animated backgrounds; keyboard-navigable nav.
+Respect `prefers-reduced-motion`; keep text contrast readable over animated backgrounds; keyboard-navigable rail and links.

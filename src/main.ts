@@ -1,12 +1,5 @@
 import { createWorld, type World } from "./world";
-import {
-  PROJECTS,
-  LANGUAGES,
-  TOOLS,
-  TRAITS,
-  PARTY_LANGUAGES,
-  type StatSlot,
-} from "./data";
+import { PROJECTS } from "./data";
 
 const $ = <T extends Element = HTMLElement>(sel: string) =>
   document.querySelector<T>(sel);
@@ -40,79 +33,43 @@ if (world && finePointer) {
 // ── content: projects ────────────────────────────────────────────
 function projectCard(p: (typeof PROJECTS)[number], i: number): string {
   return `
-  <article class="project-card reveal${p.play_url ? " featured" : ""}"
-           style="--pc:${p.color}; --i:${i % 4}" data-project>
-    <div class="pc-head">
-      <span class="pc-index">/${String(i + 1).padStart(2, "0")}</span>
-      <h3 class="pc-title">${p.title}</h3>
-    </div>
+  <article class="project-card reveal${p.live_url ? " featured" : ""}"
+           style="--i:${i % 4}">
+    <h3 class="pc-title">${p.title}</h3>
     <p class="pc-desc">${p.description}</p>
+    ${p.insight ? `<p class="pc-insight">${p.insight}</p>` : ""}
     <ul class="pc-tags">
       ${p.tags.map((t) => `<li>${t}</li>`).join("")}
     </ul>
     <div class="pc-links">
       <a class="pc-link" href="${p.github_url}" target="_blank"
          rel="noopener noreferrer">
-        <span class="obj-arrow" aria-hidden="true"><svg viewBox="0 0 8 8"><rect x="0" y="3" width="6" height="2" fill="currentColor"/><rect x="4" y="1" width="2" height="6" fill="currentColor"/></svg></span>
-        SOURCE
+        Source
+        <svg class="cta-arrow" viewBox="0 0 14 14" aria-hidden="true">
+          <rect x="1" y="6" width="10" height="2" fill="currentColor" />
+          <rect x="7" y="3" width="2" height="8" fill="currentColor" transform="rotate(45 8 7)" />
+          <rect x="7" y="3" width="2" height="8" fill="currentColor" transform="rotate(-45 8 7)" />
+        </svg>
       </a>
       ${
-        p.play_url
-          ? `<a class="pc-link pc-play" href="${p.play_url}" target="_blank"
+        p.live_url
+          ? `<a class="pc-link" href="${p.live_url}" target="_blank"
              rel="noopener noreferrer">
-              <span class="obj-arrow" aria-hidden="true"><svg viewBox="0 0 8 8"><rect x="1" y="1" width="2" height="6" fill="currentColor"/><rect x="5" y="1" width="2" height="6" fill="currentColor"/></svg></span>
-              PLAY
+              Live
+              <svg class="cta-arrow" viewBox="0 0 14 14" aria-hidden="true">
+                <rect x="1" y="6" width="10" height="2" fill="currentColor" />
+                <rect x="7" y="3" width="2" height="8" fill="currentColor" transform="rotate(45 8 7)" />
+                <rect x="7" y="3" width="2" height="8" fill="currentColor" transform="rotate(-45 8 7)" />
+              </svg>
             </a>`
           : ""
       }
     </div>
-    <span class="pc-shine" aria-hidden="true"></span>
   </article>`;
 }
 
 const grid = $("#projects-grid");
 if (grid) grid.innerHTML = PROJECTS.map(projectCard).join("");
-
-// ── content: stats panels ────────────────────────────────────────
-function slots(list: StatSlot[]): string {
-  return `
-  <ul class="slot-grid">
-    ${list
-      .map(
-        (s) => `
-    <li class="slot">
-      <span class="slot-abbr">${s.abbr}</span>
-      <span class="slot-name">${s.name}</span>
-    </li>`,
-      )
-      .join("")}
-  </ul>`;
-}
-
-function listPanel(title: string, items: string[]): string {
-  return `
-  <div class="stat-panel reveal" style="--i:2">
-    <h3 class="stat-title">${title}</h3>
-    <ul class="trait-list">
-      ${items.map((t) => `<li>${t}</li>`).join("")}
-    </ul>
-  </div>`;
-}
-
-const stats = $("#stats-panels");
-if (stats) {
-  stats.innerHTML = `
-  <div class="stat-panel reveal" style="--i:0">
-    <h3 class="stat-title">INVENTORY — LANGUAGES</h3>
-    ${slots(LANGUAGES)}
-  </div>
-  <div class="stat-panel reveal" style="--i:1">
-    <h3 class="stat-title">ITEMS — TOOLS &amp; FRAMEWORKS</h3>
-    ${slots(TOOLS)}
-  </div>
-  ${listPanel("TRAITS", TRAITS)}
-  ${listPanel("PARTY LANGUAGES", PARTY_LANGUAGES)}`;
-}
 
 // ── reveal on scroll ─────────────────────────────────────────────
 const revealables = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
@@ -133,22 +90,52 @@ if ("IntersectionObserver" in window && !reduced) {
   revealables.forEach((el) => el.classList.add("in"));
 }
 
-// ── HUD: scroll progress, biome, level chips ─────────────────────
-const hud = $("#hud");
-const hpFill = $("#hud-hp-fill");
-const hpBar = document.querySelector<HTMLElement>(".hud-hp");
-const secrets = $("#hud-secrets");
-const levels = Array.from(document.querySelectorAll<HTMLElement>(".hud-level"));
+// ── path progress: biome, rail, timeline fill, hero drift ────────
+const railFill = $("#rail-fill");
+const trailFill = $("#timeline-fill");
+const hero = $("#intro .hero");
+const stops = Array.from(document.querySelectorAll<HTMLElement>(".rail-stop"));
 const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-biome]"));
 
-function updateHud() {
+let lastY = window.scrollY;
+let lastT = performance.now();
+let vel = 0;
+let decaying = false;
+
+function decayLoop() {
+  vel *= 0.93;
+  if (vel > 0.004) {
+    world?.setVelocity(vel);
+    requestAnimationFrame(decayLoop);
+  } else {
+    vel = 0;
+    world?.setVelocity(0);
+    decaying = false;
+  }
+}
+
+function updatePath() {
   const max = document.documentElement.scrollHeight - window.innerHeight;
   const p = max > 0 ? window.scrollY / max : 0;
-  if (hpFill) hpFill.style.transform = `scaleX(${p.toFixed(3)})`;
-  if (hpBar) hpBar.setAttribute("aria-valuenow", String(Math.round(p * 100)));
   world?.setScroll(p);
+  if (railFill) railFill.style.transform = `scaleY(${p.toFixed(3)})`;
 
-  // dominant section decides the biome / level
+  // travel velocity makes the world's breath quicken
+  const now = performance.now();
+  const inst = Math.min(
+    Math.abs(window.scrollY - lastY) / Math.max(now - lastT, 1) / 2.2,
+    1,
+  );
+  lastY = window.scrollY;
+  lastT = now;
+  vel = Math.max(vel, inst);
+  world?.setVelocity(vel);
+  if (!decaying && vel > 0.004) {
+    decaying = true;
+    requestAnimationFrame(decayLoop);
+  }
+
+  // dominant section decides the biome and the active waypoint
   const mid = window.scrollY + window.innerHeight * 0.5;
   let current = sections[0];
   for (const s of sections) {
@@ -156,9 +143,35 @@ function updateHud() {
   }
   const b = Number(current?.dataset.biome ?? 0);
   world?.setBiome(b);
-  levels.forEach((btn, i) => {
-    btn.classList.toggle("active", i + 1 === b);
+  stops.forEach((stop, i) => {
+    stop.classList.toggle("active", i === b);
   });
+
+  if (!reduced) {
+    // the hero drifts up and fades as the journey begins
+    if (hero) {
+      const y = window.scrollY;
+      if (y < window.innerHeight * 1.3) {
+        hero.style.transform = `translate3d(0, ${(y * 0.2).toFixed(1)}px, 0)`;
+        hero.style.opacity = Math.max(
+          0,
+          1 - y / (window.innerHeight * 0.8),
+        ).toFixed(3);
+      }
+    }
+    // the timeline's trail fills as it is traversed
+    if (trailFill) {
+      const timeline = trailFill.parentElement;
+      if (timeline) {
+        const r = timeline.getBoundingClientRect();
+        const t = Math.min(
+          Math.max((window.innerHeight * 0.72 - r.top) / r.height, 0),
+          1,
+        );
+        trailFill.style.transform = `scaleY(${t.toFixed(3)})`;
+      }
+    }
+  }
 }
 
 let ticking = false;
@@ -168,134 +181,38 @@ window.addEventListener(
     if (!ticking) {
       ticking = true;
       requestAnimationFrame(() => {
-        updateHud();
+        updatePath();
         ticking = false;
       });
     }
   },
   { passive: true },
 );
-updateHud();
+updatePath();
 
-levels.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const target = document.getElementById(btn.dataset.target ?? "");
-    target?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
-  });
-});
-
-const start = $("#start");
-start?.addEventListener("click", () => {
-  document.getElementById("journey")?.scrollIntoView({
-    behavior: reduced ? "auto" : "smooth",
-  });
-});
-
-// ── secrets counter ───────────────────────────────────────────────
-const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-project]"));
-let found = 0;
-if (secrets && "IntersectionObserver" in window) {
-  const co = new IntersectionObserver(
-    (entries) => {
-      for (const e of entries) {
-        if (e.isIntersecting) {
-          co.unobserve(e.target);
-          found += 1;
-          secrets.textContent = `${found}/${cards.length}`;
-        }
-      }
-    },
-    { threshold: 0.4 },
-  );
-  cards.forEach((c) => co.observe(c));
-}
-
-// ── card tilt ────────────────────────────────────────────────────
+// ── card hover light ─────────────────────────────────────────────
 if (finePointer && !reduced) {
-  for (const card of cards) {
+  for (const card of Array.from(document.querySelectorAll<HTMLElement>(".project-card"))) {
     card.addEventListener("pointermove", (e) => {
       const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      card.style.setProperty("--rx", `${(-y * 6).toFixed(2)}deg`);
-      card.style.setProperty("--ry", `${(x * 6).toFixed(2)}deg`);
-      card.style.setProperty("--mx", `${((x + 0.5) * 100).toFixed(1)}%`);
-      card.style.setProperty("--my", `${((y + 0.5) * 100).toFixed(1)}%`);
-    });
-    card.addEventListener("pointerleave", () => {
-      card.style.setProperty("--rx", "0deg");
-      card.style.setProperty("--ry", "0deg");
+      card.style.setProperty(
+        "--mx",
+        `${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}%`,
+      );
+      card.style.setProperty(
+        "--my",
+        `${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}%`,
+      );
     });
   }
 }
 
-// ── boot sequence ────────────────────────────────────────────────
-const boot = $("#boot");
-const bootLog = $("#boot-log");
-const BOOT_LINES = [
-  "XDM67X SYSTEM v2.6 — BOOT SEQUENCE",
-  "> LOADING WORLD ............... OK",
-  "> COMPILING SHADERS ........... OK",
-  "> SUMMONING PLAYER DATA ....... OK",
-  "> MOUNTING PORTFOLIO .......... OK",
-];
-
-function finishBoot() {
-  if (!boot) return;
-  document.documentElement.classList.remove("booting");
-  if (hud) hud.hidden = false;
-  boot.classList.add("boot-done");
-  window.setTimeout(() => boot.remove(), 700);
-  const title = $("#title");
-  if (title && !reduced) title.classList.add("live");
-  if (title && reduced) {
-    title.classList.add("live");
-    title.querySelectorAll(".logo, .tagline, .bio, .btn-start, .controls-hint")
-      .forEach((el) => el.classList.add("now"));
-  }
-}
-
-if (!boot || !bootLog || reduced || sessionStorage.getItem("booted")) {
-  finishBoot();
+// ── hero entrance ────────────────────────────────────────────────
+const settle = () => document.documentElement.classList.add("loaded");
+if (reduced || !("fonts" in document)) {
+  settle();
 } else {
-  sessionStorage.setItem("booted", "1");
-  let skipped = false;
-  const skip = () => {
-    if (skipped) return;
-    skipped = true;
-    finishBoot();
-  };
-  boot.addEventListener("click", skip);
-  window.addEventListener("keydown", skip, { once: true });
-
-  const fontsReady = ("fonts" in document)
-    ? Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 1200))])
-    : Promise.resolve();
-
-  fontsReady.then(() => {
-    if (skipped) return;
-    let line = 0;
-    let col = 0;
-    const step = () => {
-      if (skipped) return;
-      if (line >= BOOT_LINES.length) {
-        window.setTimeout(skip, 420);
-        return;
-      }
-      const text = BOOT_LINES[line];
-      col += 1;
-      bootLog.textContent =
-        BOOT_LINES.slice(0, line).join("\n") +
-        (line > 0 ? "\n" : "") +
-        text.slice(0, col);
-      if (col >= text.length) {
-        line += 1;
-        col = 0;
-        window.setTimeout(step, 130);
-      } else {
-        window.setTimeout(step, reduced ? 0 : 14);
-      }
-    };
-    step();
-  });
+  Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 1200))]).then(
+    settle,
+  );
 }

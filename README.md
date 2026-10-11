@@ -1,7 +1,7 @@
 # xdm67x
 
-Personal portfolio website built with Bun, Vite, and Three.js — a playable
-adventure through a WebGL shader world.
+Personal portfolio website built with Bun, Vite, and Three.js — a path
+traced through one continuous WebGL shader world.
 
 ## Tech Stack
 

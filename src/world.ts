@@ -10,59 +10,45 @@ interface Biome {
   nebA: string;
   nebB: string;
   glow: string;
-  star: string;
-  ridgeTint: string;
+  glowAmt: number;
   mote: string;
-  starAmt: number;
-  moonAmt: number;
-  auroraAmt: number;
-  haze: number;
 }
 
 const BIOMES: Biome[] = [
-  // 0 — title: indigo night, gold moon
+  // 0 — intro: indigo silk, gold breath
   {
-    skyTop: "#05060f", skyBot: "#171b3d", nebA: "#2c2460", nebB: "#14224e",
-    glow: "#f2c14e", star: "#ffe9b0", ridgeTint: "#0a0c1e", mote: "#ffd97a",
-    starAmt: 0.16, moonAmt: 1.0, auroraAmt: 0.0, haze: 0.35,
+    skyTop: "#070a18", skyBot: "#111a3a", nebA: "#1d2a5e", nebB: "#3a2f7a",
+    glow: "#e5b96b", glowAmt: 0.55, mote: "#ffd98f",
   },
-  // 1 — journey: dawn over the ridge
+  // 1 — experience: dawn rose silk
   {
-    skyTop: "#0c0d26", skyBot: "#4d2b46", nebA: "#a34d57", nebB: "#5e2f5c",
-    glow: "#ff9d5c", star: "#ffd7c2", ridgeTint: "#14102a", mote: "#ffb08a",
-    starAmt: 0.05, moonAmt: 0.4, auroraAmt: 0.0, haze: 0.5,
+    skyTop: "#141126", skyBot: "#3a2242", nebA: "#7a3a54", nebB: "#9a5a3a",
+    glow: "#ff9d5c", glowAmt: 0.6, mote: "#ffb08a",
   },
-  // 2 — quests: crystal cave
+  // 2 — projects: violet dusk silk
   {
-    skyTop: "#060312", skyBot: "#241040", nebA: "#7b2fa8", nebB: "#2a1c5e",
-    glow: "#d966ff", star: "#e6c0ff", ridgeTint: "#0b0718", mote: "#ff9a5c",
-    starAmt: 0.1, moonAmt: 0.25, auroraAmt: 0.0, haze: 0.6,
+    skyTop: "#0b0818", skyBot: "#221040", nebA: "#4a2a7e", nebB: "#1c2a6e",
+    glow: "#c9a0ff", glowAmt: 0.6, mote: "#d9b8ff",
   },
-  // 3 — stats: aurora fields
+  // 3 — contact: aurora teal silk
   {
-    skyTop: "#03100f", skyBot: "#0d2b33", nebA: "#1f8a70", nebB: "#14505e",
-    glow: "#7ef29d", star: "#d8ffe8", ridgeTint: "#071413", mote: "#9df5c0",
-    starAmt: 0.14, moonAmt: 0.0, auroraAmt: 1.0, haze: 0.4,
-  },
-  // 4 — continue: starfield arena
-  {
-    skyTop: "#02020a", skyBot: "#14062b", nebA: "#4d2a8f", nebB: "#8c3c78",
-    glow: "#b48ce8", star: "#ffffff", ridgeTint: "#05030f", mote: "#cdb0ff",
-    starAmt: 0.3, moonAmt: 0.15, auroraAmt: 0.0, haze: 0.3,
+    skyTop: "#05121a", skyBot: "#0c2e33", nebA: "#14655e", nebB: "#1f8a70",
+    glow: "#7ef29d", glowAmt: 0.6, mote: "#9df5c0",
   },
 ];
 
 const BIOME_KEYS = [
-  "skyTop", "skyBot", "nebA", "nebB", "glow", "star", "ridgeTint", "mote",
+  "skyTop", "skyBot", "nebA", "nebB", "glow", "mote",
 ] as const;
 type ColorKey = (typeof BIOME_KEYS)[number];
 
-const FLOAT_KEYS = ["starAmt", "moonAmt", "auroraAmt", "haze"] as const;
+const FLOAT_KEYS = ["glowAmt"] as const;
 
 export interface World {
   setBiome(target: number): void;
   setScroll(progress: number): void;
   setPointer(x: number, y: number): void;
+  setVelocity(velocity: number): void;
   dispose(): void;
 }
 
@@ -104,12 +90,7 @@ export function createWorld(
     nebA: { value: biomeColors.nebA[0].clone() },
     nebB: { value: biomeColors.nebB[0].clone() },
     glow: { value: biomeColors.glow[0].clone() },
-    star: { value: biomeColors.star[0].clone() },
-    ridgeTint: { value: biomeColors.ridgeTint[0].clone() },
-    starAmt: { value: BIOMES[0].starAmt },
-    moonAmt: { value: BIOMES[0].moonAmt },
-    auroraAmt: { value: BIOMES[0].auroraAmt },
-    haze: { value: BIOMES[0].haze },
+    glowAmt: { value: BIOMES[0].glowAmt },
   };
 
   const sky = new THREE.Mesh(
@@ -170,6 +151,7 @@ export function createWorld(
   let biomeTarget = 0;
   let biome = 0;
   let scrollTarget = 0;
+  let velocity = 0;
   const pointer = new THREE.Vector2(0, 0);
   const pointerTarget = new THREE.Vector2(0, 0);
 
@@ -220,12 +202,13 @@ export function createWorld(
   function frame(now: number) {
     const dt = Math.min((now - last) / 1000, 0.1);
     last = now;
-    const k = 1 - Math.exp(-dt * 3.2);
+    const k = 1 - Math.exp(-dt * 2.6);
     biome += (biomeTarget - biome) * k;
     skyUniforms.uScroll.value += (scrollTarget - skyUniforms.uScroll.value) * k;
     pointer.lerp(pointerTarget, 1 - Math.exp(-dt * 5));
     skyUniforms.uMouse.value.copy(pointer);
-    skyUniforms.uTime.value += dt;
+    // the world's breath quickens while traveling
+    skyUniforms.uTime.value += dt * (1 + velocity * 4.5);
     applyPalette(biome);
     renderer.render(scene, camera);
     raf = requestAnimationFrame(frame);
@@ -269,6 +252,9 @@ export function createWorld(
     },
     setPointer(x: number, y: number) {
       pointerTarget.set(x, y);
+    },
+    setVelocity(v: number) {
+      velocity = Math.max(0, Math.min(1, v));
     },
     dispose() {
       cancelAnimationFrame(raf);
