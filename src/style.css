@@ -393,34 +393,12 @@ html.booting #hud {
   color: var(--ink-dim);
 }
 
-.insert-coin {
-  position: absolute;
-  bottom: 7vh;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--px);
-  font-size: 12px;
-  color: var(--gold);
-  animation: blink 1.6s steps(1) infinite;
-}
-
-.arcade-credit {
-  position: absolute;
-  bottom: 7vh;
-  right: 26px;
-  font-family: var(--px);
-  font-size: 12px;
-  color: var(--ink-dim);
-}
-
 /* title entrance, after boot */
 #title .logo,
 #title .tagline,
 #title .bio,
 #title .btn-start,
-#title .controls-hint,
-#title .insert-coin,
-#title .arcade-credit {
+#title .controls-hint {
   opacity: 0;
 }
 
@@ -438,10 +416,6 @@ html.booting #hud {
 }
 #title.live .controls-hint {
   animation: title-rise 0.9s var(--ease) 0.64s both;
-}
-#title.live .insert-coin,
-#title.live .arcade-credit {
-  animation: title-rise 0.9s var(--ease) 0.8s both;
 }
 
 #title.live .now {
@@ -1072,9 +1046,6 @@ html.booting #hud {
   .menu-dest {
     display: none;
   }
-  .arcade-credit {
-    display: none;
-  }
 }
 
 /* ── reduced motion ────────────────────────────────────────── */
@@ -1100,9 +1071,7 @@ html.booting #hud {
   #title .tagline,
   #title .bio,
   #title .btn-start,
-  #title .controls-hint,
-  #title .insert-coin,
-  #title .arcade-credit {
+  #title .controls-hint {
     opacity: 1;
   }
 }
