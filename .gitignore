@@ -18,12 +18,14 @@
 # Dependencies and build output
 node_modules/
 /dist
+/target
+
+# Trunk's build cache (see Trunk.toml). The wasm-bindgen output Trunk emits
+# lands in dist/, which is ignored above.
+/.trunk/
 
 # Bun
 .bun/
-
-# Stale Rust artifacts (rust-analyzer may recreate)
-/target
 
 # Finish-review captures (session artifacts)
 .impeccable/review/

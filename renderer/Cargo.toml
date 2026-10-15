@@ -1,0 +1,30 @@
+[package]
+name = "xdm67x-world"
+version = "1.0.0"
+edition = "2021"
+publish = false
+
+[lib]
+name = "world"
+crate-type = ["cdylib", "rlib"]
+
+# wasm-bindgen is pinned: the CLI used to post-process the wasm must match this
+# exact version. `scripts/build-wasm.sh` verifies the match before building.
+[dependencies]
+wasm-bindgen = "=0.2.129"
+wasm-bindgen-futures = "0.4"
+js-sys = "0.3"
+web-sys = { version = "0.3", features = [
+    "console",
+    "Document",
+    "Element",
+    "HtmlCanvasElement",
+    "Performance",
+    "Window",
+    "Navigator",
+    "Gpu",
+] }
+wgpu = { version = "30", features = ["webgl"] }
+bytemuck = { version = "1", features = ["derive"] }
+glam = "0.34"
+console_error_panic_hook = "0.1"

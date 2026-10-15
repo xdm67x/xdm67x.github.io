@@ -1,280 +1,241 @@
 ---
 name: Mehmet Ozkan — Portfolio
-description: A professional portfolio tracing a path through one continuous WebGL shader world — Source Serif 4 and Manrope on deep night, with a single trail-gold accent.
+description: A portfolio that cuts like a game menu: four full-frame slides of glass over a looping film of a night sea, with one hard transition — torn into bands, pushed through the lens, landed oversized — that plays in the page and in a live WebGPU scene on the same clock.
 colors:
-  trail-gold: "#e5b96b"
-  gold-bright: "#f2d494"
-  gold-brass: "#b98e35"
-  night-ground: "#05060f"
-  night-horizon: "#12153a"
-  panel: "rgba(10, 13, 24, 0.74)"
-  ink: "#e8ecf6"
-  dusk: "#a8b2cc"
+  # Four rooms, all cut from the same deep blue. `tint` owns the frame's grade;
+  # `accent` owns meaning. Both come from the renderer's table
+  # (renderer/src/layout.rs) so the page and the world cannot disagree.
+  hero-tint: "#03060f"
+  hero-accent: "#6ba6ff"
+  experience-tint: "#030b15"
+  experience-accent: "#4ddbff"
+  projects-tint: "#05071a"
+  projects-accent: "#9a8cff"
+  contact-tint: "#020c14"
+  contact-accent: "#a6d9ff"
+  ink: "#eef4ff"
+  ink-soft: "#c6d5ef"
+  ink-faint: "#8b9dbe"
+  glass-body: "rgba(255,255,255,0.055)"
+  glass-body-strong: "rgba(255,255,255,0.085)"
+  glass-edge: "rgba(255,255,255,0.14)"
+  void: "#03060f"
 typography:
+  # Instrument Serif carries the display voice — filmic, tight, and the only
+  # italic in the system. Manrope carries everything readable. The platform
+  # monospace carries data: dates, counts, tags, keys, the dock.
   display:
-    fontFamily: "'Source Serif 4', Georgia, serif"
-    fontSize: "clamp(2.6rem, 6vw, 4.4rem)"
-    fontWeight: 600
-    lineHeight: 1.08
+    fontFamily: "'Instrument Serif', 'Iowan Old Style', Georgia, serif"
+    fontSize: "clamp(3.1rem, 10.4vw, 8.6rem)"
+    fontWeight: 400
+    lineHeight: 0.9
+    letterSpacing: "-0.025em"
+  section:
+    fontFamily: "'Instrument Serif', serif"
+    fontSize: "clamp(1.9rem, 4vw, 3.2rem)"
+    fontWeight: 400
+    lineHeight: 1.02
     letterSpacing: "-0.02em"
-  headline:
-    fontFamily: "'Source Serif 4', Georgia, serif"
-    fontSize: "clamp(1.5rem, 2.6vw, 2rem)"
-    fontWeight: 600
-    lineHeight: 1.2
-    letterSpacing: "-0.01em"
   title:
-    fontFamily: "'Manrope', system-ui, sans-serif"
-    fontSize: "1.0625rem"
-    fontWeight: 700
-    lineHeight: 1.4
-  title-large:
-    fontFamily: "'Manrope', system-ui, sans-serif"
-    fontSize: "1.375rem"
-    fontWeight: 700
-    lineHeight: 1.35
+    fontFamily: "'Manrope', ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(1.02rem, 1.25vw, 1.18rem)"
+    fontWeight: 600
+    letterSpacing: "-0.015em"
   body:
-    fontFamily: "'Manrope', system-ui, sans-serif"
-    fontSize: "1rem"
+    fontFamily: "'Manrope', ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(0.92rem, 0.98vw, 1.02rem)"
     fontWeight: 400
-    lineHeight: 1.7
-  small:
-    fontFamily: "'Manrope', system-ui, sans-serif"
-    fontSize: "0.9375rem"
-    fontWeight: 400
-    lineHeight: 1.7
-  button:
-    fontFamily: "'Manrope', system-ui, sans-serif"
-    fontSize: "0.875rem"
-    fontWeight: 700
-    lineHeight: 1.4
-  label:
-    fontFamily: "'Manrope', system-ui, sans-serif"
-    fontSize: "0.8125rem"
-    fontWeight: 600
-    lineHeight: 1.5
+    lineHeight: 1.6
+  lede:
+    fontFamily: "'Manrope', ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(1rem, 1.15vw, 1.19rem)"
+    lineHeight: 1.62
   micro:
-    fontFamily: "'Manrope', system-ui, sans-serif"
-    fontSize: "0.75rem"
-    fontWeight: 600
-    lineHeight: 1.5
+    fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace"
+    fontSize: "0.6875rem"
+    letterSpacing: "0.1em"
+scale:
+  steps: ["0.5625", "0.625", "0.6875", "0.7813", "0.8125", "0.8438", "0.875", "0.9375", "0.9688", "1", "1.0625", "1.1875"]
+  fluid: ["clamp(3.1rem, 10.4vw, 8.6rem)", "clamp(1.9rem, 4vw, 3.2rem)", "clamp(0.92rem, 0.98vw, 1.02rem)"]
+  overrides:
+    mobile-display: "clamp(3rem, 15vw, 5.5rem)"
+    mobile-body: "15px"
+    print-body: "1rem"
 rounded:
-  card: "14px"
+  chip: "0.35rem"
+  card: "0.85rem"
+  panel: "1rem"
   pill: "999px"
-components:
-  button-primary:
-    backgroundColor: "rgba(7, 8, 26, 0.55)"
-    textColor: "{colors.trail-gold}"
-    rounded: "{rounded.card}"
-    padding: "13px 22px"
-  button-primary-hover:
-    backgroundColor: "{colors.trail-gold}"
-    textColor: "{colors.night-ground}"
-  chip-tag:
-    textColor: "{colors.dusk}"
-    rounded: "{rounded.pill}"
-    padding: "4px 11px"
-  card-project:
-    backgroundColor: "{colors.panel}"
-    rounded: "{rounded.card}"
-    padding: "24px 26px"
-  rail-stop-active:
-    backgroundColor: "{colors.trail-gold}"
+motion:
+  # One authored moment. Everything else is 2-4% atmosphere at most.
+  cut: "0.92s total: 0.42 to leave, 0.08 of flash, 0.46 to land"
+  cut-switch: "0.42 (flash, shockwave, chromatic split peak)"
+  stagger: "0.05 out, 0.20 in (0.026 per block)"
+  fastest: "0.25s (hover, focus)"
+  longest: "1.1s (film resolving from blur at boot)"
 ---
 
-# Design System: Mehmet Ozkan — Portfolio
+# Design
 
-## Overview
+<!-- The scene: who is looking, from where, under what light. -->
+A recruiter skims this in an office between meetings, or on a phone on a train,
+for under two minutes. That decides the light: a night sea, deep navy and
+moonlit, with the page as panes of glass in front of it — never a bright
+white document, and never so dark that the sea disappears.
 
-**Creative North Star: "The Traverse"**
+## The film
 
-A professional portfolio that traces a path. The page is one continuous
-journey through a WebGL shader world — indigo night at the hero, dawn behind
-the experience timeline, dusk violet over the projects, and a quiet aurora
-at the contact — with a slim waypoint rail on the right edge filling with
-gold as the visitor descends. The world provides all the atmosphere; the
-content stays quiet, factual, and typographically calm.
+One looping film of a night sea fills the frame, behind everything. It is
+generated for this page (`tools/loopgen.rs`, no dependencies): a heightfield of
+seven wave components running mostly towards the camera, lit by one low light
+off to the right, rows mapped to distance the way a real lens maps a plane, so
+the swell opens up towards the viewer. It is seamless because every component
+advances by a whole number of cycles per loop, not because it is cross-faded.
 
-Typography carries the professionalism: Source Serif 4 gives the name and
-section headings an editorial, confident voice; Manrope keeps every sentence
-and control precise and unpretentious. One accent — Trail Gold — marks the
-path itself: waypoint dots, timeline markers, actions, and the rail fill.
-Nothing shouts, nothing blinks, nothing games.
+It is graded in CSS, not in the file: `brightness(0.98) saturate(1.12)`, a 1.5px
+blur, a left-to-right scrim that quiets the side the type sits on, a vignette,
+and a wash of the current room's tint. That wash is what makes a slide change
+felt across the whole frame. While a cut plays the film scales up 5% and the
+grade lifts (`--film-open`), so the sea is part of the movement.
 
-**Key Characteristics:**
+The loop has no audio, is muted, loops, plays inline, and pauses with
+`prefers-reduced-motion` (leaving the poster showing).
 
-- One evolving shader world — a living domain-warped fBm silk field with a
-  breathing glow and GPU motes, blending through four biomes and quickening
-  with scroll velocity; never a hard cut, never decoration bolted onto a
-  section.
-- A single warm accent. Trail Gold appears only on the path's markers and
-  actions; the sky owns the big color.
-- Content in near-opaque dark panels with 14px radii and 1px hairline
-  borders; depth is declared once, as a border.
-- Motion is restrained but alive: exponential ease-out entrances (rise +
-  blur clear), a clip-path wipe for section headings, the hero drifting and
-  fading as the journey begins, the timeline trail filling as it is
-  traversed, and the silk quickening while you scroll. Everything freezes
-  under `prefers-reduced-motion`; the site works with no WebGL at all.
+## The cut
 
-## Colors
+The site has one piece of authored motion, and it is used everywhere. It takes
+0.92 s and has three parts:
 
-A night palette disciplined by one warm accent. The shader supplies the
-chromatic range; the UI supplies restraint.
+| When | What the page does | What the world does |
+| --- | --- | --- |
+| 0 → 0.42 | Blocks converge a little, grow ~25%, blur and burn out; bands of glass rip sideways out of the frame, alternating direction; the type splits into red and cyan copies | Every piece is thrown along its own radial direction by a burst that grows, the plates stretch into streaks, the rings flare, the camera pulls back and widens |
+| 0.42 | Flash frame; shockwave ring expands from the centre; the split peaks | The burst peaks: brightest emissive, widest view, most roll |
+| 0.42 → 1 | The new page punches in ~18% oversized and snaps back, block by block down the column, behind one wipe of light | Pieces converge past their marks and settle (a small overshoot), the camera pushes back in and the room's colour has changed |
 
-### Primary
+Both halves are driven by one number: the front end owns `progress`, paints its
+own blocks with it, and hands it to the renderer as `set_deck(from, to,
+progress)`. The world is a pure function of that state, so the two layers cannot
+drift apart — and at rest (`from === to`, `progress === 1`) nothing is animating
+at all.
 
-- **Trail Gold** (#e5b96b): the path's voice — hero role line, waypoint
-  dots and rail fill, timeline markers, CTA borders and text, link hovers.
-  Used on ≤10% of any viewport.
-- **Gold Bright** (#f2d494): the gold's hover state on links.
-- **Gold Brass** (#b98e35): scrollbar thumb; the darker gold for platform
-  surfaces.
+## The world
 
-### Neutral
+One pool of 176 glass pieces: a core, three hairline rings and 172 plates cut
+from a seven-sided shard with a beveled rim so the outline catches a specular
+line the way chipped glass does. Each slide is a different arrangement of that
+same pool.
 
-- **Night Ground** (#05060f): the world's ground and page background.
-- **Night Horizon** (#12153a): the body's fallback gradient midpoint
-  (no-WebGL world).
-- **Ink** (#e8ecf6): primary text, ~14:1 on panels.
-- **Dusk** (#a8b2cc): secondary text — descriptions, dates, destinations,
-  ~7:1 on panels.
-- **Panel** (rgba(10, 13, 24, 0.74)): the near-opaque indigo surface every
-  card sits on.
+| Slide | Arrangement | What it means |
+| --- | --- | --- |
+| 01 Hero | An oblate cloud of plates orbiting the core, inside three tipped rings | The work, presented in orbit |
+| 02 Experience | Three columns rising left to right over a wide field of fallen plates | A record that grows, oldest to newest |
+| 03 Projects | A 13×13 lattice of tiles with a larger, deeper layer behind it | The work itself, as objects |
+| 04 Contact | Concentric rings of plates around a signal sphere | A landing place: something answered |
 
-### Named Rules
+**Scale.** At a slide the camera sits about 4.4 m from the arrangement with a
+42° view, so one metre is roughly 270 px on a 900 px-tall frame. Arrangements are
+built inside a box about 2.0 m wide and 1.5 m tall, and the camera aims left of
+that box (`AXIS_X`), which keeps the structure in the right half of the frame and
+the document's column of type in the left. On a portrait viewport the camera
+moves over the centre line and steps back so the whole arrangement fits.
 
-**The Single Accent Rule.** Trail Gold is the only UI accent. If a screen
-needs a second accent color, the request is really for the shader's biome
-palette — add it there, not to the chrome.
+**Material.** One fragment shader, two pipelines. The core and the rings are
+opaque, write depth, and are lit by a cool key light, a hemisphere ambient and a
+fresnel rim in the room's accent. The plates are blended, sorted back to front
+on the CPU every frame, and deliberately thin (0.09–0.24 alpha at rest): they
+add light along their edges rather than darkening the sea behind them. A fake
+environment, sampled by reflection direction, gives a stack of panes depth. Fog
+is not a colour but a fade: far pieces dissolve back into the film.
 
-**The Solid Panel Rule.** Body copy never floats on the animated sky. Reading
-text lives on Panel surfaces; only the hero's name, role, and bio sit
-directly on the world, and only on the night hero where the sky is calmest.
+The canvas is transparent (premultiplied) and composited over the video, so the
+sea is visible through every pane. There is no sky pass and no shadow map: the
+film is the background, and the world is the glass in front of it.
 
 ## Typography
 
-**Display Font:** Source Serif 4 (fallback: Georgia)
-**Body Font:** Manrope (fallback: system-ui)
+Instrument Serif for the display voice — the name, the section headings, the
+email address — with one italic gesture per heading (the second half of a
+sentence, the family name). Manrope for everything readable: lede, entries,
+descriptions, links, buttons. The platform monospace for data only: dates,
+counts, tags, indices, the dock's counter, keyboard keys.
 
-**Character:** An editorial serif for authority — the name and section
-headings read like the opening lines of a travel journal — paired with a
-precise, slightly humanist sans that keeps controls and copy professional.
-Neither face borrows the other's job.
+Sizes do the work; there are two weights in play (400, 600) plus 500 for
+links. Headings carry their own weight — no label sits above a heading claiming
+to introduce it. Section identity comes from the glass nav's numbered tabs and
+the dock's counter, where the sequence *is* the content.
 
-### Hierarchy
+Body measure is 58ch or narrower, in a column that takes the left 40rem of a
+wide frame; the world keeps the rest.
 
-- **Display** (600, clamp(2.6rem–4.4rem), 1.08, -0.02em): the hero name,
-  once per page.
-- **Headline** (600, clamp(1.5rem–2rem), 1.2): section headings — Experience,
-  Projects, Contact — each flanked by a gold waypoint dot.
-- **Title** (700, 1.0625rem, Manrope): timeline roles and project titles;
-  the featured project scales to 1.375rem.
-- **Body** (400, 1rem, 1.7): timeline bullets and contact copy; measure
-  capped at 68–70ch.
-- **Small** (400–700, 0.9375rem): descriptions, email action, link rows.
-- **Label** (600, 0.8125rem): timeline date lines and rail labels; normal
-  case, no letterspacing games.
-- **Micro** (600, 0.75rem): project tags and footer. The type floor; nothing
-  renders smaller.
+## Colour
 
-### Named Rules
+Four rooms, all cut from the same deep blue. The tint owns the frame's grade and
+the glass; the accent owns meaning and is rationed: the world's core and rings,
+the active tab, focus rings, links, the live badge, the waypoint of the shockwave.
+Nothing else is coloured, and there is never more than one accent in a frame.
 
-**The Serif-For-Headings Rule.** Source Serif 4 appears only on h1/h2 and
-one italic publication note. Every control, label, and sentence is Manrope.
+`renderer/src/layout.rs` holds the table and `web/main.js` writes `--accent` and
+`--tint` from it every frame, blended across the cut, so the world and the
+document cannot disagree about a room's colour. Every accent clears 4.5:1
+against the film it sits on.
 
-**The 0.75rem Floor Rule.** No text below 12px. The smallest labels (tags,
-footer) still clear contrast over the night world.
+## Type in the world
 
-## Layout
+Three labels live in the scene rather than in the document: the span of years on
+experience, an index line on projects, a position on contact. Each is an
+ordinary DOM element whose `transform` and `font-size` are driven from the
+renderer's per-frame anchor projection (screen position, fade, pixels-per-metre),
+so text stays crisp, selectable and translatable while appearing to sit in the
+space. They are `aria-hidden`, decorative, and never carry a fact the document
+does not also state.
 
-Full-viewport stages stacked vertically with generous travel space (16vh
-top padding desktop, 12vh ≤900px). One reading column per section: hero
-640px left-aligned and vertically centered; experience timeline 760px with
-a 1px trail line at left (40px node offset); projects 1080px in an
-auto-fill grid of ≥320px columns, featured card spanning full width;
-contact 640px centered. A fixed waypoint rail sits 34px from the right
-edge on ≥1000px viewports: four dots, labels on hover/focus, a gold fill
-line tracking scroll; hidden below 1000px, where the page's own trail
-carries the metaphor.
+## Interaction
 
-## Elevation & Depth
+- **Wheel, trackpad, swipe, keys.** A slide change takes one deliberate gesture:
+  wheel and trackpad accumulate past a threshold, a touch flick or a swipe
+  counts, and <kbd>↑</kbd> <kbd>↓</kbd> <kbd>space</kbd> <kbd>1</kbd>–<kbd>4</kbd>
+  <kbd>Home</kbd> <kbd>End</kbd> work from the keyboard. A sheet with more
+  content than its frame scrolls first and only then changes slide.
+- **The glass nav** carries four numbered tabs with a pip that slides between
+  them, and the mark returns to the hero.
+- **History.** Each slide is a history entry, so the back button walks the deck.
+- **Focus.** When a cut lands, focus moves to the new slide's heading; slides
+  that are off screen are `inert`, so nothing unreachable is focusable.
 
-No shadow system. Depth comes from the world itself — the silk field's
-layered domain warping and breathing glow do the atmospheric work — and
-from one hairline (1px,
-rgba(232,236,246,.1)) declaring each panel. Hover brightens the border and
-lifts cards 3px; nothing glows, nothing halos.
+## Fallbacks
 
-### Named Rules
-
-**The Hairline Rule.** A panel states its elevation once, as a border —
-never border plus shadow. Hover changes border color, not box-shadow.
-
-## Shapes
-
-Calm geometry: 14px radii on cards and buttons, 999px pills only for the
-small tag chips, perfectly round 9–11px dots for waypoints and timeline
-nodes. The only drawn icon is a geometric arrow (SVG rects), used on CTAs
-and links. The favicon carries the trail mark: a gold path curving to a
-terminal dot.
-
-## Components
-
-### Buttons
-
-- **Shape:** 14px radius, 1px solid Trail Gold border
-- **Primary (hero CTA, email action):** Trail Gold text on translucent night
-  (rgba(7,8,26,.55) or panel), Manrope 700 at 0.875–0.9375rem, padding
-  13–14px 22–24px
-- **Hover / Focus:** fills Trail Gold, text flips to Night Ground; `:active`
-  presses down 2px. Focus-visible: 2px gold outline, 3px offset
-
-### Chips
-
-- **Tag chips:** Dusk text on a 1px hairline, 999px pill, 0.75rem/600,
-  padding 4px 11px. No selected states — they are metadata, not controls.
-
-### Cards / Containers
-
-- **Project card:** Panel surface, 1px hairline, 14px radius, 24px 26px
-  padding; title, description, insight line, tags, Source/Live links.
-  Hover: hairline brightens, card lifts 3px, and a faint Trail Gold wash
-  (0.07 alpha radial) follows the cursor across the face.
-- **Contact card:** same language, 40px 42px padding, a hairline separating
-  the email action from the link rows.
-- **Timeline entry:** not a card — typography on the world, anchored by a
-  1px trail line and a gold ringed node at 11px; the trail fills with gold
-  as the section is traversed, and topic chips (pill, hairline) tag each
-  entry.
-
-### Navigation
-
-- **Waypoint rail (≥1000px):** fixed right, four stops (Intro, Experience,
-  Projects, Contact); 9px dots on a 1px track, gold fill scaling with scroll
-  progress, active dot solid gold; labels fade in on hover/focus 22px left of
-  the dot. Anchor links, keyboard-focusable.
+- **Reduced motion**: no cut, no tear, no film motion, no drift; the slide
+  changes instantly and the film holds its poster.
+- **No WebGPU**: the canvas is dropped, the film is graded darker, and a faint
+  accent grid stands in for the world. Nothing is hidden or duplicated.
+- **No scripting**: the four slides stay in the document flow as a plain,
+  scrollable portfolio, complete with the projects list.
+- **Print**: the film, the canvas, the chrome and the labels are dropped and the
+  four slides print in order as a plain document.
 
 ## Do's and Don'ts
 
-### Do:
+### Do
 
-- **Do** keep every sentence on a near-opaque Panel; only the hero sits
-  directly on the sky.
-- **Do** blend biome palettes continuously through scroll — the world is one
-  traverse, not four decorated sections.
-- **Do** keep motion exponential ease-out and restrained: rise + blur
-  entrances, one heading wipe, no blinking.
-- **Do** respect `prefers-reduced-motion` (static world, instant reveals)
-  and keep the CSS-gradient fallback world for no-WebGL browsers.
+- **Do** treat the cut as the product: one transition, tuned, and the same
+  movement in the page and in the world.
+- **Do** keep glass thin. A pane that darkens the sea behind it is a pane too
+  far.
+- **Do** keep the film visible. If the page reads as black, the background has
+  been lost.
+- **Do** keep every fact in the DOM. If the film and the world both failed, the
+  page would still be a complete portfolio.
 
-### Don't:
+### Don't
 
-- **Don't** reintroduce gaming vocabulary, pixel fonts, boot sequences, or
-  arcade chrome — the world is professional (user decision, 2026-10-11).
-- **Don't** add a second UI accent; new color arrives through the shader's
-  biome palettes.
-- **Don't** put text below 0.75rem or animate layout properties.
-- **Don't** use Source Serif 4 for controls or sentences — serif is for
-  headings and the one italic note.
+- **Don't** scatter, tumble or explode the typography: the page is cut, not
+  thrown. Blocks move in scale and blur, never in rotation.
+- **Don't** add a second transition style. New movement arrives as a parameter of
+  the cut (a stagger, an amplitude), not as a new animation.
+- **Don't** put a label above a heading, or a number on a section that does not
+  need one.
+- **Don't** name the technology in the interface — no stack labels, no renderer
+  readout. The renderer's identity belongs in the console.
+- **Don't** introduce a fifth colour. New colour arrives as a room in the
+  palette table.
 - **Don't** add a stats/skills section — removed by user decision.
