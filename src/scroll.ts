@@ -15,16 +15,16 @@ export function setupScroll(
   })
   scope.add(() => {
     if (scope.matches.reducedMotion) {
-      root.style.setProperty('--vivid', '100%')
+      root.style.setProperty('--vivid', '1')
       onVivid(1)
       return () => root.style.removeProperty('--vivid')
     }
 
-    root.style.setProperty('--vivid', '0%')
+    root.style.setProperty('--vivid', '0')
     onVivid(0)
     CHAPTERS.forEach((_, index) => onChapterProgress(index, 0))
 
-    animate('#hero-inner', {
+    animate('#hero-inner, #hero .sfx', {
       y: [0, -100],
       opacity: [1, 0],
       ease: 'linear',
@@ -74,7 +74,7 @@ export function setupScroll(
         leave: 'bottom bottom',
         sync: true,
         onUpdate: (observer) => {
-          root.style.setProperty('--vivid', `${observer.progress * 100}%`)
+          root.style.setProperty('--vivid', `${observer.progress}`)
           onVivid(observer.progress)
         },
       }),

@@ -4,13 +4,14 @@ My portfolio website: a scroll-driven, one-page journey from monochrome manga to
 
 ## The experience
 
-- Hero: inked typography over a procedural wireframe terrain, a neural web overhead, and manga screentones
+- Hero: inked typography and an outlined sound effect over a procedural wireframe terrain, a neural web overhead, and manga screentones
+- The whole page is laid out as comic panels: heavy ink frames, offset shadows, numbered panel tabs, screentone fills, a speech balloon, and action lines raking off each headline
 - Chapter 01 · The Origin: camera pushes toward a breathing, noise-displaced planet
 - Chapter 02 · The Craft: orbital ring system
 - Chapter 03 · The Playground: drifting crystal field and project cards
 - Chapter 04 · Your Turn: camera lifts into a wide overview
 - As you scroll, the world blooms: screentones give way to a blue sky, the terrain turns to grass with procedural flowers, butterflies wake up, and cel-shaded objects gain color
-- The same scroll progress colors the interface: ink outlines, offset panel shadows, and coral, blue, yellow, and mint fills
+- The same scroll progress develops the page from manga to anime: screentone and action lines fade out as panel fills bloom into coral, blue, yellow, and mint, and the ink accents turn blue
 - Reduced motion: all content stays visible in a fully colored, static scene, with no reveals, camera travel, pointer tilt, or continuous render loop
 
 ## Stack
