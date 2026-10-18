@@ -15,7 +15,7 @@ const SHARD_COLORS: number[][] = [
   [0.5, 0.8, 0.4],
 ]
 
-// Ink goo: vertex noise displacement + posterized monochrome shading.
+// Manga screentones dissolve into cel-shaded color, keeping the ink silhouette.
 const GOO_VERT = /* glsl */ `
   uniform float uTime;
   uniform float uAmp;
@@ -65,12 +65,16 @@ const GOO_FRAG = /* glsl */ `
   void main() {
     vec3 n = normalize(vNormal);
     float lambert = dot(n, normalize(vec3(0.4, 0.75, 0.55))) * 0.5 + 0.5;
-    float bands = floor(lambert * 4.0) / 4.0;
-    float fresnel = pow(1.0 - abs(n.z), 2.0);
-    vec3 mono = mix(vec3(0.05), vec3(0.95), bands * 0.8);
-    mono = mix(mono, vec3(1.0), fresnel * 0.85);
-    vec3 tint = mix(uColor * 0.3, uColor, bands);
-    tint = mix(tint, vec3(1.0), fresnel * 0.5);
+    float bands = floor(lambert * 3.0) / 3.0;
+    float edge = smoothstep(0.16, 0.26, abs(n.z));
+    vec2 dotUv = fract(gl_FragCoord.xy / 5.0) - 0.5;
+    float dotRadius = mix(0.38, 0.06, bands);
+    float tone = 1.0 - smoothstep(dotRadius - 0.05, dotRadius, length(dotUv));
+    vec3 mono = mix(vec3(0.94), vec3(0.12), tone * (1.0 - bands * 0.6));
+    vec3 tint = mix(uColor * 0.42, uColor, bands);
+    tint = mix(tint, vec3(1.0, 0.96, 0.83), step(0.72, lambert) * 0.45);
+    mono = mix(vec3(0.06), mono, edge);
+    tint = mix(vec3(0.07, 0.08, 0.12), tint, edge);
     gl_FragColor = vec4(mix(mono, tint, uVivid), 1.0);
   }
 `

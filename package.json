@@ -12,7 +12,7 @@
     "fmt:check": "oxfmt --check src vite.config.ts"
   },
   "dependencies": {
-    "gsap": "^3.15.0",
+    "animejs": "^4.5.0",
     "three": "^0.186.1"
   },
   "devDependencies": {

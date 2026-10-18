@@ -5,7 +5,7 @@ export interface BackdropHandle {
   dispose(): void
 }
 
-// CRT scanline base: white with a faint moving raster and vignette.
+// Printed manga paper opens into a softly painted anime sky.
 const SCANLINE_VERT = /* glsl */ `
   varying vec2 vUv;
 
@@ -22,13 +22,14 @@ const SCANLINE_FRAG = /* glsl */ `
   varying vec2 vUv;
 
   void main() {
-    vec3 base = mix(vec3(1.0), vec3(0.93, 0.97, 1.0), uVivid * 0.7);
-    float scan = 0.5 + 0.5 * sin(vUv.y * 800.0 + uTime * 2.0);
-    vec3 col = base - scan * 0.015 * (1.0 - uVivid * 0.5);
-    float sweep = smoothstep(0.04, 0.0, abs(fract(vUv.y * 0.5 + uTime * 0.03) - 0.5));
-    col -= sweep * 0.03 * (1.0 - uVivid * 0.5);
-    float vig = smoothstep(0.75, 0.2, distance(vUv, vec2(0.5)));
-    col -= (1.0 - vig) * 0.05;
+    vec2 dotUv = fract(gl_FragCoord.xy / 6.0) - 0.5;
+    float dots = 1.0 - smoothstep(0.06, 0.16, length(dotUv));
+    vec3 paper = vec3(0.98 - dots * 0.07);
+    vec3 sky = mix(vec3(1.0, 0.94, 0.82), vec3(0.52, 0.76, 0.95), vUv.y);
+    float cloud = sin(vUv.x * 12.0 + uTime * 0.015) * 0.025;
+    cloud = 1.0 - smoothstep(0.015, 0.08, abs(vUv.y - 0.72 - cloud));
+    sky = mix(sky, vec3(0.98, 0.98, 0.96), cloud * 0.5);
+    vec3 col = mix(paper, sky, uVivid);
     gl_FragColor = vec4(col, 1.0);
   }
 `

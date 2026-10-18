@@ -1,135 +1,138 @@
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { animate, createAnimatable, createScope, onScroll, stagger } from 'animejs'
 
-gsap.registerPlugin(ScrollTrigger)
+const CHAPTERS = ['#about', '#experience', '#work', '#contact']
 
 export function setupScroll(
   onChapterProgress: (index: number, progress: number) => void,
   onVivid: (progress: number) => void,
 ): () => void {
-  const mm = gsap.matchMedia()
+  const root = document.documentElement
+  const scope = createScope({
+    mediaQueries: {
+      reducedMotion: '(prefers-reduced-motion: reduce)',
+      finePointer: '(hover: hover) and (pointer: fine)',
+    },
+  })
+  scope.add(() => {
+    if (scope.matches.reducedMotion) {
+      root.style.setProperty('--vivid', '100%')
+      onVivid(1)
+      return () => root.style.removeProperty('--vivid')
+    }
 
-  mm.add('(prefers-reduced-motion: no-preference)', () => {
-    // Hero: typography lifts away as the journey starts.
-    gsap.to('#hero-inner', {
-      y: -120,
-      opacity: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#hero',
-        start: 'top top',
-        end: 'bottom 25%',
-        scrub: true,
-      },
+    root.style.setProperty('--vivid', '0%')
+    onVivid(0)
+    CHAPTERS.forEach((_, index) => onChapterProgress(index, 0))
+
+    animate('#hero-inner', {
+      y: [0, -100],
+      opacity: [1, 0],
+      ease: 'linear',
+      autoplay: onScroll({
+        target: '#hero',
+        enter: 'top top',
+        leave: '25% bottom',
+        sync: true,
+      }),
     })
-    gsap.fromTo(
-      '.scroll-cue',
-      { opacity: 1 },
-      {
-        opacity: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#hero',
-          start: 'top top',
-          end: '20% top',
-          scrub: true,
-        },
-      },
-    )
 
-    // Single-element reveals.
-    gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {
-      gsap.fromTo(
-        element,
-        { y: 48, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: element,
-            start: 'top bottom',
-            toggleActions: 'play none none reverse',
+    animate('#hero h1, #hero .tagline', {
+      y: [24, 0],
+      opacity: [0, 1],
+      duration: 900,
+      delay: stagger(140),
+      ease: 'out(4)',
+    })
+
+    document
+      .querySelectorAll<HTMLElement>('[data-reveal], [data-reveal-group]')
+      .forEach((element) => {
+        const grouped = element.hasAttribute('data-reveal-group')
+        animate(grouped ? Array.from(element.children) : element, {
+          y: [36, 0],
+          opacity: [0, 1],
+          duration: 800,
+          delay: grouped ? stagger(70) : 0,
+          ease: 'out(4)',
+          autoplay: onScroll({
+            target: element,
+            enter: 'bottom top',
+            leave: 'top bottom',
+            sync: 'play none play reverse',
+          }),
+        })
+      })
+
+    // One scroll value inks both the interface and the shader world.
+    const color = { progress: 0 }
+    animate(color, {
+      progress: [0, 1],
+      ease: 'linear',
+      autoplay: onScroll({
+        target: '#app',
+        enter: 'top top',
+        leave: 'bottom bottom',
+        sync: true,
+        onUpdate: (observer) => {
+          root.style.setProperty('--vivid', `${observer.progress * 100}%`)
+          onVivid(observer.progress)
+        },
+      }),
+    })
+
+    CHAPTERS.forEach((selector, index) => {
+      const chapter = { progress: 0 }
+      animate(chapter, {
+        progress: [0, 1],
+        ease: 'linear',
+        autoplay: onScroll({
+          target: selector,
+          enter: 'bottom top',
+          leave: index === CHAPTERS.length - 1 ? 'bottom bottom' : 'top bottom',
+          sync: true,
+          onUpdate: (observer) => onChapterProgress(index, observer.progress),
+        }),
+      })
+    })
+
+    const listeners = new AbortController()
+    if (scope.matches.finePointer) {
+      document.querySelectorAll<HTMLElement>('.card').forEach((card) => {
+        const tilt = createAnimatable(card, {
+          rotateX: 0,
+          rotateY: 0,
+          duration: 350,
+          ease: 'out(3)',
+        })
+        const { rotateX, rotateY } = tilt
+        if (!rotateX || !rotateY) {
+          throw new Error('Anime.js card tilt properties were not initialized')
+        }
+        card.addEventListener(
+          'pointermove',
+          (event) => {
+            const rect = card.getBoundingClientRect()
+            rotateY(((event.clientX - rect.left - rect.width / 2) / rect.width) * 10)
+            rotateX((-(event.clientY - rect.top - rect.height / 2) / rect.height) * 10)
           },
-        },
-      )
-    })
-
-    // Grouped children, staggered on entry.
-    gsap.utils.toArray<HTMLElement>('[data-reveal-group]').forEach((group) => {
-      const children = Array.from(group.children)
-      gsap.fromTo(
-        children,
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.9,
-          ease: 'power3.out',
-          stagger: 0.08,
-          scrollTrigger: {
-            trigger: group,
-            start: 'top bottom',
-            toggleActions: 'play none none reverse',
+          { signal: listeners.signal },
+        )
+        card.addEventListener(
+          'pointerleave',
+          () => {
+            rotateX(0)
+            rotateY(0)
           },
-        },
-      )
-    })
-
-    // Overall page progress: the world gains color as you discover it.
-    ScrollTrigger.create({
-      trigger: '#app',
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: (self) => onVivid(self.progress),
-    })
-
-    // Chapter triggers feed the 3D world its story progress,
-    // and flip the page accent as each chapter arrives.
-    const chapters: Array<{ selector: string; start: string; end: string }> = [
-      { selector: '#about', start: 'top bottom', end: 'bottom top' },
-      { selector: '#experience', start: 'top bottom', end: 'bottom top' },
-      { selector: '#work', start: 'top bottom', end: 'bottom top' },
-      { selector: '#contact', start: 'top bottom', end: 'bottom bottom' },
-    ]
-    chapters.forEach((chapter, index) => {
-      ScrollTrigger.create({
-        trigger: chapter.selector,
-        start: chapter.start,
-        end: chapter.end,
-        toggleClass: { targets: 'body', className: `in-c${index + 1}` },
-        onUpdate: (self) => onChapterProgress(index, self.progress),
+          { signal: listeners.signal },
+        )
       })
-    })
-
-    // Cards tilt toward the pointer.
-    gsap.utils.toArray<HTMLElement>('.card').forEach((card) => {
-      gsap.set(card, { transformPerspective: 900 })
-      const rotationX = gsap.quickTo(card, 'rotationX', { duration: 0.5, ease: 'power2.out' })
-      const rotationY = gsap.quickTo(card, 'rotationY', { duration: 0.5, ease: 'power2.out' })
-      card.addEventListener('pointermove', (event) => {
-        const rect = card.getBoundingClientRect()
-        const px = (event.clientX - rect.left) / rect.width - 0.5
-        const py = (event.clientY - rect.top) / rect.height - 0.5
-        rotationY(px * 14)
-        rotationX(-py * 14)
-      })
-      card.addEventListener('pointerleave', () => {
-        rotationX(0)
-        rotationY(0)
-      })
-    })
-
-    ScrollTrigger.refresh()
+    }
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+      listeners.abort()
+      root.style.removeProperty('--vivid')
     }
   })
 
-  return () => {
-    mm.revert()
-    ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
-  }
+  return () => scope.revert()
 }
