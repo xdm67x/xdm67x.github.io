@@ -1,31 +1,4 @@
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Worktrees
-.worktrees
-
-# Superpowers brainstorming artifacts
-.superpowers
-
-# Dependencies and build output
 node_modules/
-/dist
-/target
-
-# Trunk's build cache (see Trunk.toml). The wasm-bindgen output Trunk emits
-# lands in dist/, which is ignored above.
-/.trunk/
-
-# Bun
-.bun/
-
-# Finish-review captures (session artifacts)
-.impeccable/review/
+dist/
+*.local
+.DS_Store

@@ -21,25 +21,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          targets: wasm32-unknown-unknown
+          version: 12
 
-      - name: Cache Rust build
-        uses: Swatinem/rust-cache@v2
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          workspaces: renderer
+          node-version: 26
+          cache: pnpm
 
-      # Trunk builds the Rust crate, resolves the matching wasm-bindgen CLI
-      # itself, runs it, and copies the plain-ES-module front end.
-      - name: Install Trunk
-        uses: taiki-e/install-action@v2
-        with:
-          tool: trunk
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Build site
-        run: trunk build --release
+        run: pnpm build
 
       - name: Copy index.html to 404.html
         run: cp dist/index.html dist/404.html
