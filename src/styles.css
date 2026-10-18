@@ -157,11 +157,13 @@ body {
 }
 
 @keyframes cue-drop {
+
   0%,
   100% {
     transform: translateY(0);
     opacity: 1;
   }
+
   70% {
     transform: translateY(9px);
     opacity: 0.15;
@@ -173,6 +175,7 @@ body {
     opacity: 0;
     transform: translateY(1.4rem);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
