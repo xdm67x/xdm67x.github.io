@@ -22,16 +22,20 @@ export function setupScroll(
         scrub: true,
       },
     })
-    gsap.to('.scroll-cue', {
-      opacity: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#hero',
-        start: 'top top',
-        end: '20% top',
-        scrub: true,
+    gsap.fromTo(
+      '.scroll-cue',
+      { opacity: 1 },
+      {
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#hero',
+          start: 'top top',
+          end: '20% top',
+          scrub: true,
+        },
       },
-    })
+    )
 
     // Single-element reveals.
     gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((element) => {

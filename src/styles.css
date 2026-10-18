@@ -29,6 +29,13 @@ body.in-c4 {
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 body {
@@ -110,32 +117,54 @@ body {
 
 .scroll-cue {
   position: absolute;
-  bottom: 1.2rem;
+  bottom: 1.8rem;
   right: clamp(1.5rem, 6vw, 6rem);
-  width: 1px;
-  height: 3.5rem;
-  background: var(--line);
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  animation: rise 1s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  animation-delay: 1.4s;
 }
 
-.scroll-cue span {
+.cue-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.cue-track {
+  position: relative;
+  width: 14px;
+  height: 22px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.cue-dot {
   position: absolute;
-  left: 0;
-  top: -40%;
-  width: 100%;
-  height: 40%;
+  left: 50%;
+  top: 3px;
+  width: 2px;
+  height: 5px;
+  margin-left: -1px;
+  border-radius: 999px;
   background: var(--accent);
-  animation: drip 1.8s ease-in-out infinite;
   transition: background-color 0.8s ease;
+  animation: cue-drop 1.6s ease-in-out infinite;
 }
 
-@keyframes drip {
+@keyframes cue-drop {
   0%,
   100% {
-    top: -40%;
+    transform: translateY(0);
+    opacity: 1;
   }
-  60% {
-    top: 100%;
+  70% {
+    transform: translateY(9px);
+    opacity: 0.15;
   }
 }
 
@@ -364,7 +393,7 @@ body {
 
   #hero h1,
   #hero .tagline,
-  .scroll-cue span {
+  .cue-dot {
     animation: none;
   }
 }
