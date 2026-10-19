@@ -1,39 +1,41 @@
 # Mehmet Ozkan - Portfolio
 
-My portfolio website: a scroll-driven, one-page journey from monochrome manga to colorful anime. Built with Three.js (custom GLSL shaders), Anime.js, and TypeScript, bundled with Vite and managed with pnpm.
+My portfolio website, laid out as a book. Scrolling or dragging peels each page from its bottom-right corner to reveal the next chapter: about me, experiences, projects, and contact.
 
 ## The experience
 
-- Hero: inked typography and an outlined sound effect over a procedural wireframe terrain, a neural web overhead, and manga screentones
-- The whole page is laid out as comic panels: heavy ink frames, offset shadows, numbered panel tabs, screentone fills, a speech balloon, and action lines raking off each headline
-- Chapter 01 · The Origin: camera pushes toward a breathing, noise-displaced planet
-- Chapter 02 · The Craft: orbital ring system
-- Chapter 03 · The Playground: drifting crystal field and project cards
-- Chapter 04 · Your Turn: camera lifts into a wide overview
-- As you scroll, the world blooms: screentones give way to a blue sky, the terrain turns to grass with procedural flowers, butterflies wake up, and cel-shaded objects gain color
-- The same scroll progress develops the page from manga to anime: screentone and action lines fade out as panel fills bloom into coral, blue, yellow, and mint, and the ink accents turn blue
-- Reduced motion: all content stays visible in a fully colored, static scene, with no reveals, camera travel, pointer tilt, or continuous render loop
+- One fixed page per chapter, stacked as leaves
+- Scrolling or dragging peels each leaf from the bottom-right: a diagonal fold line sweeps across the page, the paper back covers the unpeeled side, and the next chapter shows through underneath with a shadowed crease
+- The peel eases toward the scroll position, then settles on the nearest page so a leaf never rests half-turned
+- Scroll, drag horizontally, or use arrow/page keys to turn pages; vertical touch scrolling still works
+- Every chapter has its own paper: cream for the hero, forest green for experiences, warm sand for projects, near-black for contact
+- Hero name rises line by line out of its mask; each chapter's content staggers in once the page is uncovered
+- Hidden pages are `inert`, so keyboard focus never lands on a page you cannot see
+- No JS: the leaves flatten into scrollable chapters and all content stays visible
+- Contact is three icon links: email, LinkedIn, and GitHub
+- Reduced motion: no peel or reveals, pages switch instantly and all content stays visible
 
 ## Stack
 
-- Three.js with custom vertex/fragment shaders (goo displacement, fbm-free terrain, point sprites, line pulses)
-- Anime.js v4 (`onScroll`, `animate`, `createAnimatable`, and responsive scopes) for chapter travel, reveals, pointer tilt, and shared color progression
-- TypeScript (strict), Vite, pnpm
+- Anime.js v4 (`onScroll`, `animate`, `stagger`) for the scroll follow, settling, and staggered reveals
+- Fold geometry (`src/fold.ts`) computes the front/flap clip polygons and crease placement; covered by `bun test`
+- TypeScript, Bun (bundler + dev server)
 - oxlint + oxfmt for linting and formatting
-- Self-hosted M PLUS Rounded 1c Latin fonts (400, 500, 700, 900), distributed under the [SIL Open Font License](public/fonts/OFL.txt)
+- Self-hosted Space Grotesk variable font (300–700, Latin), distributed under the [SIL Open Font License](src/fonts/OFL.txt)
 
 ## Commands
 
 ```sh
-pnpm install
-pnpm dev       # dev server
-pnpm build     # type-check + production build to dist/
-pnpm preview   # preview the production build
-pnpm lint      # oxlint
-pnpm fmt       # oxfmt (write)
-pnpm fmt:check # oxfmt (check)
+bun install
+bun dev        # dev server with HMR
+bun build      # production build to dist/
+bun preview    # preview the production build
+bun lint       # oxlint
+bun fmt        # oxfmt (write)
+bun fmt:check  # oxfmt (check)
+bun test       # fold geometry tests
 ```
 
 ## Deployment
 
-Pushes to `main` trigger the GitHub Pages workflow (`.github/workflows/deploy.yml`), which installs dependencies with pnpm, builds with Vite, and deploys `dist/`.
+Pushes to `main` trigger the GitHub Pages workflow (`.github/workflows/deploy.yml`), which installs dependencies with Bun, builds with `bun build`, and deploys `dist/`.
