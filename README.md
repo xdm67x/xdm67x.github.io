@@ -1,41 +1,62 @@
-# Mehmet Ozkan - Portfolio
+# Mehmet Ozkan — Portfolio
 
-My portfolio website, laid out as a book. Scrolling or dragging peels each page from its bottom-right corner to reveal the next chapter: about me, experiences, projects, and contact.
+A minimal portfolio at the intersection of **video games**, **AI** and **3D**,
+rendered live in **Rust** and **WebGPU**. Scrolling takes each page apart in
+three dimensions and rebuilds it as the next: the world's 176 glass pieces fly
+from one themed arrangement to another while the DOM plays the same
+choreography, driven by the same clock.
 
 ## The experience
 
-- One fixed page per chapter, stacked as leaves
-- Scrolling or dragging peels each leaf from the bottom-right: a diagonal fold line sweeps across the page, the paper back covers the unpeeled side, and the next chapter shows through underneath with a shadowed crease
-- The peel eases toward the scroll position, then settles on the nearest page so a leaf never rests half-turned
-- Scroll, drag horizontally, or use arrow/page keys to turn pages; vertical touch scrolling still works
-- Every chapter has its own paper: cream for the hero, forest green for experiences, warm sand for projects, near-black for contact
-- Hero name rises line by line out of its mask; each chapter's content staggers in once the page is uncovered
-- Hidden pages are `inert`, so keyboard focus never lands on a page you cannot see
-- No JS: the leaves flatten into scrollable chapters and all content stays visible
-- Contact is three icon links: email, LinkedIn, and GitHub
-- Reduced motion: no peel or reveals, pages switch instantly and all content stays visible
+- Four slides — intro, craft, play, contact — each with its own accent colour
+  and its own 3D room, composited over a quiet looping film
+- **Hero** — a voxel game level under construction: a wireframe grid, a floating
+  cursor block, a sky of scattered voxels (lime accent)
+- **Craft** — the AI layer: a central node wired to an orbit of satellite nodes
+  (mint accent)
+- **Play** — the 3D viewport: a perspective grid floor with objects standing on
+  it, framed by an orbit cage (violet accent)
+- **Contact** — a radar: concentric sweeps around a signal sphere (ice accent)
+- The scroll transition is a real 3D burst: every piece is thrown outward along
+  its own radial, stretched into a streak, and lands overshot with a snap —
+  while the DOM tears in horizontal slices, flashes at the cut, and settles the
+  new page block by block
+- The camera eases with pointer parallax; on touch devices it drifts on its own
+- Design is deliberately épuré: near-monochrome, hairline borders, flat panels,
+  one accent colour per slide, Space Grotesk + JetBrains Mono
+- No JS or no WebGPU: the four slides remain a plain, readable, printable
+  portfolio (real DOM, `<noscript>` fallback, print stylesheet)
+- Reduced motion: no burst, no tear — slides switch instantly
+- Keyboard: arrows, space, page up/down, 1–4, home/end; the back button walks
+  the deck
 
 ## Stack
 
-- Anime.js v4 (`onScroll`, `animate`, `stagger`) for the scroll follow, settling, and staggered reveals
-- Fold geometry (`src/fold.ts`) computes the front/flap clip polygons and crease placement; covered by `bun test`
-- TypeScript, Bun (bundler + dev server)
-- oxlint + oxfmt for linting and formatting
-- Self-hosted Space Grotesk variable font (300–700, Latin), distributed under the [SIL Open Font License](src/fonts/OFL.txt)
+- **Rust → WebAssembly** (`renderer/`): wgpu 30 + WGSL renderer with procedural
+  meshes (sphere, torus, shard), four themed arrangements of one shared pool of
+  176 pieces, the destruct/reconstruct transition, filmic lighting and the
+  projection of world anchors the DOM pins its small labels to
+- **Trunk** builds everything: compiles the crate, resolves the matching
+  wasm-bindgen CLI, copies the plain-ES-module front end
+- **Front end** (`web/`): plain ES modules (`main.js`, `data.js`, `style.css`),
+  no bundler, no transpiler; `web/wasm/world.js` keeps a stable import path for
+  the emitted wasm-bindgen module
+- **GitHub Actions** (`.github/workflows/deploy.yml`) builds with Trunk and
+  deploys `dist/` to GitHub Pages
 
 ## Commands
 
 ```sh
-bun install
-bun dev        # dev server with HMR
-bun build      # production build to dist/
-bun preview    # preview the production build
-bun lint       # oxlint
-bun fmt        # oxfmt (write)
-bun fmt:check  # oxfmt (check)
-bun test       # fold geometry tests
+rustup target add wasm32-unknown-unknown
+cargo install trunk --locked
+
+trunk serve          # dev server with live reload on http://127.0.0.1:8080
+trunk build --release  # production build to dist/
+cargo check --target wasm32-unknown-unknown
 ```
 
 ## Deployment
 
-Pushes to `main` trigger the GitHub Pages workflow (`.github/workflows/deploy.yml`), which installs dependencies with Bun, builds with `bun build`, and deploys `dist/`.
+Pushes to `main` trigger the GitHub Pages workflow, which installs Rust +
+`wasm32-unknown-unknown`, caches the `renderer/` workspace, installs Trunk,
+builds with `trunk build --release`, and deploys `dist/`.

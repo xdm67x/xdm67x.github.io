@@ -1,13 +1,22 @@
 //! The world: one set of glass pieces, four ways of assembling them.
 //!
 //! There is a single pool of pieces — a core, three rings and a field of glass
-//! plates. A *slide* is an arrangement of that pool: an orbit for the hero,
-//! three growing columns for experience, a lattice for projects, concentric
-//! rings for contact. Moving between slides takes the pool apart and puts it
-//! back together, which is the whole of this site's 3D transition.
+//! plates. A *slide* is an arrangement of that pool, themed on what the slide
+//! is about:
 //!
-//! **Scale.** At a slide the camera sits about 4.4 m from the arrangement with a
-//! 42° field of view, so one metre is roughly 270 px on a 900 px-tall frame.
+//!   00 Hero       a voxel game level under construction: a wireframe grid,
+//!                 a floating cube cursor and a sky of scattered voxels
+//!   01 Craft      the AI layer: a central node wired to an orbit of satellite
+//!                 nodes, pulses running along the wires
+//!   02 Projects   the 3D viewport: a perspective grid floor with objects
+//!                 standing on it, framed by an orbit cage
+//!   03 Contact    a radar: concentric sweeps around a signal sphere
+//!
+//! Moving between slides takes the pool apart and puts it back together,
+//! which is the whole of this site's 3D transition.
+//!
+//! **Scale.** At a slide the camera sits about 4.4 m from the arrangement with
+//! a 42° field of view, so one metre is roughly 270 px on a 900 px-tall frame.
 //! Arrangements are built inside a box about 2.0 m wide and 1.5 m tall, and the
 //! camera aims to the left of that box (`AXIS_X`), which puts the structure in
 //! the right half of the frame and leaves the left half to the document.
@@ -16,7 +25,7 @@
 
 use crate::mesh::{self, MeshData};
 use glam::{Quat, Vec3};
-use std::f32::consts::{FRAC_PI_2, PI, TAU};
+use std::f32::consts::{FRAC_PI_2, TAU};
 
 pub const SLIDES: usize = 4;
 
@@ -58,36 +67,37 @@ pub struct Slide {
     pub fov: f32,
 }
 
-/// Four rooms, all cut from the same deep blue: only the light changes.
+/// Four rooms, each with its own accent so a slide change is felt as a change
+/// of light, not just of layout:
 ///
-///   00 Hero       abyss      #03060f / azure   #6ba6ff
-///   01 Experience deep sea   #030b15 / cyan    #4ddbff
-///   02 Projects   night blue #05071a / iris    #9a8cff
-///   03 Contact    glacier    #020c14 / ice     #a6d9ff
+///   00 Hero       near-black   #05070d / lime    #a8e34d   (game dev)
+///   01 Craft      deep teal    #03110f / mint    #4de8b0   (AI)
+///   02 Projects   deep indigo  #0b0817 / violet  #a98cff   (3D)
+///   03 Contact    deep slate   #060a12 / ice     #a6d9ff   (signal)
 pub const SLIDE_TABLE: [Slide; SLIDES] = [
     Slide {
-        tint: [0.012, 0.024, 0.059],
-        accent: [0.42, 0.65, 1.0],
+        tint: [0.012, 0.016, 0.031],
+        accent: [0.66, 0.89, 0.30],
         eye: Vec3::new(0.0, 0.10, ORBIT),
         target: Vec3::new(AXIS_X, -0.02, 0.0),
         fov: 42.0,
     },
     Slide {
-        tint: [0.012, 0.043, 0.082],
-        accent: [0.30, 0.86, 1.0],
+        tint: [0.008, 0.047, 0.043],
+        accent: [0.30, 0.91, 0.69],
         eye: Vec3::new(0.06, 0.26, ORBIT + 0.20),
         target: Vec3::new(AXIS_X - 0.04, -0.05, 0.0),
         fov: 42.0,
     },
     Slide {
-        tint: [0.020, 0.027, 0.102],
-        accent: [0.60, 0.55, 1.0],
+        tint: [0.035, 0.024, 0.075],
+        accent: [0.66, 0.55, 1.0],
         eye: Vec3::new(0.0, 0.02, ORBIT + 0.30),
         target: Vec3::new(AXIS_X, 0.02, 0.0),
         fov: 39.0,
     },
     Slide {
-        tint: [0.008, 0.047, 0.078],
+        tint: [0.014, 0.026, 0.047],
         accent: [0.65, 0.85, 1.0],
         eye: Vec3::new(0.0, 0.14, ORBIT + 0.10),
         target: Vec3::new(AXIS_X, -0.02, 0.0),
@@ -163,180 +173,128 @@ fn jitter_rot(slot: usize, amount: f32) -> Quat {
 
 // ---------------------------------------------------------------- arrangements
 
-/// 00 Hero — an oblate cloud of plates orbiting the core, inside three rings.
-/// The work, presented in orbit.
-fn arrange_orbit() -> Vec<Piece> {
+/// 00 Hero — a voxel scene under construction: a wireframe grid on the floor,
+/// a floating "cursor" cube above it, and a sky of scattered voxels. The game
+/// dev room: everything is a block, everything snaps to the grid.
+fn arrange_voxels() -> Vec<Piece> {
     let mut out = Vec::with_capacity(PIECES);
 
-    out.push(piece(CENTRE, Quat::IDENTITY, Vec3::splat(0.115)));
-
-    // Three hairline orbits, each tipped differently, so they read as one cage.
-    let ring_tilt = [
-        Quat::from_euler(glam::EulerRot::YXZ, 0.22, 1.30, -0.30),
-        Quat::from_euler(glam::EulerRot::YXZ, -1.10, 0.62, 0.95),
-        Quat::from_euler(glam::EulerRot::YXZ, 0.92, -0.36, -1.15),
-    ];
-    let ring_scale = [0.30, 0.50, 0.74];
-    for k in 0..RINGS {
-        out.push(piece(
-            CENTRE + Vec3::new(0.0, 0.02 * k as f32, 0.0),
-            ring_tilt[k],
-            Vec3::splat(ring_scale[k]),
-        ));
-    }
-
-    // Plates on three shells, squashed vertically and in depth so the cloud
-    // reads as a belt around the core rather than as a ball.
-    for j in 0..PLATES {
-        let slot = FIRST_PLATE + j;
-        let shell = j % 3;
-        let radius = [0.38, 0.60, 0.84][shell] * (0.86 + 0.28 * hash01(slot, 11));
-        let a = hash01(slot, 23) * TAU;
-        let lat = (hash01(slot, 31) - 0.5) * PI;
-        let dir = Vec3::new(
-            lat.cos() * a.cos(),
-            lat.sin() * 0.62,
-            lat.cos() * a.sin() * 0.66,
-        )
-        .normalize_or(Vec3::Z);
-
-        // Face outwards along the shell, so the cloud catches the key light.
-        let rot = Quat::from_rotation_arc(Vec3::Z, dir)
-            * Quat::from_rotation_z(hash01(slot, 47) * TAU)
-            * jitter_rot(slot, 0.6);
-
-        out.push(plate(
-            CENTRE + dir * radius,
-            rot,
-            0.050 + 0.085 * hash01(slot, 53),
-            1.25,
-            0.9,
-        ));
-    }
-
-    out
-}
-
-/// 01 Experience — three columns rising left to right over a wide field of
-/// fallen plates. A record that grows, oldest to newest.
-fn arrange_columns() -> Vec<Piece> {
-    let mut out = Vec::with_capacity(PIECES);
-
-    let base = -0.50;
-    let heights = [0.44f32, 0.68, 0.94];
-    let widths = [0.28f32, 0.32, 0.36];
-    let lanes = [-0.42f32, 0.0, 0.44];
-
+    // The core: the block under the cursor, slightly raised, glowing lime.
     out.push(piece(
-        Vec3::new(CENTRE.x + 0.44, base + heights[2] + 0.09, 0.0),
+        CENTRE + Vec3::new(0.0, 0.28, 0.0),
         Quat::IDENTITY,
-        Vec3::splat(0.040),
+        Vec3::splat(0.075),
     ));
 
-    for k in 0..RINGS {
-        out.push(piece(
-            Vec3::new(CENTRE.x + lanes[k], base - 0.04, 0.0),
-            facing(0.24),
-            Vec3::splat(heights[k] * 0.30),
-        ));
-    }
-
-    // 54 plates stacked into the three columns: 18 levels each.
-    let stacked = 54;
-    let levels = stacked / 3;
-    for j in 0..stacked {
-        let slot = FIRST_PLATE + j;
-        let column = j % 3;
-        let level = j / 3;
-        let t = level as f32 / (levels - 1) as f32;
-        let pos = Vec3::new(
-            CENTRE.x + lanes[column] + hash_sym_f32(slot, 61) * widths[column] * (0.20 + 0.14 * t),
-            base + t * heights[column],
-            hash_sym_f32(slot, 67) * 0.12,
-        );
-        let size = 0.045 + 0.038 * hash01(slot, 71);
-        let rot = Quat::from_rotation_y(hash01(slot, 73) * TAU)
-            * Quat::from_euler(
-                glam::EulerRot::YXZ,
-                0.0,
-                hash_sym_f32(slot, 79) * 0.5,
-                hash_sym_f32(slot, 83) * 0.3,
-            );
-        out.push(plate(pos, rot, size, 1.5, 1.0));
-    }
-
-    // The rest lies fallen: a wide, quiet field settling under the columns,
-    // which is what gives this slide its horizon.
-    for j in stacked..PLATES {
-        let slot = FIRST_PLATE + j;
-        let pos = Vec3::new(
-            CENTRE.x + hash_sym_f32(slot, 91) * 1.15,
-            base - 0.14 - hash01(slot, 101) * 0.14,
-            hash_sym_f32(slot, 97) * 0.70,
-        );
-        let size = 0.050 + 0.080 * hash01(slot, 103);
-        let rot = Quat::from_euler(
-            glam::EulerRot::YXZ,
-            hash_sym_f32(slot, 107) * 0.30,
-            hash01(slot, 109) * TAU,
-            hash_sym_f32(slot, 113) * 0.30,
-        );
-        out.push(plate(pos, rot, size, 1.4, 1.0));
-    }
-
-    out
-}
-
-/// 02 Projects — a lattice of tiles with a deeper second layer behind it. The
-/// work itself, as objects.
-fn arrange_lattice() -> Vec<Piece> {
-    let mut out = Vec::with_capacity(PIECES);
-
+    // Three rings: the grid's boundary seen from inside — one on the floor
+    // plane, two tilted like a skybox's seams.
     out.push(piece(
-        Vec3::new(CENTRE.x + 0.72, 0.72, -0.42),
+        CENTRE + Vec3::new(0.0, -0.42, 0.0),
         Quat::IDENTITY,
-        Vec3::splat(0.045),
+        Vec3::splat(0.92),
+    ));
+    out.push(piece(
+        CENTRE,
+        Quat::from_rotation_x(FRAC_PI_2),
+        Vec3::splat(1.06),
+    ));
+    out.push(piece(
+        CENTRE,
+        Quat::from_rotation_z(FRAC_PI_2),
+        Vec3::splat(0.72),
     ));
 
-    // Rings stand behind the lattice: the frame the work hangs in.
-    for k in 0..RINGS {
-        out.push(piece(
-            Vec3::new(CENTRE.x + 0.16, 0.0, -0.60 - 0.20 * k as f32),
-            facing(0.10 * k as f32),
-            Vec3::splat([0.60, 0.84, 1.06][k]),
-        ));
-    }
-
-    let columns = 13;
-    let front = columns * columns;
+    // A flat grid of plates on the floor: 10 x 10 = 100 cells, each a thin
+    // square slightly above the ring plane, like a wireframe made of glass.
+    let grid = 10;
+    let cell = 0.148;
+    let half = (grid as f32 - 1.0) * 0.5 * cell;
     for j in 0..PLATES {
         let slot = FIRST_PLATE + j;
-        if j < front {
-            let col = j % columns;
-            let row = j / columns;
-            let pos = Vec3::new(
-                CENTRE.x + 0.14 + (col as f32 - 6.0) * 0.125,
-                (row as f32 - 6.0) * 0.115,
-                hash_sym_f32(slot, 131) * 0.03,
-            );
-            let rot = Quat::from_rotation_z(hash_sym_f32(slot, 137) * 0.14)
-                * jitter_rot(slot, 0.08);
-            out.push(plate(pos, rot, 0.046, 1.35, 1.0));
+        if j < grid * grid {
+            let col = (j % grid) as f32;
+            let row = (j / grid) as f32;
+            let x = CENTRE.x - half + col * cell;
+            let z = -half + row * cell;
+            // Skip the centre cell: the cursor block hovers there.
+            if (col - 4.5).abs() < 0.6 && (row - 4.5).abs() < 0.6 {
+                out.push(plate(Vec3::new(x, -0.40, z), Quat::IDENTITY, 0.0, 1.0, 1.0));
+                continue;
+            }
+            out.push(plate(
+                Vec3::new(x, -0.40, z),
+                Quat::IDENTITY,
+                cell * 0.86,
+                1.0,
+                0.06,
+            ));
         } else {
-            // Spare tiles fall back into a deeper, larger grid: the index
-            // behind the index.
-            let col = (j - front) % 7;
-            let row = (j - front) / 7;
-            let pos = Vec3::new(
-                CENTRE.x + 0.06 + (col as f32 - 3.0) * 0.34,
-                (row as f32 - 3.0) * 0.28,
-                -1.05 - hash01(slot, 149) * 0.35,
-            );
+            // The sky: scattered voxels drifting above the grid, denser near
+            // the cursor, like blocks a player has placed and not yet stacked.
+            let t = (j - grid * grid) as f32 / (PLATES - grid * grid) as f32;
+            let a = hash01(slot, 211) * TAU;
+            let r = 0.55 + 0.75 * t;
+            let y = 0.10 + 0.95 * hash01(slot, 223);
+            let pos = CENTRE
+                + Vec3::new(
+                    a.cos() * r * (0.7 + 0.3 * hash01(slot, 227)),
+                    y,
+                    a.sin() * r * 0.62,
+                );
+            let size = 0.028 + 0.030 * hash01(slot, 229);
+            out.push(plate(pos, jitter_rot(slot, 0.9), size, 1.0, 1.0));
+        }
+    }
+
+    out
+}
+
+/// 01 Craft — the AI room: a central node wired to an orbit of satellite
+/// nodes. The core glows mint, the rings are the orbit paths, and the plates
+/// are the satellites plus the pulses that run between them.
+fn arrange_network() -> Vec<Piece> {
+    let mut out = Vec::with_capacity(PIECES);
+
+    // The model: a bright node at the centre.
+    out.push(piece(CENTRE, Quat::IDENTITY, Vec3::splat(0.085)));
+
+    // Three orbit rings at different tilts, like electron shells.
+    let tilts = [
+        Quat::from_euler(glam::EulerRot::YXZ, 0.35, 0.0, 0.0),
+        Quat::from_euler(glam::EulerRot::YXZ, -0.55, 1.05, 0.0),
+        Quat::from_euler(glam::EulerRot::YXZ, 0.95, -0.60, 0.35),
+    ];
+    let radii = [0.34f32, 0.55, 0.78];
+    for k in 0..RINGS {
+        out.push(piece(CENTRE, tilts[k], Vec3::splat(radii[k])));
+    }
+
+    // Satellites: 100 nodes spread over the three orbits, plus the rest as
+    // free-floating context tokens drifting outside the system.
+    let sats = 100;
+    for j in 0..PLATES {
+        let slot = FIRST_PLATE + j;
+        if j < sats {
+            let orbit = j % 3;
+            let on_ring = (j / 3) as f32;
+            let count = (sats / 3) as f32;
+            let a = (on_ring / count) * TAU + orbit as f32 * 0.7;
+            // Local orbit space: x = cos, z = sin, then the ring's tilt.
+            let local = Vec3::new(a.cos() * radii[orbit], 0.0, a.sin() * radii[orbit]);
+            let pos = CENTRE + tilts[orbit] * local;
+            let size = 0.030 + 0.026 * hash01(slot, 241);
+            out.push(plate(pos, jitter_rot(slot, 0.5), size, 1.0, 1.0));
+        } else {
+            // Context tokens: a loose cloud beyond the outer ring.
+            let a = hash01(slot, 251) * TAU;
+            let r = 0.95 + 0.55 * hash01(slot, 257);
+            let y = (hash01(slot, 261) - 0.5) * 1.1;
+            let pos = CENTRE + Vec3::new(a.cos() * r, y, a.sin() * r * 0.7);
             out.push(plate(
                 pos,
-                jitter_rot(slot, 0.5),
-                0.12 + 0.05 * hash01(slot, 139),
-                1.3,
+                jitter_rot(slot, 1.2),
+                0.024 + 0.022 * hash01(slot, 263),
+                1.0,
                 1.0,
             ));
         }
@@ -345,13 +303,102 @@ fn arrange_lattice() -> Vec<Piece> {
     out
 }
 
-/// 03 Contact — concentric rings of plates around a signal sphere. A landing
-/// place: something answered.
-fn arrange_rings() -> Vec<Piece> {
+/// 02 Projects — the 3D viewport: a perspective grid floor, objects standing
+/// on it, and an orbit cage framing the scene. The graphics room: a scene
+/// graph you can almost reach into.
+fn arrange_scene() -> Vec<Piece> {
     let mut out = Vec::with_capacity(PIECES);
 
+    // The hero object: a tall block standing on the floor, slightly off axis.
+    out.push(piece(
+        CENTRE + Vec3::new(0.30, 0.30, 0.0),
+        Quat::from_rotation_y(0.5),
+        Vec3::splat(0.085),
+    ));
+
+    // The cage: three rings, one flat on the floor (the grid's frame), two
+    // tilted to suggest a skybox.
+    out.push(piece(
+        CENTRE + Vec3::new(0.0, -0.42, 0.0),
+        Quat::IDENTITY,
+        Vec3::splat(0.98),
+    ));
+    out.push(piece(
+        CENTRE,
+        Quat::from_rotation_x(FRAC_PI_2),
+        Vec3::splat(1.10),
+    ));
+    out.push(piece(
+        CENTRE + Vec3::new(0.0, 0.0, -0.30),
+        facing(0.18),
+        Vec3::splat(0.80),
+    ));
+
+    // The floor grid: 9 x 9 = 81 plates, thin lines of glass that recede into
+    // the distance, denser spacing near the camera (a perspective hint).
+    let grid = 9;
+    for j in 0..PLATES {
+        let slot = FIRST_PLATE + j;
+        if j < grid * grid {
+            let col = (j % grid) as f32;
+            let row = (j / grid) as f32;
+            let half = (grid as f32 - 1.0) * 0.5 * 0.16;
+            let x = CENTRE.x - half + col * 0.16;
+            let z = -half + row * 0.16 - 0.10;
+            let size = 0.135;
+            // Cross the lines: half run along X, half along Z.
+            let (rot, wide) = if j % 2 == 0 {
+                (Quat::IDENTITY, 1.0)
+            } else {
+                (Quat::from_rotation_y(FRAC_PI_2), 1.0)
+            };
+            out.push(plate(Vec3::new(x, -0.40, z), rot, size, wide, 0.05));
+        } else if j < grid * grid + 40 {
+            // Objects on the floor: 40 blocks of varied height, like meshes
+            // placed in a scene. Deterministic pseudo-random placement.
+            let slot2 = slot;
+            let gx = hash01(slot2, 271);
+            let gz = hash01(slot2, 277);
+            let x = CENTRE.x + (gx - 0.5) * 1.5;
+            let z = (gz - 0.5) * 1.5 - 0.10;
+            let h = 0.10 + 0.45 * hash01(slot2, 281);
+            let y = -0.40 + h * 0.5;
+            let size = 0.045 + 0.035 * hash01(slot2, 283);
+            out.push(plate(
+                Vec3::new(x, y, z),
+                Quat::from_rotation_y(hash01(slot2, 287) * TAU),
+                size,
+                1.0,
+                h / size * 0.5,
+            ));
+        } else {
+            // Sky debris: shards drifting above the scene.
+            let a = hash01(slot, 293) * TAU;
+            let r = 0.85 + 0.65 * hash01(slot, 297);
+            let y = 0.35 + 0.85 * hash01(slot, 299);
+            let pos = CENTRE + Vec3::new(a.cos() * r, y, a.sin() * r * 0.6 - 0.10);
+            out.push(plate(
+                pos,
+                jitter_rot(slot, 1.0),
+                0.035 + 0.045 * hash01(slot, 301),
+                1.4,
+                1.0,
+            ));
+        }
+    }
+
+    out
+}
+
+/// 03 Contact — a radar: concentric sweeps around a signal sphere, with
+/// blips scattered on the rings. A landing place: something answered.
+fn arrange_radar() -> Vec<Piece> {
+    let mut out = Vec::with_capacity(PIECES);
+
+    // The signal: a sphere at the centre.
     out.push(piece(CENTRE, Quat::IDENTITY, Vec3::splat(0.072)));
 
+    // Three concentric sweep rings in the screen plane.
     let radii = [0.30f32, 0.52, 0.76];
     for k in 0..RINGS {
         out.push(piece(
@@ -361,7 +408,8 @@ fn arrange_rings() -> Vec<Piece> {
         ));
     }
 
-    let counts = [24usize, 40, 56];
+    // Blips: 120 plates distributed on the three rings, tangent to their ring.
+    let counts = [24usize, 44, 52];
     let banded: usize = counts.iter().sum();
     for j in 0..PLATES {
         let slot = FIRST_PLATE + j;
@@ -412,7 +460,7 @@ fn arrange_rings() -> Vec<Piece> {
 fn anchors() -> Vec<Anchor> {
     vec![
         Anchor {
-            id: "experience.span".into(),
+            id: "craft.span".into(),
             slide: 1,
             pos: CENTRE + Vec3::new(-0.06, 0.74, 0.20),
             size: 0.048,
@@ -450,10 +498,10 @@ impl Plan {
         Self {
             meshes,
             arrangements: vec![
-                arrange_orbit(),
-                arrange_columns(),
-                arrange_lattice(),
-                arrange_rings(),
+                arrange_voxels(),
+                arrange_network(),
+                arrange_scene(),
+                arrange_radar(),
             ],
             anchors: anchors(),
         }

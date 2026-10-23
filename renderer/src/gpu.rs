@@ -189,7 +189,8 @@ impl Renderer {
             .request_device(&wgpu::DeviceDescriptor {
                 label: Some("world-device"),
                 required_features: wgpu::Features::empty(),
-                required_limits: wgpu::Limits::downlevel_defaults().using_resolution(adapter.limits()),
+                required_limits: wgpu::Limits::downlevel_defaults()
+                    .using_resolution(adapter.limits()),
                 experimental_features: wgpu::ExperimentalFeatures::disabled(),
                 memory_hints: wgpu::MemoryHints::default(),
                 trace: wgpu::Trace::Off,
@@ -509,7 +510,11 @@ impl Renderer {
                 pass.set_pipeline(pipeline);
                 pass.set_vertex_buffer(0, mesh.vertices.slice(..));
                 pass.set_index_buffer(mesh.indices.slice(..), wgpu::IndexFormat::Uint32);
-                pass.draw_indexed(0..mesh.index_count, 0, group.first..group.first + group.count);
+                pass.draw_indexed(
+                    0..mesh.index_count,
+                    0,
+                    group.first..group.first + group.count,
+                );
             }
         }
 

@@ -184,9 +184,7 @@ pub fn shard(sides: usize, irregularity: f32, thickness: f32) -> MeshData {
         // Two incommensurate waves: a stable, non-repeating silhouette.
         let wobble = (k as f32 * 1.0).sin() * 0.55 + (k as f32 * 2.37).cos() * 0.45;
         radii.push(1.0 - irregularity * (0.5 + 0.5 * wobble));
-        angles.push(
-            k as f32 * step + irregularity * 0.45 * step * (k as f32 * 1.7).sin(),
-        );
+        angles.push(k as f32 * step + irregularity * 0.45 * step * (k as f32 * 1.7).sin());
     }
 
     // Three rings of the same outline: top face rim, sharp edge, bottom face rim.
@@ -222,8 +220,12 @@ pub fn shard(sides: usize, irregularity: f32, thickness: f32) -> MeshData {
     m.vertices
         .push(Vertex::new(Vec3::Z * half, Vec3::Z, 1.0, Vec2::splat(0.5)));
     let centre_bottom = m.vertices.len() as u32;
-    m.vertices
-        .push(Vertex::new(Vec3::Z * -half, -Vec3::Z, 1.0, Vec2::splat(0.5)));
+    m.vertices.push(Vertex::new(
+        Vec3::Z * -half,
+        -Vec3::Z,
+        1.0,
+        Vec2::splat(0.5),
+    ));
 
     let top = 0u32;
     let mid = sides as u32;
@@ -274,4 +276,3 @@ pub fn torus(radius: f32, tube: f32, radial_segments: usize, tube_segments: usiz
     }
     m
 }
-

@@ -315,7 +315,11 @@ impl World {
 
 fn prefers_reduced_motion() -> bool {
     web_sys::window()
-        .and_then(|w| w.match_media("(prefers-reduced-motion: reduce)").ok().flatten())
+        .and_then(|w| {
+            w.match_media("(prefers-reduced-motion: reduce)")
+                .ok()
+                .flatten()
+        })
         .map(|m| m.matches())
         .unwrap_or(false)
 }

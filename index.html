@@ -3,25 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mehmet Ozkan — Software Engineer</title>
+    <title>Mehmet Ozkan — Game, AI & 3D engineer</title>
     <meta
       name="description"
-      content="Mehmet Ozkan, software engineer. Billing and EHR product engineering at Doctolib, AI enablement for engineering teams, VR/AR research at ICube. A portfolio whose pages are taken apart and rebuilt in 3D, rendered live in Rust and WebGPU."
+      content="Mehmet Ozkan, software engineer at the intersection of video games, AI and 3D. Billing and EHR product engineering at Doctolib, AI enablement for engineering teams, VR/AR research at ICube. A portfolio rendered live in Rust and WebGPU, whose pages are taken apart in three dimensions as you scroll."
     />
-    <meta name="theme-color" content="#03060f" />
-    <meta property="og:title" content="Mehmet Ozkan — Software Engineer" />
+    <meta name="theme-color" content="#05070d" />
+    <meta property="og:title" content="Mehmet Ozkan — Game, AI & 3D engineer" />
     <meta
       property="og:description"
-      content="A portfolio whose pages are taken apart in three dimensions and put back together. Rendered live in Rust, WebGPU and WGSL."
+      content="A portfolio at the intersection of video games, AI and 3D — rendered live in Rust, WebGPU and WGSL."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://xdm67x.github.io" />
-    <meta property="og:image" content="https://xdm67x.github.io/loop.jpg" />
+    <meta property="og:image" content="https://xdm67x.github.io/film/loop.jpg" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <!-- The deck is a scripted experience: without scripting the four slides
@@ -54,12 +54,12 @@
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Mehmet Ozkan",
-        "jobTitle": "Software Engineer",
+        "jobTitle": "Software Engineer — games, AI & 3D",
         "email": "m-ozkan@outlook.fr",
         "address": { "@type": "PostalAddress", "addressLocality": "Niort", "addressCountry": "FR" },
         "alumniOf": "University of Strasbourg",
         "worksFor": { "@type": "Organization", "name": "Doctolib" },
-        "knowsAbout": ["Rust", "WebGPU", "Computer graphics", "AI tooling", "Healthcare software"],
+        "knowsAbout": ["Rust", "WebGPU", "WGSL", "Bevy", "Game development", "AI tooling", "Computer graphics", "VR/AR", "Healthcare software"],
         "sameAs": ["https://github.com/xdm67x", "https://www.linkedin.com/in/dm67x"]
       }
     </script>
@@ -99,24 +99,23 @@
     <header class="nav" id="nav">
       <a class="brand" href="#hero" data-go="0">
         <svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true">
-          <circle cx="16" cy="16" r="13.2" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.5" />
-          <ellipse cx="16" cy="16" rx="13.2" ry="5.2" fill="none" stroke="currentColor" stroke-width="1.4" transform="rotate(-28 16 16)" />
-          <circle cx="16" cy="16" r="4.4" fill="currentColor" />
+          <rect x="9" y="9" width="14" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6" transform="rotate(45 16 16)" />
+          <rect x="12.5" y="12.5" width="7" height="7" fill="currentColor" transform="rotate(45 16 16)" />
         </svg>
         <span class="brand-text">
           <span class="brand-name">Mehmet Ozkan</span>
-          <span class="brand-role">Software engineer</span>
+          <span class="brand-role">Game · AI · 3D</span>
         </span>
       </a>
 
       <nav class="tabs" id="tabs" aria-label="Sections">
         <span class="tabs-pip" id="tabs-pip" aria-hidden="true"></span>
-        <a class="tab" href="#hero" data-go="0"><span class="tab-num">01</span><span class="tab-name">Hero</span></a>
-        <a class="tab" href="#experience" data-go="1"
-          ><span class="tab-num">02</span><span class="tab-name">Experience</span></a
+        <a class="tab" href="#hero" data-go="0"><span class="tab-num">01</span><span class="tab-name">Intro</span></a>
+        <a class="tab" href="#craft" data-go="1"
+          ><span class="tab-num">02</span><span class="tab-name">Craft</span></a
         >
         <a class="tab" href="#projects" data-go="2"
-          ><span class="tab-num">03</span><span class="tab-name">Projects</span></a
+          ><span class="tab-num">03</span><span class="tab-name">Play</span></a
         >
         <a class="tab" href="#contact" data-go="3"
           ><span class="tab-num">04</span><span class="tab-name">Contact</span></a
@@ -128,44 +127,50 @@
       <!-- 01 · hero ---------------------------------------------------------- -->
       <section class="slide" id="hero" data-slide="0" aria-label="Introduction">
         <div class="sheet">
-          <p class="dateline" data-piece>Software engineer · Niort, France · open to remote</p>
+          <p class="dateline" data-piece>Software engineer · Niort, France · games, AI & 3D</p>
           <h1 class="display" data-piece tabindex="-1">
             <span class="display-line">Mehmet</span>
-            <span class="display-line display-line--italic">Ozkan</span>
+            <span class="display-line display-line--accent">Ozkan</span>
           </h1>
           <p class="lede" data-piece>
-            I build billing and EHR software at <strong>Doctolib</strong>, where thousands of French
-            practitioners run their practice, and I lead the AI adoption that keeps its engineering
-            teams shipping. Before that, VR/AR research at ICube, and a master's in computer
-            graphics — the discipline behind every pane of glass on this page.
+            I build at the intersection of <strong>video games</strong>, <strong>AI</strong> and
+            <strong>3D</strong>. By day, billing and EHR software at <strong>Doctolib</strong>,
+            where thousands of French practitioners run their practice — and the AI adoption that
+            keeps its engineering teams shipping. By night, game engines in Rust, agents that code,
+            and shaders. Before all of it, VR/AR research at ICube and a master's in computer
+            graphics.
           </p>
           <ul class="facts" data-piece>
             <li>
-              <span class="fact-key">Doctolib</span>
-              <span class="fact-val">2021 — present</span>
+              <span class="fact-key">Now</span>
+              <span class="fact-val">Software Engineer, Doctolib — 2021 → present</span>
             </li>
             <li>
-              <span class="fact-key">ICube, CNRS</span>
-              <span class="fact-val">VR/AR research, 2020</span>
+              <span class="fact-key">Research</span>
+              <span class="fact-val">VR/AR, ICube (CNRS) · peer-reviewed, 2020</span>
             </li>
             <li>
-              <span class="fact-key">University of Strasbourg</span>
-              <span class="fact-val">M.Sc. graphics, 2020</span>
+              <span class="fact-key">Degree</span>
+              <span class="fact-val">M.Sc. computer graphics, Strasbourg, 2020</span>
+            </li>
+            <li>
+              <span class="fact-key">Stack</span>
+              <span class="fact-val">Rust · WebGPU · WGSL · Bevy · agents</span>
             </li>
           </ul>
           <div class="actions" data-piece>
-            <button class="cta" type="button" data-go="2">See the work</button>
+            <button class="cta" type="button" data-go="2">Play the work</button>
             <a class="cta cta--ghost" href="mailto:m-ozkan@outlook.fr">m-ozkan@outlook.fr</a>
           </div>
           <p class="slide-cue">
             <span class="slide-cue-glyph"></span>
-            Scroll to take the page apart
+            Scroll — the page comes apart in 3D
           </p>
         </div>
       </section>
 
-      <!-- 02 · experience ---------------------------------------------------- -->
-      <section class="slide" id="experience" data-slide="1" aria-label="Experience">
+      <!-- 02 · craft --------------------------------------------------------- -->
+      <section class="slide" id="craft" data-slide="1" aria-label="Craft">
         <div class="sheet sheet--wide">
           <h2 class="display display--section" data-piece tabindex="-1">
             Five years of shipping, <span class="display-soft">one habit of research.</span>
@@ -193,6 +198,7 @@
                   </li>
                 </ul>
                 <ul class="tags">
+                  <li>Product</li>
                   <li>Billing</li>
                   <li>EHR</li>
                   <li>AI enablement</li>
@@ -204,7 +210,7 @@
               <p class="entry-when">Jan — Jul 2020</p>
               <div class="entry-body">
                 <h3 class="entry-role">
-                  R&amp;D Engineering Intern, <span class="entry-org">ICube Laboratory (CNRS)</span>
+                  R&D Engineering Intern, <span class="entry-org">ICube Laboratory (CNRS)</span>
                 </h3>
                 <p class="entry-where">Strasbourg, France</p>
                 <ul class="entry-points">
@@ -219,8 +225,8 @@
                 </ul>
                 <p class="entry-note">
                   <span class="note-key">Publication</span>
-                  “Interactions with a Hybrid Map for Navigation Information Visualization in Virtual
-                  Reality” — peer-reviewed, ICube Laboratory, 2020.
+                  "Interactions with a Hybrid Map for Navigation Information Visualization in Virtual
+                  Reality" — peer-reviewed, ICube Laboratory, 2020.
                 </p>
                 <ul class="tags">
                   <li>VR/AR</li>
@@ -249,7 +255,7 @@
             </li>
           </ol>
         </div>
-        <p class="anchor anchor--mono" data-anchor="experience.span" aria-hidden="true">
+        <p class="anchor anchor--mono" data-anchor="craft.span" aria-hidden="true">
           2020 → 2026
         </p>
       </section>
@@ -258,12 +264,13 @@
       <section class="slide" id="projects" data-slide="2" aria-label="Projects">
         <div class="sheet sheet--wide">
           <h2 class="display display--section" data-piece tabindex="-1">
-            Nine things I built, <span class="display-soft">and a few I fixed.</span>
+            Things I built, <span class="display-soft">mostly in Rust.</span>
           </h2>
           <ul class="worklist" id="worklist" data-piece></ul>
           <noscript>
             <ul class="worklist worklist--plain">
               <li><a href="https://github.com/xdm67x/TwoZeroFourEight">TwoZeroFourEight</a></li>
+              <li><a href="https://github.com/xdm67x/clawdquest">Clawdquest</a></li>
               <li><a href="https://github.com/rtk-ai/rtk">RTK (Rust Token Killer)</a></li>
               <li><a href="https://github.com/xdm67x/simple-agent">simple-agent</a></li>
               <li><a href="https://github.com/xdm67x/cargo-feature-guard">cargo-feature-guard</a></li>
@@ -276,7 +283,7 @@
           </noscript>
         </div>
         <p class="anchor anchor--mono" data-anchor="projects.index" aria-hidden="true">
-          Selected work
+          Selected play
         </p>
       </section>
 
@@ -284,12 +291,11 @@
       <section class="slide" id="contact" data-slide="3" aria-label="Contact">
         <div class="sheet">
           <h2 class="display display--section" data-piece tabindex="-1">
-            Let's build <span class="display-soft">something.</span>
+            Got a world <span class="display-soft">to build?</span>
           </h2>
           <p class="lede" data-piece>
-            Five years of healthcare product engineering, a research habit in graphics and VR, and a
-            sideline of tools that make engineers faster. If that mix fits your plans, the quickest
-            way is email.
+            Games, agents, graphics — or the unglamorous product work that pays for them. If the
+            mix fits your plans, the quickest way is email.
           </p>
           <a class="mailto" data-piece href="mailto:m-ozkan@outlook.fr">m-ozkan@outlook.fr</a>
           <ul class="channels" data-piece>
@@ -324,7 +330,7 @@
       <footer class="dock" id="dock">
         <p class="dock-count">
           <span id="dock-index">01</span><span class="dock-slash">/</span><span>04</span>
-          <span class="dock-name" id="dock-name">Hero</span>
+          <span class="dock-name" id="dock-name">Intro</span>
         </p>
         <p class="dock-hint" aria-hidden="true">
           <span class="dock-keys">↑</span><span class="dock-keys">↓</span>

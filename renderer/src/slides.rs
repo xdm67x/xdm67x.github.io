@@ -17,7 +17,7 @@
 //! and plays its own version of the same motion on the page.
 
 use crate::gpu::{Globals, Group, Instance, Kind};
-use crate::layout::{self, Plan, Piece, CENTRE, PIECES, PLATES, SLIDES, SLIDE_TABLE};
+use crate::layout::{self, Piece, Plan, CENTRE, PIECES, PLATES, SLIDES, SLIDE_TABLE};
 use glam::camera::rh::{proj, view};
 use glam::{Mat3, Mat4, Quat, Vec2, Vec3};
 use std::f32::consts::PI;
@@ -244,16 +244,22 @@ impl Stage {
         let mood_accent = mix3(a.accent, b.accent, hand);
         let exposure = 1.05 + (b.tint.iter().sum::<f32>() - a.tint.iter().sum::<f32>()) * 0.6;
 
-        let cam = camera(from, to, progress, burst, pointer, time, reduced, viewport.wide);
-        let view_matrix = Mat4::from_rotation_z(cam.roll) * view::look_at_mat4(cam.pos, cam.target, Vec3::Y);
+        let cam = camera(
+            from,
+            to,
+            progress,
+            burst,
+            pointer,
+            time,
+            reduced,
+            viewport.wide,
+        );
+        let view_matrix =
+            Mat4::from_rotation_z(cam.roll) * view::look_at_mat4(cam.pos, cam.target, Vec3::Y);
         // glam's projection takes the vertical field of view in **radians**; the
         // slide table is authored in degrees, which is the friendlier unit.
-        let projection = proj::directx::perspective(
-            cam.fov.to_radians(),
-            viewport.aspect,
-            0.06,
-            220.0,
-        );
+        let projection =
+            proj::directx::perspective(cam.fov.to_radians(), viewport.aspect, 0.06, 220.0);
         let view_proj = projection * view_matrix;
 
         let globals = Globals {
@@ -282,12 +288,27 @@ impl Stage {
                 mood_tint[2] * 2.6 + 0.075,
                 0.95,
             ],
-            accent: [mood_accent[0], mood_accent[1], mood_accent[2], 0.85 + 0.7 * burst],
+            accent: [
+                mood_accent[0],
+                mood_accent[1],
+                mood_accent[2],
+                0.85 + 0.7 * burst,
+            ],
             tint: [mood_tint[0], mood_tint[1], mood_tint[2], exposure],
             params: [time, burst, debug, 0.0],
         };
 
-        self.build_instances(from, to, progress, hand, burst, mood_tint, mood_accent, time, reduced);
+        self.build_instances(
+            from,
+            to,
+            progress,
+            hand,
+            burst,
+            mood_tint,
+            mood_accent,
+            time,
+            reduced,
+        );
         self.project_anchors(from, to, progress, burst, &view_proj, &cam, viewport);
 
         globals
@@ -477,20 +498,14 @@ fn piece_instance(
 /// The interpolation overshoots slightly (`ease_out_back`), so a piece arrives
 /// past its mark and comes back: that snap is what makes the new arrangement
 /// read as *landing* rather than as easing into place.
-fn pose_of(
-    a: &Piece,
-    b: &Piece,
-    motion: &Motion,
-    progress: f32,
-    time: f32,
-    reduced: bool,
-) -> Pose {
+fn pose_of(a: &Piece, b: &Piece, motion: &Motion, progress: f32, time: f32, reduced: bool) -> Pose {
     let raw = ((progress - motion.delay) / (1.0 - motion.delay)).clamp(0.0, 1.0);
     let local = ease_out_back(raw);
     let open = (1.0 - (2.0 * raw - 1.0).abs()).powf(1.4);
 
     let mut pos = a.pos.lerp(b.pos, local) + motion.dir * (open * motion.amp);
-    let mut rot = a.rot.slerp(b.rot, local) * Quat::from_axis_angle(motion.axis, motion.spin * open);
+    let mut rot =
+        a.rot.slerp(b.rot, local) * Quat::from_axis_angle(motion.axis, motion.spin * open);
     let base = a.scale.lerp(b.scale, local);
 
     if !reduced {
