@@ -1,302 +1,341 @@
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mehmet Ozkan — Software Engineer</title>
     <meta
       name="description"
-      content="Mehmet Ozkan, software engineer building interactive worlds where imagination turns into reality, with AI."
+      content="Mehmet Ozkan, software engineer. Billing and EHR product engineering at Doctolib, AI enablement for engineering teams, VR/AR research at ICube. A portfolio whose pages are taken apart and rebuilt in 3D, rendered live in Rust and WebGPU."
     />
-    <title>Mehmet Ozkan - Portfolio</title>
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
-    <meta name="theme-color" content="#f0e7d5" />
-    <link rel="stylesheet" href="/src/styles.css" />
+    <meta name="theme-color" content="#03060f" />
+    <meta property="og:title" content="Mehmet Ozkan — Software Engineer" />
+    <meta
+      property="og:description"
+      content="A portfolio whose pages are taken apart in three dimensions and put back together. Rendered live in Rust, WebGPU and WGSL."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://xdm67x.github.io" />
+    <meta property="og:image" content="https://xdm67x.github.io/loop.jpg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- The deck is a scripted experience: without scripting the four slides
+         stay in the document flow as a plain, readable portfolio. This runs
+         before first paint so nothing jumps. -->
     <script>
-      document.documentElement.classList.remove("no-js");
+      document.documentElement.classList.add("js");
+    </script>
+    <!-- Trunk owns the build: the renderer crate, the stylesheet and the plain
+         ES modules are all declared here. See Trunk.toml. -->
+    <link
+      data-trunk
+      rel="rust"
+      href="renderer/Cargo.toml"
+      data-wasm-opt="0"
+      data-typescript="true"
+    />
+    <link data-trunk rel="css" href="web/style.css" />
+    <link data-trunk rel="copy-file" href="public/favicon.svg" />
+    <link data-trunk rel="copy-dir" href="public/film" />
+    <!-- A note for the build: Trunk's JavaScript minifier cannot read the
+         wasm-bindgen glue, so it warns once and leaves every script file
+         unminified. That is expected, and 30 kB of readable source next to a
+         2.4 MB wasm module is not worth a second toolchain. -->
+    <link data-trunk rel="copy-file" href="web/main.js" />
+    <link data-trunk rel="copy-file" href="web/data.js" />
+    <link data-trunk rel="copy-dir" href="web/wasm" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mehmet Ozkan",
+        "jobTitle": "Software Engineer",
+        "email": "m-ozkan@outlook.fr",
+        "address": { "@type": "PostalAddress", "addressLocality": "Niort", "addressCountry": "FR" },
+        "alumniOf": "University of Strasbourg",
+        "worksFor": { "@type": "Organization", "name": "Doctolib" },
+        "knowsAbout": ["Rust", "WebGPU", "Computer graphics", "AI tooling", "Healthcare software"],
+        "sameAs": ["https://github.com/xdm67x", "https://www.linkedin.com/in/dm67x"]
+      }
     </script>
   </head>
-
   <body>
-    <main class="book">
-      <div class="stage">
-        <div class="leaf page--hero">
-          <section class="page" aria-label="Introduction">
-            <div class="page__inner">
-              <p class="eyebrow reveal">
-                Software engineer · Interactive graphics
-              </p>
-              <h1 class="hero__name">
-                <span class="hero__mask"
-                  ><span class="hero__line">Mehmet</span></span
-                >
-                <span class="hero__mask"
-                  ><span class="hero__line">Ozkan</span></span
-                >
-              </h1>
-              <p class="hero__lede reveal">
-                I build interactive worlds where imagination turns into reality
-                — with AI.
-              </p>
-              <p class="hero__what reveal">
-                Computer graphics master's, VR research roots, and a soft spot
-                for shaders. By day I ship billing and AI tooling at Doctolib.
-              </p>
-              <p class="page__hint reveal">
-                Scroll or drag to turn the page
-                <span aria-hidden="true">↓</span>
-              </p>
-            </div>
-            <span class="folio" aria-hidden="true">01 — 04</span>
-          </section>
-          <div class="leaf__fold" aria-hidden="true"></div>
-          <div class="leaf__crease" aria-hidden="true"></div>
-        </div>
+    <!-- The film: a seamless loop generated for this page, graded down so the
+         typography always has something calm to sit on. -->
+    <div class="film" aria-hidden="true">
+      <video
+        class="film-media"
+        id="film"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        poster="/film/loop.jpg"
+      >
+        <source src="/film/loop.mp4" type="video/mp4" />
+      </video>
+      <div class="film-grade"></div>
+    </div>
 
-        <div class="leaf page--experience">
-          <section class="page" aria-labelledby="experience-title">
-            <div class="page__inner page__inner--experience">
-              <header class="section__head">
-                <p class="eyebrow reveal">Chapter 02 · The craft</p>
-                <h2 class="section__title reveal" id="experience-title">
-                  Experiences
-                </h2>
-              </header>
-              <div class="xp">
-                <article class="xp__item reveal">
-                  <p class="xp__when">Jan 2021 — Present</p>
-                  <div class="xp__body">
-                    <h3 class="xp__role">Software Engineer</h3>
-                    <p class="xp__org">Doctolib · Paris / Niort, France</p>
-                    <div class="xp__groups">
-                      <div class="xp__group">
-                        <h4>
-                          Core Product &amp; Domain Engineering
-                          <span>(Doctolib Médecin)</span>
-                        </h4>
-                        <ul>
-                          <li>
-                            <strong>Billing:</strong> Architected and developed
-                            core billing features for Doctolib Médecin,
-                            streamlining financial workflows and compliance for
-                            thousands of French medical practitioners.
-                          </li>
-                          <li>
-                            <strong>International Expansion &amp; EHR:</strong>
-                            Spent 6 months embedded in the German market
-                            initiative, building EHR solutions and designing a
-                            smart coding engine powered by expert rules to
-                            automate medical procedure codification.
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="xp__group">
-                        <h4>AI Integration &amp; Engineering Enablement</h4>
-                        <ul>
-                          <li>
-                            <strong>AI Adoption Leader:</strong> Pioneered the
-                            integration and continuous adoption of AI
-                            technologies across engineering teams at Doctolib.
-                          </li>
-                          <li>
-                            <strong>Tooling &amp; Infrastructure:</strong>
-                            Authored custom AI skills, agentic workflows, and
-                            test harnesses to enhance developer productivity and
-                            automate complex tasks.
-                          </li>
-                          <li>
-                            <strong>Upskilling &amp; Culture:</strong> Designed
-                            and delivered technical training programs on
-                            practical AI implementation for internal software
-                            engineering teams.
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-                <article class="xp__item reveal">
-                  <p class="xp__when">Jan 2020 — Jul 2020</p>
-                  <div class="xp__body">
-                    <h3 class="xp__role">
-                      Software Engineering Intern (R&amp;D)
-                    </h3>
-                    <p class="xp__org">ICube Laboratory (CNRS) · Strasbourg</p>
-                    <p class="xp__note">
-                      Built immersive VR/AR research environments with Unity3D
-                      and C#, rendering live map data in 3D. Co-authored a
-                      peer-reviewed publication.
-                    </p>
-                  </div>
-                </article>
+    <!-- The glass the film is seen through: a WebGPU canvas, composited over
+         the video, drawing the world's pieces. Decoration only. -->
+    <canvas id="world" aria-hidden="true"></canvas>
+    <!-- The page's own transition effects: a stack of slices that tears across
+         the frame, the flash of the landing, its shockwave, and a light sweep
+         that crosses the new page. Decoration only. -->
+    <div class="fx" id="fx" aria-hidden="true">
+      <div class="slices" id="slices"></div>
+      <div class="fx-sweep"></div>
+      <div class="fx-wave"></div>
+      <div class="fx-flash"></div>
+    </div>
+
+    <header class="nav" id="nav">
+      <a class="brand" href="#hero" data-go="0">
+        <svg class="brand-glyph" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="16" r="13.2" fill="none" stroke="currentColor" stroke-width="1.4" opacity="0.5" />
+          <ellipse cx="16" cy="16" rx="13.2" ry="5.2" fill="none" stroke="currentColor" stroke-width="1.4" transform="rotate(-28 16 16)" />
+          <circle cx="16" cy="16" r="4.4" fill="currentColor" />
+        </svg>
+        <span class="brand-text">
+          <span class="brand-name">Mehmet Ozkan</span>
+          <span class="brand-role">Software engineer</span>
+        </span>
+      </a>
+
+      <nav class="tabs" id="tabs" aria-label="Sections">
+        <span class="tabs-pip" id="tabs-pip" aria-hidden="true"></span>
+        <a class="tab" href="#hero" data-go="0"><span class="tab-num">01</span><span class="tab-name">Hero</span></a>
+        <a class="tab" href="#experience" data-go="1"
+          ><span class="tab-num">02</span><span class="tab-name">Experience</span></a
+        >
+        <a class="tab" href="#projects" data-go="2"
+          ><span class="tab-num">03</span><span class="tab-name">Projects</span></a
+        >
+        <a class="tab" href="#contact" data-go="3"
+          ><span class="tab-num">04</span><span class="tab-name">Contact</span></a
+        >
+      </nav>
+    </header>
+
+    <main id="deck">
+      <!-- 01 · hero ---------------------------------------------------------- -->
+      <section class="slide" id="hero" data-slide="0" aria-label="Introduction">
+        <div class="sheet">
+          <p class="dateline" data-piece>Software engineer · Niort, France · open to remote</p>
+          <h1 class="display" data-piece tabindex="-1">
+            <span class="display-line">Mehmet</span>
+            <span class="display-line display-line--italic">Ozkan</span>
+          </h1>
+          <p class="lede" data-piece>
+            I build billing and EHR software at <strong>Doctolib</strong>, where thousands of French
+            practitioners run their practice, and I lead the AI adoption that keeps its engineering
+            teams shipping. Before that, VR/AR research at ICube, and a master's in computer
+            graphics — the discipline behind every pane of glass on this page.
+          </p>
+          <ul class="facts" data-piece>
+            <li>
+              <span class="fact-key">Doctolib</span>
+              <span class="fact-val">2021 — present</span>
+            </li>
+            <li>
+              <span class="fact-key">ICube, CNRS</span>
+              <span class="fact-val">VR/AR research, 2020</span>
+            </li>
+            <li>
+              <span class="fact-key">University of Strasbourg</span>
+              <span class="fact-val">M.Sc. graphics, 2020</span>
+            </li>
+          </ul>
+          <div class="actions" data-piece>
+            <button class="cta" type="button" data-go="2">See the work</button>
+            <a class="cta cta--ghost" href="mailto:m-ozkan@outlook.fr">m-ozkan@outlook.fr</a>
+          </div>
+          <p class="slide-cue">
+            <span class="slide-cue-glyph"></span>
+            Scroll to take the page apart
+          </p>
+        </div>
+      </section>
+
+      <!-- 02 · experience ---------------------------------------------------- -->
+      <section class="slide" id="experience" data-slide="1" aria-label="Experience">
+        <div class="sheet sheet--wide">
+          <h2 class="display display--section" data-piece tabindex="-1">
+            Five years of shipping, <span class="display-soft">one habit of research.</span>
+          </h2>
+          <ol class="timeline">
+            <li class="entry" data-piece>
+              <p class="entry-when">2021 — present</p>
+              <div class="entry-body">
+                <h3 class="entry-role">Software Engineer, <span class="entry-org">Doctolib</span></h3>
+                <p class="entry-where">Paris / Niort, France</p>
+                <ul class="entry-points">
+                  <li>
+                    Architected core billing features for Doctolib Médecin, streamlining financial
+                    workflows and compliance for thousands of French medical practitioners.
+                  </li>
+                  <li>
+                    Embedded for six months with the German market initiative, building EHR
+                    solutions and a rules-powered coding engine that automates medical procedure
+                    codification.
+                  </li>
+                  <li>
+                    Led AI adoption across engineering teams: authored AI skills, agentic workflows
+                    and test harnesses, and delivered internal training on practical AI
+                    implementation.
+                  </li>
+                </ul>
+                <ul class="tags">
+                  <li>Billing</li>
+                  <li>EHR</li>
+                  <li>AI enablement</li>
+                </ul>
               </div>
-            </div>
-            <span class="folio" aria-hidden="true">02 — 04</span>
-          </section>
-          <div class="leaf__fold" aria-hidden="true"></div>
-          <div class="leaf__crease" aria-hidden="true"></div>
-        </div>
+            </li>
 
-        <div class="leaf page--projects">
-          <section class="page" aria-labelledby="projects-title">
-            <div class="page__inner">
-              <header class="section__head">
-                <p class="eyebrow reveal">Chapter 03 · The playground</p>
-                <h2 class="section__title reveal" id="projects-title">
-                  Projects
-                </h2>
-              </header>
-              <div class="projects">
-                <a
-                  class="project reveal"
-                  href="https://github.com/xdm67x/clawdquest"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <p class="project__meta">Rust · WebGPU</p>
-                  <h3 class="project__title">Clawdquest</h3>
-                  <p class="project__desc">
-                    A macOS desktop pet you can drag anywhere. Finish a quest,
-                    feed him an apple.
-                  </p>
-                  <span class="project__link">View on GitHub →</span>
-                </a>
-                <a
-                  class="project reveal"
-                  href="https://github.com/xdm67x/hyperdeck"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <p class="project__meta">TypeScript</p>
-                  <h3 class="project__title">Hyperdeck</h3>
-                  <p class="project__desc">
-                    Write in Markdown, animate with CSS. A slideshow tool that
-                    keeps the deck in plain text.
-                  </p>
-                  <span class="project__link">View on GitHub →</span>
-                </a>
-                <a
-                  class="project reveal"
-                  href="https://github.com/xdm67x/aime"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <p class="project__meta">Rust · Agents</p>
-                  <h3 class="project__title">Aime</h3>
-                  <p class="project__desc">
-                    Describe the job once. The agent runs it to the goal.
-                  </p>
-                  <span class="project__link">View on GitHub →</span>
-                </a>
-                <a
-                  class="project reveal"
-                  href="https://github.com/xdm67x/electrotest"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <p class="project__meta">Rust · CDP</p>
-                  <h3 class="project__title">Electrotest</h3>
-                  <p class="project__desc">
-                    Gherkin-driven CLI automation for testing Electron apps.
-                  </p>
-                  <span class="project__link">View on GitHub →</span>
-                </a>
+            <li class="entry" data-piece>
+              <p class="entry-when">Jan — Jul 2020</p>
+              <div class="entry-body">
+                <h3 class="entry-role">
+                  R&amp;D Engineering Intern, <span class="entry-org">ICube Laboratory (CNRS)</span>
+                </h3>
+                <p class="entry-where">Strasbourg, France</p>
+                <ul class="entry-points">
+                  <li>
+                    Engineered immersive VR/AR research environments in Unity3D and C#, integrating
+                    Mapbox and WrldAPI cartography into interactive 3D spaces.
+                  </li>
+                  <li>
+                    Ran functional prototyping and user testing of mixed-reality interaction
+                    mechanics.
+                  </li>
+                </ul>
+                <p class="entry-note">
+                  <span class="note-key">Publication</span>
+                  “Interactions with a Hybrid Map for Navigation Information Visualization in Virtual
+                  Reality” — peer-reviewed, ICube Laboratory, 2020.
+                </p>
+                <ul class="tags">
+                  <li>VR/AR</li>
+                  <li>Unity3D</li>
+                  <li>Research</li>
+                </ul>
               </div>
-              <a
-                class="more reveal"
-                href="https://github.com/xdm67x"
-                target="_blank"
-                rel="noreferrer"
-                >All projects on GitHub →</a
-              >
-            </div>
-            <span class="folio" aria-hidden="true">03 — 04</span>
-          </section>
-          <div class="leaf__fold" aria-hidden="true"></div>
-          <div class="leaf__crease" aria-hidden="true"></div>
-        </div>
+            </li>
 
-        <div class="leaf page--contact">
-          <section class="page" aria-labelledby="contact-title">
-            <div class="page__inner">
-              <p class="eyebrow reveal">Chapter 04 · Your turn</p>
-              <h2
-                class="section__title contact__title reveal"
-                id="contact-title"
-              >
-                The best worlds are built with someone.
-              </h2>
-              <p class="contact__lede reveal">
-                Building something that needs a world? Let's talk.
-              </p>
-              <ul class="contact__links">
-                <li class="reveal">
-                  <a
-                    href="mailto:m-ozkan@outlook.fr"
-                    aria-label="Email m-ozkan@outlook.fr"
-                    title="Email m-ozkan@outlook.fr"
-                  >
-                    <svg
-                      viewBox="0 0 16 16"
-                      aria-hidden="true"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.4"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <rect x="1.2" y="3" width="13.6" height="10" rx="1.4" />
-                      <path d="m1.8 4.4 6.2 4.4 6.2-4.4" />
-                    </svg>
-                  </a>
-                </li>
-                <li class="reveal">
-                  <a
-                    href="https://www.linkedin.com/in/dm67x"
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="LinkedIn"
-                    title="LinkedIn"
-                  >
-                    <svg
-                      viewBox="0 0 16 16"
-                      aria-hidden="true"
-                      fill="currentColor"
-                    >
-                      <path
-                        d="M3.6 1.8a1.8 1.8 0 1 1-3.6 0 1.8 1.8 0 0 1 3.6 0ZM.2 5.2h3.3V16H.2V5.2Zm5.3 0h3.2v1.5h.05c.44-.84 1.53-1.72 3.15-1.72 3.37 0 4 2.22 4 5.1V16h-3.3v-5.3c0-1.26-.02-2.9-1.76-2.9-1.77 0-2.04 1.38-2.04 2.8V16H5.5V5.2Z"
-                      />
-                    </svg>
-                  </a>
-                </li>
-                <li class="reveal">
-                  <a
-                    href="https://github.com/xdm67x"
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="GitHub"
-                    title="GitHub"
-                  >
-                    <svg
-                      viewBox="0 0 16 16"
-                      aria-hidden="true"
-                      fill="currentColor"
-                    >
-                      <path
-                        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"
-                      />
-                    </svg>
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <span class="folio" aria-hidden="true">04 — 04</span>
-          </section>
-          <div class="leaf__fold" aria-hidden="true"></div>
-          <div class="leaf__crease" aria-hidden="true"></div>
+            <li class="entry" data-piece>
+              <p class="entry-when">Class of 2020</p>
+              <div class="entry-body">
+                <h3 class="entry-role">
+                  M.Sc. Computer Science, <span class="entry-org">University of Strasbourg</span>
+                </h3>
+                <p class="entry-where">Strasbourg, France</p>
+                <ul class="entry-points">
+                  <li>Specialised in computer graphics, imaging and 3D.</li>
+                </ul>
+                <ul class="tags">
+                  <li>Graphics</li>
+                  <li>Imaging</li>
+                  <li>3D</li>
+                </ul>
+              </div>
+            </li>
+          </ol>
         </div>
-      </div>
+        <p class="anchor anchor--mono" data-anchor="experience.span" aria-hidden="true">
+          2020 → 2026
+        </p>
+      </section>
+
+      <!-- 03 · projects ------------------------------------------------------ -->
+      <section class="slide" id="projects" data-slide="2" aria-label="Projects">
+        <div class="sheet sheet--wide">
+          <h2 class="display display--section" data-piece tabindex="-1">
+            Nine things I built, <span class="display-soft">and a few I fixed.</span>
+          </h2>
+          <ul class="worklist" id="worklist" data-piece></ul>
+          <noscript>
+            <ul class="worklist worklist--plain">
+              <li><a href="https://github.com/xdm67x/TwoZeroFourEight">TwoZeroFourEight</a></li>
+              <li><a href="https://github.com/rtk-ai/rtk">RTK (Rust Token Killer)</a></li>
+              <li><a href="https://github.com/xdm67x/simple-agent">simple-agent</a></li>
+              <li><a href="https://github.com/xdm67x/cargo-feature-guard">cargo-feature-guard</a></li>
+              <li><a href="https://github.com/tafia/quick-xml">quick-xml</a></li>
+              <li><a href="https://github.com/xdm67x/electrotest">electrotest</a></li>
+              <li><a href="https://github.com/xdm67x/soft-delight">Soft Delight</a></li>
+              <li><a href="https://github.com/dm67x/chip8">chip8</a></li>
+              <li><a href="https://github.com/xdm67x/xdm67x.github.io">This World</a></li>
+            </ul>
+          </noscript>
+        </div>
+        <p class="anchor anchor--mono" data-anchor="projects.index" aria-hidden="true">
+          Selected work
+        </p>
+      </section>
+
+      <!-- 04 · contact ------------------------------------------------------- -->
+      <section class="slide" id="contact" data-slide="3" aria-label="Contact">
+        <div class="sheet">
+          <h2 class="display display--section" data-piece tabindex="-1">
+            Let's build <span class="display-soft">something.</span>
+          </h2>
+          <p class="lede" data-piece>
+            Five years of healthcare product engineering, a research habit in graphics and VR, and a
+            sideline of tools that make engineers faster. If that mix fits your plans, the quickest
+            way is email.
+          </p>
+          <a class="mailto" data-piece href="mailto:m-ozkan@outlook.fr">m-ozkan@outlook.fr</a>
+          <ul class="channels" data-piece>
+            <li>
+              <a href="https://github.com/xdm67x" target="_blank" rel="noopener noreferrer">
+                <span class="channel-key">GitHub</span>
+                <span class="channel-val">github.com/xdm67x</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/dm67x" target="_blank" rel="noopener noreferrer">
+                <span class="channel-key">LinkedIn</span>
+                <span class="channel-val">in/dm67x</span>
+              </a>
+            </li>
+            <li>
+              <span class="channel-static">
+                <span class="channel-key">Niort, France</span>
+                <span class="channel-val">remote-friendly</span>
+              </span>
+            </li>
+          </ul>
+          <p class="colophon" data-piece>
+            This page prints as a plain document: the four slides, in order, on paper.
+          </p>
+        </div>
+        <p class="anchor anchor--mono" data-anchor="contact.signal" aria-hidden="true">
+          46.32°N 0.46°W · Niort
+        </p>
+      </section>
+
+      <footer class="dock" id="dock">
+        <p class="dock-count">
+          <span id="dock-index">01</span><span class="dock-slash">/</span><span>04</span>
+          <span class="dock-name" id="dock-name">Hero</span>
+        </p>
+        <p class="dock-hint" aria-hidden="true">
+          <span class="dock-keys">↑</span><span class="dock-keys">↓</span>
+          <span class="dock-keys dock-keys--wide">space</span>
+          <span class="dock-keys dock-keys--wide">1–4</span>
+        </p>
+      </footer>
     </main>
 
-    <script type="module" src="/src/main.ts"></script>
+    <p class="sr-only" id="announce" role="status" aria-live="polite"></p>
+
+    <script type="module" src="/main.js"></script>
   </body>
 </html>
